@@ -9,6 +9,7 @@ package net.robertboehm.rygal;
 
 import nme.display.Bitmap;
 import nme.display.BitmapData;
+import nme.display.DisplayObject;
 import nme.display.Sprite;
 import nme.display.StageAlign;
 import nme.display.StageScaleMode;
@@ -20,34 +21,40 @@ import nme.Lib;
  * @author Robert Böhm
  */
 
-class RyGame extends Bitmap {
+class RyGame {
 	
 	private var _lastUpdate:Int;
 	private var _now:Int;
 	private var _scenes:Hash<RyScene>;
-	private var currentScene:RyScene;
-	public var gameWidth:Int;
-	public var gameHeight:Int;
+	private var _sprite:Sprite;
+	private var _bitmap:Bitmap;
+	private var _currentScene:RyScene;
+	public var zoom:Int;
+	public var width:Int;
+	public var height:Int;
 	public var mouse:RyMouse;
 	
 	public function new(width:Int, height:Int, zoom:Int, initialScene:RyScene, initialSceneName:String="") {
-		super(new BitmapData(width, height));
+		_bitmap = new Bitmap(new BitmapData(width, height));
+		_sprite = new Sprite();
+		_sprite.addChild(_bitmap);
 		
-		this.mouse = new RyMouse(zoom, this);
-		this.gameWidth = width;
-		this.gameHeight = height;
+		this.zoom = zoom;
+		this.width = width;
+		this.height = height;
 		_scenes = new Hash<RyScene>();
 		registerScene(initialScene, initialSceneName);
 		useScene(initialSceneName);
-		this.scaleX = this.scaleY = zoom;
-		this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+		_sprite.scaleX = _sprite.scaleY = zoom;
+		_sprite.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 	}
 	
 	private function onAddedToStage(e:Event):Void {
-		this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+		_sprite.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		
+		this.mouse = new RyMouse(_sprite);
 		_lastUpdate = Lib.getTimer();
-		this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+		_sprite.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 	}
 	
 	private function onEnterFrame(e:Event):Void {
@@ -61,16 +68,20 @@ class RyGame extends Bitmap {
 	}
 	
 	public function useScene(name:String = ""):Void {
-		if (currentScene != null)
-			currentScene.unload();
+		if (_currentScene != null)
+			_currentScene.unload();
 		
-		currentScene = _scenes.get(name);
-		currentScene.load(this);
+		_currentScene = _scenes.get(name);
+		_currentScene.load(this);
 	}
 	
 	private function update(time:RyGameTime):Void {
-		currentScene.update(time);
-		currentScene.draw(this.bitmapData);
+		_currentScene.update(time);
+		_currentScene.draw(this._bitmap.bitmapData);
+	}
+	
+	public function getDisplayObject():DisplayObject {
+		return _sprite;
 	}
 	
 }

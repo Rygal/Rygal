@@ -19,17 +19,14 @@ class RyMouse {
 	
 	public var x:Int;
 	public var y:Int;
-	private var _zoom:Int;
 	
-	public function new(zoom:Int, handler:DisplayObject) {
-		_zoom = zoom;
-		
+	public function new(handler:DisplayObject) {
 		handler.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 	}
 	
 	private function onMouseMove(e:MouseEvent):Void {
-		this.x = e.localX / _zoom;
-		this.y = e.localY / _zoom;
+		this.x = Math.floor(e.localX);
+		this.y = Math.floor(e.localY);
 	}
 	
 }
