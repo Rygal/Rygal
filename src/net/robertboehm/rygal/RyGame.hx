@@ -10,10 +10,14 @@ package net.robertboehm.rygal;
 import nme.display.Bitmap;
 import nme.display.BitmapData;
 import nme.display.DisplayObject;
+import nme.display.PixelSnapping;
 import nme.display.Sprite;
 import nme.display.StageAlign;
 import nme.display.StageScaleMode;
 import nme.events.Event;
+import nme.geom.Matrix;
+import nme.geom.Point;
+import nme.geom.Rectangle;
 import nme.Lib;
 
 /**
@@ -29,6 +33,7 @@ class RyGame {
 	private var _sprite:Sprite;
 	private var _bitmap:Bitmap;
 	private var _currentScene:RyScene;
+	
 	public var zoom:Int;
 	public var width:Int;
 	public var height:Int;
@@ -36,8 +41,11 @@ class RyGame {
 	
 	public function new(width:Int, height:Int, zoom:Int, initialScene:RyScene, initialSceneName:String="") {
 		_bitmap = new Bitmap(new BitmapData(width, height));
+		_bitmap.scaleX = _bitmap.scaleY = zoom;
 		_sprite = new Sprite();
+		
 		_sprite.addChild(_bitmap);
+		
 		
 		this.zoom = zoom;
 		this.width = width;
@@ -45,14 +53,13 @@ class RyGame {
 		_scenes = new Hash<RyScene>();
 		registerScene(initialScene, initialSceneName);
 		useScene(initialSceneName);
-		_sprite.scaleX = _sprite.scaleY = zoom;
 		_sprite.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 	}
 	
 	private function onAddedToStage(e:Event):Void {
 		_sprite.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		
-		this.mouse = new RyMouse(_sprite);
+		this.mouse = new RyMouse(_sprite, zoom);
 		_lastUpdate = Lib.getTimer();
 		_sprite.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 	}
