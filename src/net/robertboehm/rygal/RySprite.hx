@@ -6,7 +6,6 @@
 
 
 package net.robertboehm.rygal;
-import nme.display.BitmapData;
 import nme.geom.Point;
 
 /**
@@ -18,18 +17,23 @@ class RySprite implements RyGameObject {
 	
 	public var x:Float;
 	public var y:Float;
+	public var width:Int;
+	public var height:Int;
 	
-	public var bitmapData:BitmapData;
+	public var texture:RyTexture;
 	
-	public function new(bitmapData:BitmapData) {
-		this.bitmapData = bitmapData;
+	public function new(texture:RyTexture) {
+		this.texture = texture;
+		
+		this.width = texture.width;
+		this.height = texture.height;
 	}
 	
 	public function update(time:RyGameTime) {
 	}
 	
-	public function draw(screen:BitmapData) {
-		screen.copyPixels(bitmapData, bitmapData.rect, new Point(x, y), null, null, true);
+	public function draw(screen:RyCanvas) {
+		screen.draw(texture, new Point(x, y));
 	}
 	
 }

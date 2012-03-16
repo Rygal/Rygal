@@ -6,7 +6,6 @@
 
 
 package net.robertboehm.rygal;
-import nme.display.BitmapData;
 
 /**
  * ...
@@ -20,6 +19,6 @@ interface RyGameObject {
 	
 	public function update(time:RyGameTime):Void;
 	
-	public function draw(screen:BitmapData):Void;
+	public function draw(screen:RyCanvas):Void;
 	
 }

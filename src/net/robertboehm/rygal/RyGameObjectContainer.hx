@@ -6,7 +6,6 @@
 
 
 package net.robertboehm.rygal;
-import nme.display.BitmapData;
 
 /**
  * ...
@@ -50,7 +49,7 @@ class RyGameObjectContainer implements RyGameObject {
 		}
 	}
 	
-	public function draw(screen:BitmapData):Void {
+	public function draw(screen:RyCanvas):Void {
 		for (child in _children) {
 			child.draw(screen);
 		}
