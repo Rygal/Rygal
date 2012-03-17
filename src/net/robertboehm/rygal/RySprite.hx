@@ -23,17 +23,27 @@ class RySprite implements RyGameObject {
 	public var texture:RyTexture;
 	
 	public function new(texture:RyTexture) {
+		setTexture(texture);
+	}
+	
+	public function setTexture(texture:RyTexture):Void {
 		this.texture = texture;
 		
-		this.width = texture.width;
-		this.height = texture.height;
+		if (texture != null) {
+			this.width = texture.width;
+			this.height = texture.height;
+		} else {
+			this.width = 0;
+			this.height = 0;
+		}
 	}
 	
-	public function update(time:RyGameTime) {
+	public function update(time:RyGameTime):Void {
 	}
 	
-	public function draw(screen:RyCanvas) {
-		screen.draw(texture, x, y);
+	public function draw(screen:RyCanvas):Void {
+		if(texture != null)
+			screen.draw(texture, x, y);
 	}
 	
 }
