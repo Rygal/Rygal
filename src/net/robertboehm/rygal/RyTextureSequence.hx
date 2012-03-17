@@ -47,4 +47,12 @@ class RyTextureSequence {
 		return new RyTextureSequence(textures);
 	}
 	
+	public static function fromSpritesheet(spritesheet:RySpritesheet, names:Array<String>):RyTextureSequence {
+		var textures:Array<RyTexture> = new Array<RyTexture>();
+		for (name in names) {
+			textures.push(spritesheet.getTexture(name));
+		}
+		return new RyTextureSequence(textures);
+	}
+	
 }

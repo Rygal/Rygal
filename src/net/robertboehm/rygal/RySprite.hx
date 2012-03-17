@@ -22,8 +22,10 @@ class RySprite implements RyGameObject {
 	
 	public var texture:RyTexture;
 	
-	public function new(texture:RyTexture) {
+	public function new(texture:RyTexture, x:Int=0, y:Int=0) {
 		setTexture(texture);
+		this.x = x;
+		this.y = y;
 	}
 	
 	public function setTexture(texture:RyTexture):Void {
