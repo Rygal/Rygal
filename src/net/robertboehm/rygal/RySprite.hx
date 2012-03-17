@@ -33,7 +33,7 @@ class RySprite implements RyGameObject {
 	}
 	
 	public function draw(screen:RyCanvas) {
-		screen.draw(texture, new Point(x, y));
+		screen.draw(texture, x, y);
 	}
 	
 }
