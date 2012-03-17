@@ -26,7 +26,11 @@ class RyTexture {
 	}
 	
 	public function slice(x:Int, y:Int, width:Int, height:Int):RyTexture {
+		#if js
+		var data:BitmapData = new BitmapData(width, height);
+		#else
 		var data:BitmapData = new BitmapData(width, height, bitmapData.transparent);
+		#end
 		data.copyPixels(bitmapData, new Rectangle(x, y, width, height), new Point());
 		return new RyTexture(data);
 	}
