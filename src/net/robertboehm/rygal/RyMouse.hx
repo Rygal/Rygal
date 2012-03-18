@@ -19,8 +19,8 @@ import nme.events.MouseEvent;
 
 class RyMouse extends EventDispatcher {
 	
-	public var x:Int;
-	public var y:Int;
+	public var position:RyVector;
+	
 	public var isPressed:Bool;
 	private var _zoom:Int;
 	#if js
@@ -56,11 +56,11 @@ class RyMouse extends EventDispatcher {
 	
 	private function onMouseMove(e:MouseEvent):Void {
 		#if js
-		this.x = Math.floor((e.stageX - _handler.x) / _zoom);
-		this.y = Math.floor((e.stageY - _handler.y) / _zoom);
+		this.position.x = Math.floor((e.stageX - _handler.x) / _zoom);
+		this.position.y = Math.floor((e.stageY - _handler.y) / _zoom);
 		#else
-		this.x = Math.floor(e.localX / _zoom);
-		this.y = Math.floor(e.localY / _zoom);
+		this.position.x = Math.floor(e.localX / _zoom);
+		this.position.y = Math.floor(e.localY / _zoom);
 		#end
 		this.dispatchEvent(new RyMouseEvent(RyMouseEvent.MOUSE_MOVE, this));
 	}

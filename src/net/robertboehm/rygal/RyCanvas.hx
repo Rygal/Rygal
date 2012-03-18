@@ -35,8 +35,8 @@ class RyCanvas {
 		_bitmapData.setPixel32(x, y, color);
 	}
 	
-	public function draw(texture:RyTexture, x:Float, y:Float):Void {
-		_bitmapData.copyPixels(texture.bitmapData, texture.bitmapData.rect, new Point(x, y), null, null, true);
+	public function draw(texture:RyTexture, vector:RyVector):Void {
+		_bitmapData.copyPixels(texture.bitmapData, texture.bitmapData.rect, new Point(vector.x, vector.y), null, null, true);
 	}
 	
 	public function toTexture():RyTexture {

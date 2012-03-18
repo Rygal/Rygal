@@ -15,8 +15,7 @@ import nme.geom.Point;
 
 class RySprite implements RyGameObject {
 	
-	public var x:Float;
-	public var y:Float;
+	public var position:RyVector;
 	public var width:Int;
 	public var height:Int;
 	
@@ -24,8 +23,7 @@ class RySprite implements RyGameObject {
 	
 	public function new(texture:RyTexture, x:Int=0, y:Int=0) {
 		setTexture(texture);
-		this.x = x;
-		this.y = y;
+		this.position = new RyVector(x, y);
 	}
 	
 	public function setTexture(texture:RyTexture):Void {
@@ -45,7 +43,7 @@ class RySprite implements RyGameObject {
 	
 	public function draw(screen:RyCanvas):Void {
 		if(texture != null)
-			screen.draw(texture, x, y);
+			screen.draw(texture, position.x, position.y);
 	}
 	
 }

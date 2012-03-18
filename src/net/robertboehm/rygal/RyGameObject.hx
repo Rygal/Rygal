@@ -14,8 +14,7 @@ package net.robertboehm.rygal;
 
 interface RyGameObject {
 	
-	public var x:Float;
-	public var y:Float;
+	public var position:RyVector;
 	
 	public function update(time:RyGameTime):Void;
 	

@@ -20,15 +20,13 @@ class RyMouseEvent extends Event {
 	public static var MOUSE_UP:String = "mouseUp";
 	public static var MOUSE_MOVE:String = "mouseMove";
 	
-	public var x:Int;
-	public var y:Int;
+	public var position:RyVector;
 	public var isPressed:Bool;
 	
 	public function new(type:String, mouse:RyMouse) {
 		super(type);
 		
-		this.x = mouse.x;
-		this.y = mouse.y;
+		this.position = mouse.position;
 		this.isPressed = mouse.isPressed;
 	}
 	

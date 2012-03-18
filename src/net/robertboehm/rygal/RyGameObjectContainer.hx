@@ -14,8 +14,7 @@ package net.robertboehm.rygal;
 
 class RyGameObjectContainer implements RyGameObject {
 	
-	public var x:Float;
-	public var y:Float;
+	public var position:RyVector;
 	
 	private var _children:Array<RyGameObject>;
 	
