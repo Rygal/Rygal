@@ -5,19 +5,23 @@
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
 
 
-package net.robertboehm.rygal;
+package rygal;
 
 /**
  * ...
  * @author Robert Böhm
  */
 
-interface RyGameObject {
+class RyGameTime {
 	
-	public var position:RyVector;
-	
-	public function update(time:RyGameTime):Void;
-	
-	public function draw(screen:RyCanvas):Void;
+	public var totalMs:Int;
+	public var elapsedMs:Int;
+	public var elapsedS:Float;
+
+	public function new(now:Int, lastUpdate:Int) {
+		totalMs = now;
+		elapsedMs = now - lastUpdate;
+		elapsedS = elapsedMs / 1000.0;
+	}
 	
 }

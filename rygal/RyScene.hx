@@ -5,17 +5,26 @@
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
 
 
-package net.robertboehm.rygal;
+package rygal;
 
 /**
  * ...
  * @author Robert Böhm
  */
 
-class RyInvalidArgumentError extends RyError {
+class RyScene extends RyGameObjectContainer {
+	
+	public var game:RyGame;
 
-	public function new(?message:String) {
-		super(message);
+	public function new() {
+		super();
+	}
+	
+	public function load(game:RyGame) {
+		this.game = game;
+	}
+	
+	public function unload() {
 	}
 	
 }

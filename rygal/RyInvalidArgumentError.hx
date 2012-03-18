@@ -5,23 +5,17 @@
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
 
 
-package net.robertboehm.rygal;
+package rygal;
 
 /**
  * ...
  * @author Robert Böhm
  */
 
-class RyError {
-	
-	private var message:String;
-	
+class RyInvalidArgumentError extends RyError {
+
 	public function new(?message:String) {
-		this.message = message;
-	}
-	
-	override public function toString():String {
-		return Type.getClassName(Type.getClass(this)) + (message == null ? "" : ": " + message);
+		super(message);
 	}
 	
 }

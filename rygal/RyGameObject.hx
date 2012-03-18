@@ -5,26 +5,19 @@
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
 
 
-package net.robertboehm.rygal;
+package rygal;
 
 /**
  * ...
  * @author Robert Böhm
  */
 
-class RyScene extends RyGameObjectContainer {
+interface RyGameObject {
 	
-	public var game:RyGame;
-
-	public function new() {
-		super();
-	}
+	public var position:RyVector;
 	
-	public function load(game:RyGame) {
-		this.game = game;
-	}
+	public function update(time:RyGameTime):Void;
 	
-	public function unload() {
-	}
+	public function draw(screen:RyCanvas):Void;
 	
 }
