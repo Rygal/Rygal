@@ -1,0 +1,7 @@
+<project name="rygal" url="http://github.com/rynti/Rygal" license="LGPL">
+    <user name="your_haxelib_name"/>
+    <tag v="game"/>
+    <tag v="cross"/>
+    <description>A free open source engine for games using haXe & NME.</description>
+    <version name="?.?.?">???</version>
+</project>

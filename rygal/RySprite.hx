@@ -1,11 +1,12 @@
-// Copyright (C) 2011 Robert Böhm
+// Copyright (C) 2012 Robert Böhm
 // This file is part of Rygal.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
 
 
-package net.robertboehm.rygal;
+package rygal;
+
 import nme.geom.Point;
 
 /**
@@ -15,8 +16,7 @@ import nme.geom.Point;
 
 class RySprite implements RyGameObject {
 	
-	public var x:Float;
-	public var y:Float;
+	public var position:RyVector;
 	public var width:Int;
 	public var height:Int;
 	
@@ -24,8 +24,7 @@ class RySprite implements RyGameObject {
 	
 	public function new(texture:RyTexture, x:Int=0, y:Int=0) {
 		setTexture(texture);
-		this.x = x;
-		this.y = y;
+		this.position = new RyVector(x, y);
 	}
 	
 	public function setTexture(texture:RyTexture):Void {
@@ -45,7 +44,7 @@ class RySprite implements RyGameObject {
 	
 	public function draw(screen:RyCanvas):Void {
 		if(texture != null)
-			screen.draw(texture, x, y);
+			screen.draw(texture, position.x, position.y);
 	}
 	
 }
