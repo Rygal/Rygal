@@ -5,7 +5,7 @@
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
 
 
-package net.robertboehm.rygal;
+package net.robertboehm.rygal.graphic;
 import nme.Assets;
 import nme.display.BitmapData;
 import nme.geom.Point;

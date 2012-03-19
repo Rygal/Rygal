@@ -7,6 +7,9 @@
 
 package net.robertboehm.rygal;
 
+import net.robertboehm.rygal.graphic.RyCanvas;
+import net.robertboehm.rygal.input.RyKeyboard;
+import net.robertboehm.rygal.input.RyMouse;
 import nme.display.Bitmap;
 import nme.display.BitmapData;
 import nme.display.DisplayObject;

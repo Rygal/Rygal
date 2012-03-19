@@ -6,6 +6,7 @@
 
 
 package net.robertboehm.rygal;
+import net.robertboehm.rygal.graphic.RyCanvas;
 
 /**
  * ...
