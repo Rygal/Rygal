@@ -23,7 +23,7 @@ class RyMouse extends EventDispatcher {
 	public var y:Int;
 	public var isPressed:Bool;
 	private var _zoom:Int;
-	#if js
+	#if (js || cpp)
 	// HTML5 Mouse Events don't work on sprites, but they do on the stage
 	private var _handler:DisplayObject;
 	#end
@@ -32,7 +32,7 @@ class RyMouse extends EventDispatcher {
 		super();
 		
 		_zoom = zoom;
-		#if js
+		#if (js || cpp)
 		_handler = handler;
 		handler.stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 		handler.stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);

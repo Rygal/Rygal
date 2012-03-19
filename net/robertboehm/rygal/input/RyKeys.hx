@@ -6,6 +6,7 @@
 
 
 package net.robertboehm.rygal.input;
+import nme.ui.Keyboard;
 
 /**
  * ...
@@ -92,34 +93,42 @@ class RyKeys {
 	public static var UP:Int = 38;
 	
 	// A-Z
-	public static var A:Int = 65;
-	public static var B:Int = 66;
-	public static var C:Int = 67;
-	public static var D:Int = 68;
-	public static var E:Int = 69;
-	public static var F:Int = 70;
-	public static var G:Int = 71;
-	public static var H:Int = 72;
-	public static var I:Int = 73;
-	public static var J:Int = 74;
-	public static var K:Int = 75;
-	public static var L:Int = 76;
-	public static var M:Int = 77;
-	public static var N:Int = 78;
-	public static var O:Int = 79;
-	public static var P:Int = 80;
-	public static var Q:Int = 81;
-	public static var R:Int = 82;
-	public static var S:Int = 83;
-	public static var T:Int = 84;
-	public static var U:Int = 85;
-	public static var V:Int = 86;
-	public static var W:Int = 87;
-	public static var X:Int = 88;
-	public static var Y:Int = 89;
-	public static var Z:Int = 90;
+	public static var A:Int = getLetterKeyCode("A");
+	public static var B:Int = getLetterKeyCode("B");
+	public static var C:Int = getLetterKeyCode("C");
+	public static var D:Int = getLetterKeyCode("D");
+	public static var E:Int = getLetterKeyCode("E");
+	public static var F:Int = getLetterKeyCode("F");
+	public static var G:Int = getLetterKeyCode("G");
+	public static var H:Int = getLetterKeyCode("H");
+	public static var I:Int = getLetterKeyCode("I");
+	public static var J:Int = getLetterKeyCode("J");
+	public static var K:Int = getLetterKeyCode("K");
+	public static var L:Int = getLetterKeyCode("L");
+	public static var M:Int = getLetterKeyCode("M");
+	public static var N:Int = getLetterKeyCode("N");
+	public static var O:Int = getLetterKeyCode("O");
+	public static var P:Int = getLetterKeyCode("P");
+	public static var Q:Int = getLetterKeyCode("Q");
+	public static var R:Int = getLetterKeyCode("R");
+	public static var S:Int = getLetterKeyCode("S");
+	public static var T:Int = getLetterKeyCode("T");
+	public static var U:Int = getLetterKeyCode("U");
+	public static var V:Int = getLetterKeyCode("V");
+	public static var W:Int = getLetterKeyCode("W");
+	public static var X:Int = getLetterKeyCode("X");
+	public static var Y:Int = getLetterKeyCode("Y");
+	public static var Z:Int = getLetterKeyCode("Z");
 	
 	private function new() {
+	}
+	
+	private static function getLetterKeyCode(letter:String):Int {
+		#if cpp
+		return letter.toLowerCase().charCodeAt(0);
+		#else
+		return letter.toUpperCase().charCodeAt(0);
+		#end
 	}
 	
 	public static function getKeyName(keyCode:Int):String {
