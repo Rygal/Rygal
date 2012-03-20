@@ -6,6 +6,7 @@
 
 
 package net.robertboehm.rygal.input;
+import net.robertboehm.rygal.RyGame;
 import nme.display.DisplayObject;
 import nme.display.Stage;
 import nme.events.EventDispatcher;
@@ -22,16 +23,19 @@ class RyMouse extends EventDispatcher {
 	public var x:Int;
 	public var y:Int;
 	public var isPressed:Bool;
+	private var _absoluteX:Int;
+	private var _absoluteY:Int;
+	private var _game:RyGame;
 	private var _zoom:Int;
 	#if (js || cpp)
 	// HTML5 Mouse Events don't work on sprites, but they do on the stage
 	private var _handler:DisplayObject;
 	#end
 	
-	public function new(handler:DisplayObject, zoom:Int = 1) {
+	public function new(handler:DisplayObject, game:RyGame) {
 		super();
 		
-		_zoom = zoom;
+		_game = game;
 		#if (js || cpp)
 		_handler = handler;
 		handler.stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
@@ -55,14 +59,20 @@ class RyMouse extends EventDispatcher {
 	}
 	
 	private function onMouseMove(e:MouseEvent):Void {
+		var prevX:Int = this._absoluteX;
+		var prevY:Int = this._absoluteY;
 		#if js
-		this.x = Math.floor((e.stageX - _handler.x) / _zoom);
-		this.y = Math.floor((e.stageY - _handler.y) / _zoom);
+		this._absoluteX = Math.floor((e.stageX - _handler.x) / _game.zoom);
+		this._absoluteY = Math.floor((e.stageY - _handler.y) / _game.zoom);
 		#else
-		this.x = Math.floor(e.localX / _zoom);
-		this.y = Math.floor(e.localY / _zoom);
+		this._absoluteX = Math.floor(e.localX / _game.zoom);
+		this._absoluteY = Math.floor(e.localY / _game.zoom);
 		#end
-		this.dispatchEvent(new RyMouseEvent(RyMouseEvent.MOUSE_MOVE, this));
+		prevX += _game.cameraX;
+		prevY += _game.cameraY;
+		this.x = _absoluteX + _game.cameraX;
+		this.y = _absoluteY + _game.cameraY;
+		this.dispatchEvent(new RyMouseMoveEvent(RyMouseEvent.MOUSE_MOVE, this, prevX, prevY));
 	}
 	
 }

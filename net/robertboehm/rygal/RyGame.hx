@@ -44,6 +44,8 @@ class RyGame {
 	public var height:Int;
 	public var mouse:RyMouse;
 	public var keyboard:RyKeyboard;
+	public var cameraX:Int;
+	public var cameraY:Int;
 	
 	public function new(width:Int, height:Int, zoom:Int, initialScene:RyScene, initialSceneName:String="") {
 		_bitmap = new Bitmap(new BitmapData(width, height));
@@ -57,6 +59,8 @@ class RyGame {
 		this.zoom = zoom;
 		this.width = width;
 		this.height = height;
+		this.cameraX = 0;
+		this.cameraY = 0;
 		_initialSceneName = initialSceneName;
 		_scenes = new Hash<RyScene>();
 		registerScene(initialScene, initialSceneName);
@@ -66,7 +70,7 @@ class RyGame {
 	private function onAddedToStage(e:Event):Void {
 		_sprite.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		
-		this.mouse = new RyMouse(_sprite, zoom);
+		this.mouse = new RyMouse(_sprite, this);
 		this.keyboard = new RyKeyboard(_sprite);
 		useScene(_initialSceneName);
 		_lastUpdate = Lib.getTimer();
@@ -93,7 +97,9 @@ class RyGame {
 	
 	private function update(time:RyGameTime):Void {
 		_currentScene.update(time);
+		this.screen.translate(-cameraX, -cameraY);
 		_currentScene.draw(this.screen);
+		this.screen.reset();
 	}
 	
 	public function getDisplayObject():DisplayObject {
