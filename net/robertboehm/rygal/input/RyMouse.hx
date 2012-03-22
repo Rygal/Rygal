@@ -62,11 +62,11 @@ class RyMouse extends EventDispatcher {
 		var prevX:Int = this._absoluteX;
 		var prevY:Int = this._absoluteY;
 		#if js
-		this._absoluteX = Math.floor((e.stageX - _handler.x) / _game.zoom);
-		this._absoluteY = Math.floor((e.stageY - _handler.y) / _game.zoom);
+		this._absoluteX = Std.int((e.stageX - _handler.x) / _game.zoom);
+		this._absoluteY = Std.int((e.stageY - _handler.y) / _game.zoom);
 		#else
-		this._absoluteX = Math.floor(e.localX / _game.zoom);
-		this._absoluteY = Math.floor(e.localY / _game.zoom);
+		this._absoluteX = Std.int(e.localX / _game.zoom);
+		this._absoluteY = Std.int(e.localY / _game.zoom);
 		#end
 		prevX += _game.cameraX;
 		prevY += _game.cameraY;

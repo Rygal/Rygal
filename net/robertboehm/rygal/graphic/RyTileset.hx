@@ -24,8 +24,8 @@ class RyTileset {
 	public function new(texture:RyTexture, columns:Int, rows:Int) {
 		this.columns = columns;
 		this.rows = rows;
-		this.tileWidth = Math.floor(texture.width / columns);
-		this.tileHeight = Math.floor(texture.height / rows);
+		this.tileWidth = Std.int(texture.width / columns);
+		this.tileHeight = Std.int(texture.height / rows);
 		this._textures = new Array<RyTexture>();
 		
 		for (row in 0...rows) {
@@ -38,7 +38,7 @@ class RyTileset {
 	}
 	
 	public function fromTileSize(texture:RyTexture, tileWidth:Int, tileHeight:Int):RyTileset {
-		return new RyTileset(texture, Math.floor(texture.width / columns), Math.floor(texture.height / rows));
+		return new RyTileset(texture, Std.int(texture.width / columns), Std.int(texture.height / rows));
 	}
 	
 	public function getTextureById(id:Int):RyTexture {

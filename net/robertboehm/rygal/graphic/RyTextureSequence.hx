@@ -30,8 +30,8 @@ class RyTextureSequence {
 		return new RyTextureSequenceIterator(this);
 	}
 	
-	public function getLoopingIterator():RyTextureSequenceIterator {
-		return new RyTextureSequenceIterator(this, true);
+	public function getIterator(repeatCount:Int=0):RyTextureSequenceIterator {
+		return new RyTextureSequenceIterator(this, repeatCount);
 	}
 	
 	

@@ -5,7 +5,7 @@
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
 
 
-package net.robertboehm.rygal;
+package net.robertboehm.rygal.util;
 
 /**
  * ...
@@ -13,8 +13,16 @@ package net.robertboehm.rygal;
  */
 
 class RyUtils {
+	
+	public static var VERSION_MAJOR:Int = 0;
+	public static var VERSION_MINOR:Int = 5;
+	public static var VERSION_REVISION:Int = 0;
 
 	private function new() { }
+	
+	public static function getVersion():String {
+		return VERSION_MAJOR + "." + VERSION_MINOR + "." + VERSION_REVISION;
+	}
 	
 	public static function zeroPadNumber(number:Int, targetSize:Int):String {
 		return leftPad(Std.string(number), targetSize, "0");

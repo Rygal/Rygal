@@ -67,8 +67,8 @@ class RyCanvas {
 	}
 	
 	public function setPixel(x:Int, y:Int, color:Int):Void {
-		x += Math.floor(xTranslation);
-		y += Math.floor(yTranslation);
+		x += Std.int(xTranslation);
+		y += Std.int(yTranslation);
 		if (inBitmap(x, y)) {
 			_bitmapData.setPixel32(x, y, color);
 		}
@@ -77,7 +77,7 @@ class RyCanvas {
 	public function draw(texture:RyTexture, x:Float, y:Float):Void {
 		x += xTranslation;
 		y += yTranslation;
-		_bitmapData.copyPixels(texture.bitmapData, texture.bitmapData.rect, new Point(x, y), null, null, true);
+		_bitmapData.copyPixels(texture.bitmapData, texture.bitmapDataRect, new Point(x, y), null, null, true);
 	}
 	
 	public function toTexture():RyTexture {

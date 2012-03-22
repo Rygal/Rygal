@@ -11,7 +11,5 @@ along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
     <tag v="cross" />
     <depends name="nme" />
     <description>A free open source engine for games using haXe and NME.</description>
-    
-    <!-- Missing until version numbers are used: -->
-    <version name="?.?.?">???</version>
+    <version name="0.5.0">Supporting tilesets, spritesheets, sprites, animations, etc.</version>
 </project>

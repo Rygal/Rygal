@@ -19,13 +19,18 @@ import nme.geom.Rectangle;
 class RyTexture {
 	
 	public var bitmapData:BitmapData;
+	public var bitmapDataRect:Rectangle;
 	public var width:Int;
 	public var height:Int;
 	
-	public function new(bitmapData:BitmapData) {
+	public function new(bitmapData:BitmapData, ?bitmapDataRect:Rectangle) {
 		this.bitmapData = bitmapData;
-		this.width = bitmapData.width;
-		this.height = bitmapData.height;
+		if (bitmapDataRect == null)
+			bitmapDataRect = bitmapData.rect;
+		
+		this.bitmapDataRect = bitmapDataRect;
+		this.width = Std.int(bitmapDataRect.width);
+		this.height = Std.int(bitmapDataRect.height);
 	}
 	
 	public static function fromAssets(name:String):RyTexture {
@@ -33,17 +38,23 @@ class RyTexture {
 	}
 	
 	public function slice(x:Int, y:Int, width:Int, height:Int):RyTexture {
+		var newRect:Rectangle = new Rectangle(bitmapDataRect.x + x,
+											  bitmapDataRect.y + y,
+											  width, height);
+		
+		return new RyTexture(bitmapData, newRect);
+	}
+	
+	public function toCanvas():RyCanvas {
 		#if js
 		var data:BitmapData = new BitmapData(width, height);
 		#else
 		var data:BitmapData = new BitmapData(width, height, bitmapData.transparent);
 		#end
-		data.copyPixels(bitmapData, new Rectangle(x, y, width, height), new Point());
-		return new RyTexture(data);
-	}
-	
-	public function toCanvas():RyCanvas {
-		return new RyCanvas(bitmapData);
+		
+		data.copyPixels(bitmapData, bitmapDataRect, new Point());
+		
+		return new RyCanvas(data);
 	}
 	
 }

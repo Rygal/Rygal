@@ -6,6 +6,7 @@
 
 
 package net.robertboehm.rygal.graphic;
+import net.robertboehm.rygal.RyGameObject;
 import net.robertboehm.rygal.RyGameTime;
 import nme.geom.Point;
 
@@ -23,7 +24,7 @@ class RySprite implements RyGameObject {
 	
 	public var texture:RyTexture;
 	
-	public function new(texture:RyTexture, x:Int=0, y:Int=0) {
+	public function new(texture:RyTexture, x:Float=0, y:Float=0) {
 		setTexture(texture);
 		this.x = x;
 		this.y = y;
