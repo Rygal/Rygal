@@ -37,6 +37,14 @@ class RyTexture {
 		return new RyTexture(Assets.getBitmapData(name));
 	}
 	
+	public static function fromText(font:RyFont, text:String, color:Int,
+			width:Int = 256, height:Int = 64):RyTexture {
+		
+		var canvas:RyCanvas = RyCanvas.create(width, height);
+		canvas.drawString(font, text, color, 0, 0);
+		return canvas.toTexture();
+	}
+	
 	public function slice(x:Int, y:Int, width:Int, height:Int):RyTexture {
 		var newRect:Rectangle = new Rectangle(bitmapDataRect.x + x,
 											  bitmapDataRect.y + y,

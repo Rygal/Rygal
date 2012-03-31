@@ -6,6 +6,28 @@ Rygal is licensed under the terms of the GNU Lesser General
 Public License (LGPL).
 
 
+Supported platforms
+----------------------------------------------
+
+Even though Rygal uses haXe with NME, not every platform is (yet)
+supported:
+
+ - **Flash:** Fully supported & tested (Only platform with Multi-Game support)
+ - **C++:** Fully supported & tested (Tested on *Windows x86* target)
+ - **HTML 5:** Restricted support:
+  - Zoom is not working properly (Smoothing can't be disabled)
+  - Fonts are not working properly (Due to [the way they work with jeash](http://haxe.org/com/libs/jeash/embedfont))
+ - **Everything else:** Not tested yet
+
+Sometimes, features of the *dev* branch aren't tested on every
+platform, while on the other hand, sometimes there are features
+that are already in the *master* branch without support for some
+platforms that have just been implemented in the *dev* branch.
+
+To sum up, you could try another branch if something doesn't
+work on a platform you'd like to use ;)
+
+
 Can I have more information about the license?
 ----------------------------------------------
 
