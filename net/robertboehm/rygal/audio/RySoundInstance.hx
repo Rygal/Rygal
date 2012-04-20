@@ -52,7 +52,7 @@ class RySoundInstance extends EventDispatcher {
 	}
 	
 	public function refreshVolume():Void {
-		this.channel.soundTransform.volume = this.volume * RySound.getVolume();
+		this.channel.soundTransform = new SoundTransform(this.volume * RySound.getVolume(), this.channel.soundTransform.pan);
 	}
 	
 	public function getVolume():Float {

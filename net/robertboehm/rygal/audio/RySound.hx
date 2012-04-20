@@ -23,8 +23,10 @@ class RySound {
 	private var sound:Sound;
 	
 	public static function setVolume(volume:Float):Void {
-		RySound.volume = volume;
-		RySoundInstance.refreshVolumes();
+		if (RySound.volume != volume) {
+			RySound.volume = volume;
+			RySoundInstance.refreshVolumes();
+		}
 	}
 	
 	public static function getVolume():Float {

@@ -31,7 +31,8 @@ class RyJukebox {
 	}
 	
 	public function addSound(sound:RySound):Void {
-		this.sounds.push(sound);
+		if(sound != null)
+			this.sounds.push(sound);
 	}
 	
 	public function removeSound(sound:RySound):Void {
