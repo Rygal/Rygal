@@ -59,4 +59,9 @@ class RySoundInstance extends EventDispatcher {
 		return this.volume;
 	}
 	
+	public function stop():Void {
+		this.channel.dispatchEvent(new Event(Event.SOUND_COMPLETE));
+		this.channel.stop();
+	}
+	
 }
