@@ -37,6 +37,10 @@ class RyGame {
 	private var _bitmap:Bitmap;
 	private var _currentScene:RyScene;
 	private var _initialSceneName:String;
+	private var _paused:Bool;
+	private var _reallyPaused:Bool;
+	private var _autoPaused:Bool;
+	private var pauseScene:RyScene;
 	
 	public var screen:RyCanvas;
 	public var zoom:Int;
@@ -47,7 +51,7 @@ class RyGame {
 	public var cameraX:Int;
 	public var cameraY:Int;
 	
-	public function new(width:Int, height:Int, zoom:Int, initialScene:RyScene, initialSceneName:String="") {
+	public function new(width:Int, height:Int, zoom:Int, initialScene:RyScene, initialSceneName:String="", pauseScene:RyScene=null) {
 		_bitmap = new Bitmap(new BitmapData(width, height));
 		_bitmap.scaleX = _bitmap.scaleY = zoom;
 		_sprite = new Sprite();
@@ -55,6 +59,14 @@ class RyGame {
 		_sprite.addChild(_bitmap);
 		
 		
+		this._autoPaused = false;
+		this._paused = false;
+		this._reallyPaused = false;
+		if (pauseScene == null) {
+			this.pauseScene = new RyDefaultPauseScreen();
+		} else {
+			this.pauseScene = pauseScene;
+		}
 		this.screen = new RyCanvas(_bitmap.bitmapData);
 		this.zoom = zoom;
 		this.width = width;
@@ -72,9 +84,25 @@ class RyGame {
 		
 		this.mouse = new RyMouse(_sprite, this);
 		this.keyboard = new RyKeyboard(_sprite);
+		_sprite.addEventListener(Event.DEACTIVATE, onDeactivate);
+		_sprite.addEventListener(Event.ACTIVATE, onActivate);
+		
 		useScene(_initialSceneName);
 		_lastUpdate = Lib.getTimer();
 		_sprite.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+	}
+	
+	private function onDeactivate(e:Event):Void {
+		if (!isPaused()) {
+			_autoPaused = true;
+			pause();
+		}
+	}
+	
+	private function onActivate(e:Event):Void {
+		if (_autoPaused) {
+			unpause();
+		}
 	}
 	
 	private function onEnterFrame(e:Event):Void {
@@ -96,14 +124,46 @@ class RyGame {
 	}
 	
 	private function update(time:RyGameTime):Void {
-		_currentScene.update(time);
+		if (this._paused != this._reallyPaused) {
+			if (this._paused) {
+				this.pauseScene.load(this);
+				this._reallyPaused = true;
+			} else {
+				this.pauseScene.unload();
+				this._reallyPaused = false;
+			}
+		}
+		
+		if (this._reallyPaused) {
+			pauseScene.update(time);
+		} else {
+			_currentScene.update(time);
+		}
+		
 		this.screen.translate(-cameraX, -cameraY);
 		_currentScene.draw(this.screen);
 		this.screen.reset();
+		
+		if (this._reallyPaused) {
+			pauseScene.draw(this.screen);
+		}
 	}
 	
 	public function getDisplayObject():DisplayObject {
 		return _sprite;
+	}
+	
+	public function pause():Void {
+		this._paused = true;
+	}
+	
+	public function unpause():Void {
+		this._autoPaused = false;
+		this._paused = false;
+	}
+	
+	public function isPaused():Bool {
+		return this._paused;
 	}
 	
 }

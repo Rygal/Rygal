@@ -25,6 +25,7 @@ class RyScene extends RyGameObjectContainer {
 	}
 	
 	public function unload() {
+		this.removeChildren();
 	}
 	
 }
