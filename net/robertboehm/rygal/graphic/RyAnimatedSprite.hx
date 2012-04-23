@@ -80,6 +80,7 @@ class RyAnimatedSprite extends RySprite {
 					_currentIterator = null;
 					_currentAnimationName = null;
 					_currentAnimation = null;
+					break;
 				}
 			}
 		}

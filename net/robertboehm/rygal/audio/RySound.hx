@@ -67,7 +67,11 @@ class RySound {
 	
 	public function play(volume:Float=1, panning:Float=0, startTime:Float=0, loops:Int=0):RySoundInstance {
 		var st:SoundTransform = new SoundTransform(RySound.volume * volume, panning);
-		return new RySoundInstance(this.sound.play(startTime, loops, st), volume);
+		var channel:SoundChannel = this.sound.play(startTime, loops, st);
+		if (channel == null)
+			return null;
+		
+		return new RySoundInstance(channel, volume);
 	}
 	
 }

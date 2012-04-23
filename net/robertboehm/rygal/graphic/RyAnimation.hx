@@ -22,8 +22,8 @@ class RyAnimation {
 		this.sequence = sequence;
 	}
 	
-	public static function fromTileset(frameDelay:Int, tileset:RyTileset, start:Int = 0, end:Int = -1):RyAnimation {
-		return new RyAnimation(frameDelay, RyTextureSequence.fromTileset(tileset, start, end));
+	public static function fromTileset(frameDelay:Int, tileset:RyTileset, start:Int = 0, end:Int = -1, reverse:Bool = false):RyAnimation {
+		return new RyAnimation(frameDelay, RyTextureSequence.fromTileset(tileset, start, end, reverse));
 	}
 	
 	public static function fromSpritesheet(frameDelay:Int, spritesheet:RySpritesheet, names:Array<String>):RyAnimation {

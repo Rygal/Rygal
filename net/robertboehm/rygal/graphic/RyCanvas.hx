@@ -11,8 +11,12 @@ import nme.display.BitmapInt32;
 import nme.geom.ColorTransform;
 import nme.geom.Matrix;
 import nme.geom.Point;
+import nme.geom.Rectangle;
+import nme.text.AntiAliasType;
 import nme.text.TextField;
+import nme.text.TextFieldAutoSize;
 import nme.text.TextFormat;
+import nme.text.TextFormatAlign;
 
 /**
  * ...
@@ -70,6 +74,10 @@ class RyCanvas {
 		yTranslation += y;
 	}
 	
+	public function clear(color:Int = 0):Void {
+		_bitmapData.fillRect(_bitmapData.rect, color);
+	}
+	
 	public function setPixel(x:Int, y:Int, color:Int):Void {
 		x += Std.int(xTranslation);
 		y += Std.int(yTranslation);
@@ -78,16 +86,17 @@ class RyCanvas {
 		}
 	}
 	
-	private function drawStringByEmbeddedFont(font:RyEmbeddedFont, text:String, color:Int, x:Float, y:Float):Void {
+	private function drawStringByEmbeddedFont(font:RyEmbeddedFont, text:String, color:Int, x:Float, y:Float, alignment:Int):Void {
 		#if cpp
 		font.textFormat.color = color;
 		#end
 		
 		var field:TextField = new TextField();
+		field.antiAliasType = AntiAliasType.NORMAL;
 		field.defaultTextFormat = font.textFormat;
 		field.textColor = color;
 		field.embedFonts = true;
-		field.width = _bitmapData.width;
+		//field.width = _bitmapData.width;
 		field.height = _bitmapData.height;
 		
 		#if !flash
@@ -96,6 +105,14 @@ class RyCanvas {
 		#end
 		field.text = text;
 		field.setTextFormat(field.defaultTextFormat);
+		
+		field.autoSize = TextFieldAutoSize.LEFT;
+		
+		if (alignment == RyFont.CENTER) {
+			x -= Std.int(field.width / 2);
+		} else if (alignment == RyFont.RIGHT) {
+			x -= field.width;
+		}
 		
 		#if flash
 		var m:Matrix = new Matrix();
@@ -109,21 +126,44 @@ class RyCanvas {
 	/**
 	 * Note: This may be slow on various platforms, use RyTexture.fromString() instead!
 	 */
-	public function drawString(font:RyFont, text:String, color:Int, x:Float, y:Float):Void {
+	public function drawString(font:RyFont, text:String, color:Int, x:Float, y:Float, alignment:Int=0):Void {
 		x += xTranslation;
 		y += yTranslation;
 		
 		if (Std.is(font, RyEmbeddedFont)) {
-			drawStringByEmbeddedFont(cast(font, RyEmbeddedFont), text, color, x, y);
+			drawStringByEmbeddedFont(cast(font, RyEmbeddedFont), text, color, x, y, alignment);
 		} else if (Std.is(font, RyBitmapFont)) {
 			// TODO
 		}
 	}
 	
 	public function draw(texture:RyTexture, x:Float, y:Float):Void {
+		if (texture == null)
+			return;
+		
 		x += xTranslation;
 		y += yTranslation;
 		_bitmapData.copyPixels(texture.bitmapData, texture.bitmapDataRect, new Point(x, y), null, null, true);
+	}
+	
+	public function drawPart(texture:RyTexture, x:Float, y:Float, leftOffset:Int=0, topOffset:Int=0, rightOffset:Int=0, bottomOffset:Int=0):Void {
+		if (texture == null)
+			return;
+		
+		var sourceRect:Rectangle = new Rectangle(
+				texture.bitmapDataRect.x + leftOffset,
+				texture.bitmapDataRect.y + topOffset,
+				texture.bitmapDataRect.width - rightOffset - leftOffset,
+				texture.bitmapDataRect.height - bottomOffset - topOffset
+			);
+		
+		x += xTranslation;
+		y += yTranslation;
+		_bitmapData.copyPixels(texture.bitmapData, sourceRect, new Point(x + leftOffset, y + topOffset), null, null, true);
+	}
+	
+	public function fillRect(color:Int, x:Float, y:Float, width:Float, height:Float):Void {
+		_bitmapData.fillRect(new Rectangle(x, y, width, height), color);
 	}
 	
 	public function toTexture():RyTexture {

@@ -40,6 +40,15 @@ class RyGameObjectContainer implements RyGameObject {
 		_children.remove(child);
 	}
 	
+	public function isChild(child:RyGameObject):Bool {
+		for (c in _children) {
+			if (c == child) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public function getChildren():Array<RyGameObject> {
 		return _children;
 	}

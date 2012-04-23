@@ -36,6 +36,7 @@ class RySoundInstance extends EventDispatcher {
 		this.channel = channel;
 		if (this.channel.soundTransform == null)
 			this.channel.soundTransform = new SoundTransform();
+		
 		this.channel.addEventListener(Event.SOUND_COMPLETE, onSoundComplete);
 		this.setVolume(volume);
 	}

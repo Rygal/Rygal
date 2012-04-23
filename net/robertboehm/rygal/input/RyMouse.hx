@@ -12,6 +12,7 @@ import nme.display.Stage;
 import nme.events.EventDispatcher;
 import nme.events.IEventDispatcher;
 import nme.events.MouseEvent;
+import nme.ui.Mouse;
 
 /**
  * ...
@@ -73,6 +74,14 @@ class RyMouse extends EventDispatcher {
 		this.x = _absoluteX + _game.cameraX;
 		this.y = _absoluteY + _game.cameraY;
 		this.dispatchEvent(new RyMouseMoveEvent(RyMouseEvent.MOUSE_MOVE, this, prevX, prevY));
+	}
+	
+	public function show() {
+		Mouse.show();
+	}
+	
+	public function hide() {
+		Mouse.hide();
 	}
 	
 }

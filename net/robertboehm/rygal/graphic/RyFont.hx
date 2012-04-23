@@ -14,6 +14,10 @@ package net.robertboehm.rygal.graphic;
 
 class RyFont {
 	
+	public static var LEFT:Int = 0;
+	public static var CENTER:Int = 1;
+	public static var RIGHT:Int = 2;
+	
 	private function new() { }
 	
 	public static function fromAssets(id:String, size:Int = -1):RyFont {

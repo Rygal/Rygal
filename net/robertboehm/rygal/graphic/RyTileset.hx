@@ -37,8 +37,12 @@ class RyTileset {
 		length = _textures.length;
 	}
 	
-	public function fromTileSize(texture:RyTexture, tileWidth:Int, tileHeight:Int):RyTileset {
-		return new RyTileset(texture, Std.int(texture.width / columns), Std.int(texture.height / rows));
+	public static function fromTileSize(texture:RyTexture, tileWidth:Int, tileHeight:Int):RyTileset {
+		return new RyTileset(texture, Std.int(texture.width / tileWidth), Std.int(texture.height / tileHeight));
+	}
+	
+	public function getId(x:Int, y:Int):Int {
+		return x + y * columns;
 	}
 	
 	public function getTextureById(id:Int):RyTexture {

@@ -33,6 +33,8 @@ class RyStorage {
 	
 	public function get(key:String, defaultData:Dynamic = null):Dynamic { return defaultData; }
 	
+	public function close():Void {}
+	
 	#else
 	
 	private var object:SharedObject;
@@ -62,6 +64,10 @@ class RyStorage {
 	public function put(key:String, data:Dynamic):Void {
 		Reflect.setField(object.data, key, data);
 		object.flush();
+	}
+	
+	public function close():Void {
+		object.close();
 	}
 	
 	public function get(key:String, defaultData:Dynamic=null):Dynamic {

@@ -43,13 +43,19 @@ class RyTextureSequence {
 	 * @param	end		The last ID to use (Exclusive).
 	 * @return	
 	 */
-	public static function fromTileset(tileset:RyTileset, start:Int = 0, end:Int = -1):RyTextureSequence {
+	public static function fromTileset(tileset:RyTileset, start:Int = 0, end:Int = -1, reverse:Bool = false):RyTextureSequence {
 		if (end < 0)
 			end = tileset.length;
 		
 		var textures:Array<RyTexture> = new Array<RyTexture>();
 		for (i in start...end) {
 			textures.push(tileset.getTextureById(i));
+		}
+		if (reverse) {
+			var i:Int = end - 1;
+			while (--i > start) {
+				textures.push(tileset.getTextureById(i));
+			}
 		}
 		return new RyTextureSequence(textures);
 	}
