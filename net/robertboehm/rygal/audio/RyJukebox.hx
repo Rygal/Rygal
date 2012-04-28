@@ -8,15 +8,33 @@
 package net.robertboehm.rygal.audio;
 
 /**
- * ...
+ * A jukebox that plays music in the background.
+ * 
  * @author Robert Böhm
  */
 
 class RyJukebox {
 	
+	/**
+	 * Looping playmode.
+	 * 
+	 * @see mode
+	 */
 	public static var MODE_LOOP:Int = 0;
+	
+	/**
+	 * Random playmode.
+	 * 
+	 * @see mode
+	 */
 	public static var MODE_RANDOM:Int = 1;
 	
+	/**
+	 * Current playmode.
+	 * 
+	 * @see MODE_LOOP
+	 * @see MODE_RANDOM
+	 */
 	public var mode:Int;
 	private var currentSoundInstance:RySoundInstance;
 	private var currentSound:RySound;
@@ -61,8 +79,16 @@ class RyJukebox {
 				currentSound = sounds[Std.int(Math.random() * sounds.length)];
 			}
 			
-			currentSoundInstance = currentSound.play();
-			currentSoundInstance.addEventListener(RySoundEvent.SOUND_COMPLETE, onSoundComplete);
+			if (currentSound != null) {
+				currentSoundInstance = currentSound.play();
+				if (currentSoundInstance != null) {
+					currentSoundInstance.addEventListener(RySoundEvent.SOUND_COMPLETE, onSoundComplete);
+				} else {
+					running = false;
+				}
+			} else {
+				running = false;
+			}
 		}
 	}
 	
