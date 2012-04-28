@@ -86,6 +86,27 @@ class RyCanvas {
 		}
 	}
 	
+	private function drawStringByBitmapFont(font:RyBitmapFont, text:String, color:Int, x:Float, y:Float, alignment:Int):Void {
+		var cX:Float = x;
+		var cY:Float = y;
+		var m:Matrix;
+		var ct:ColorTransform;
+		var txt:RyTexture;
+		var charBitmap:BitmapData = new BitmapData(font.charWidth, font.charHeight, (color >> 24) != 0, color);
+		for (i in 0...text.length) {
+			if (text.charAt(i) == " ") {
+				cX += font.charWidth;
+			} else if (text.charAt(i) == "\n") {
+				cX = x;
+				cY += font.charHeight;
+			} else {
+				txt = font.getCharacterTexture(text.charAt(i));
+				_bitmapData.copyPixels(charBitmap, charBitmap.rect, new Point(cX, cY), txt.bitmapData, txt.bitmapDataRect.topLeft, true);
+				cX += font.charWidth;
+			}
+		}
+	}
+	
 	private function drawStringByEmbeddedFont(font:RyEmbeddedFont, text:String, color:Int, x:Float, y:Float, alignment:Int):Void {
 		#if cpp
 		font.textFormat.color = color;
@@ -133,7 +154,7 @@ class RyCanvas {
 		if (Std.is(font, RyEmbeddedFont)) {
 			drawStringByEmbeddedFont(cast(font, RyEmbeddedFont), text, color, x, y, alignment);
 		} else if (Std.is(font, RyBitmapFont)) {
-			// TODO
+			drawStringByBitmapFont(cast(font, RyBitmapFont), text, color, x, y, alignment);
 		}
 	}
 	

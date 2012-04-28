@@ -22,8 +22,7 @@ class RyFont {
 	
 	public static function fromAssets(id:String, size:Int = -1):RyFont {
 		if (size < 0) {
-			// TODO: RyBitmapFont
-			return null;
+			return RyBitmapFont.fromAssets(id);
 		} else {
 			return RyEmbeddedFont.fromAssets(id, size);
 		}
