@@ -8,7 +8,19 @@
 package net.robertboehm.rygal.audio;
 
 /**
- * A jukebox that plays music in the background.
+ * <h2>Description</h2>
+ * <p>
+ * 	A jukebox that plays music in the background.
+ * </p>
+ * 
+ * <h2>Example</h2>
+ * <code>
+ * 	var jukebox:Jukebox = new Jukebox(Jukebox.MODE_RANDOM);<br />
+ * 	jukebox.addSound(Sound.fromAssets("assets/music1.mp3"));<br />
+ * 	jukebox.addSound(Sound.fromAssets("assets/music2.mp3"));<br />
+ * 	jukebox.addSound(Sound.fromAssets("assets/music3.mp3"));<br />
+ * 	jukebox.start();
+ * </code>
  * 
  * @author Robert Böhm
  */

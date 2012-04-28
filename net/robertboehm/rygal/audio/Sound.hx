@@ -11,7 +11,17 @@ import nme.media.SoundChannel;
 import nme.media.SoundTransform;
 
 /**
- * A sound that can be played.
+ * <h2>Description</h2>
+ * <p>
+ * 	One Sound object contains a sound that can be played. Besides that, the
+ * 	class also controls the global volume.
+ * </p>
+ * 
+ * <h2>Example</h2>
+ * <code>
+ * 	var sound:Sound = Sound.fromAssets("assets/music.wav");<br />
+ * 	sound.play();
+ * </code>
  * 
  * @author Robert Böhm
  */
@@ -61,7 +71,7 @@ class Sound {
 	 * work. This is due to format type restrictions on specific platforms.
 	 * 
 	 * @param	id				The asset ID to be used.
-	 * @param	alternatives	(Optional) Alternative asset IDs to be used if
+	 * @param	alternatives	Alternative asset IDs to be used if
 	 * 							necessary.
 	 * @return	A sound object based on the given asset IDs.
 	 */

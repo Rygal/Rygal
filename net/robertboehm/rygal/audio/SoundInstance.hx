@@ -12,8 +12,27 @@ import nme.media.SoundChannel;
 import nme.media.SoundTransform;
 
 /**
- * An instance of a sound. Will be created by the method "play" of the class
- * Sound.
+ * <h2>Description</h2>
+ * <p>
+ * 	An instance of a sound. Will be created by the method "play" of the class
+ * 	Sound.
+ * </p>
+ * 
+ * <h2>Example</h2>
+ * <code>
+ * 	function onSoundComplete(e:SoundEvent):Void {<br />
+ * 	&nbsp;&nbsp;trace("Sound completed!");<br />
+ * 	}<br />
+ * 	<br />
+ * 	function init():Void {<br />
+ * 	&nbsp;&nbsp;var sound:Sound = Sound.fromAssets("assets/music.wav");<br />
+ * 	&nbsp;&nbsp;var soundInstance:SoundInstance = sound.play();<br />
+ * 	&nbsp;&nbsp;soundInstance.addEventListener(SoundEvent.SOUND_COMPLETE,
+ * 					onSoundComplete);<br />
+ * 	&nbsp;&nbsp;soundInstance.stop();<br />
+ * 	}
+ * </code>
+ * 
  * 
  * @author Robert Böhm
  */

@@ -9,7 +9,10 @@ package net.robertboehm.rygal.audio;
 import nme.events.Event;
 
 /**
- * A sound event.
+ * <h2>Description</h2>
+ * <p>
+ * 	A sound event.
+ * </p>
  * 
  * @author Robert Böhm
  */
