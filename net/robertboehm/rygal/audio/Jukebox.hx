@@ -22,83 +22,134 @@ class Jukebox {
 	
 	/** Current playmode. */
 	public var mode:Int;
-	private var currentSoundInstance:SoundInstance;
-	private var currentSound:Sound;
-	private var nextIndex:Int;
-	private var sounds:Array<Sound>;
-	private var running:Bool;
 	
-	public function new(mode:Int=0) {
+	
+	/** The instance of the currently playing sound. */
+	private var _currentSoundInstance:SoundInstance;
+	
+	/** The currently playing sound. */
+	private var _currentSound:Sound;
+	
+	/** The index of the next sound. */
+	private var _nextIndex:Int;
+	
+	/** The array with all _sounds. */
+	private var _sounds:Array<Sound>;
+	
+	/** Determines if this jukebox is playing. */
+	private var _running:Bool;
+	
+	
+	/**
+	 * Creates a new jukebox with the given playmode.
+	 * 
+	 * @param	mode	The playmode of this jukebox, by default it's looping.
+	 */
+	public function new(mode:Int = 0) {
 		this.mode = mode;
-		this.sounds = new Array<Sound>();
-		this.nextIndex = 0;
+		this._sounds = new Array<Sound>();
+		this._nextIndex = 0;
 	}
 	
+	/**
+	 * Adds a sound to this jukebox.
+	 * 
+	 * @param	sound	The sound that will be added to the jukebox.
+	 */
 	public function addSound(sound:Sound):Void {
 		if(sound != null)
-			this.sounds.push(sound);
+			this._sounds.push(sound);
 	}
 	
+	/**
+	 * Removes a sound from this jukebox.
+	 * 
+	 * @param	sound	The sound that'll be removed.
+	 */
 	public function removeSound(sound:Sound):Void {
-		this.sounds.remove(sound);
-		if (currentSound == sound) {
+		this._sounds.remove(sound);
+		if (_currentSound == sound) {
 			nextSound();
 		}
 	}
 	
-	private function onSoundComplete(e:SoundEvent):Void {
-		currentSoundInstance.removeEventListener(SoundEvent.SOUND_COMPLETE, onSoundComplete);
-		nextSound();
-	}
-	
+	/**
+	 * Forces the jukebox to play the next sound.
+	 * Will be automatically called when a sound is played completely.
+	 */
 	public function nextSound():Void {
-		if (this.sounds.length == 0) {
+		if (this._sounds.length == 0) {
 			stop();
 		} else if (isRunning()) {
 			if (mode == MODE_LOOP) {
-				if (nextIndex >= sounds.length) {
-					nextIndex = 0;
+				if (_nextIndex >= _sounds.length) {
+					_nextIndex = 0;
 				}
-				currentSound = sounds[nextIndex++];
+				_currentSound = _sounds[_nextIndex++];
 				
 			} else {
-				currentSound = sounds[Std.int(Math.random() * sounds.length)];
+				_currentSound = _sounds[
+						Std.int(Math.random() * _sounds.length)
+					];
 			}
 			
-			if (currentSound != null) {
-				currentSoundInstance = currentSound.play();
-				if (currentSoundInstance != null) {
-					currentSoundInstance.addEventListener(SoundEvent.SOUND_COMPLETE, onSoundComplete);
+			if (_currentSound != null) {
+				_currentSoundInstance = _currentSound.play();
+				if (_currentSoundInstance != null) {
+					_currentSoundInstance.addEventListener(
+						SoundEvent.SOUND_COMPLETE, onSoundComplete);
 				} else {
-					running = false;
+					_running = false;
 				}
 			} else {
-				running = false;
+				_running = false;
 			}
 		}
 	}
 	
+	/**
+	 * Starts this jukebox.
+	 */
 	public function start():Void {
-		if (!isRunning() && this.sounds.length > 0) {
-			running = true;
+		if (!isRunning() && this._sounds.length > 0) {
+			_running = true;
 			this.nextSound();
 		}
 	}
 	
+	/**
+	 * Stops this jukebox.
+	 */
 	public function stop():Void {
 		if (isRunning()) {
-			running = false;
-			if(currentSoundInstance != null)
-				currentSoundInstance.stop();
+			_running = false;
+			if(_currentSoundInstance != null)
+				_currentSoundInstance.stop();
 			
-			currentSound = null;
-			currentSoundInstance = null;
-			nextIndex = 0;
+			_currentSound = null;
+			_currentSoundInstance = null;
+			_nextIndex = 0;
 		}
 	}
 	
+	/**
+	 * Determines if this jukebox is currently _running.
+	 * 
+	 * @return	True if this jukebox is _running.
+	 */
 	public function isRunning():Bool {
-		return running;
+		return _running;
+	}
+	
+	/**
+	 * A callback that will be called as soon as the current sound has ended.
+	 * 
+	 * @param	e	Event parameters.
+	 */
+	private function onSoundComplete(e:SoundEvent):Void {
+		_currentSoundInstance.removeEventListener(SoundEvent.SOUND_COMPLETE,
+			onSoundComplete);
+		nextSound();
 	}
 	
 }

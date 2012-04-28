@@ -11,28 +11,63 @@ import nme.media.SoundChannel;
 import nme.media.SoundTransform;
 
 /**
- * ...
+ * A sound that can be played.
+ * 
  * @author Robert Böhm
  */
-
 class Sound {
 	
-	private static var volume:Float = 1;
+	/** The global volume. */
+	private static var _volume:Float = 1;
 	
-	private var sound:nme.media.Sound;
+	/** The internal nme.media.Sound object. */
+	private var _sound:nme.media.Sound;
 	
+	
+	/**
+	 * Creates a new Sound based on a NME sound.
+	 * 
+	 * @param	sound	The NME sound.
+	 */
+	public function new(sound:nme.media.Sound) {
+		this._sound = sound;
+	}
+	
+	/**
+	 * Sets the global volume.
+	 * 
+	 * @param	volume	The global volume. (0 = Silence, 1 = Full volume)
+	 */
 	public static function setVolume(volume:Float):Void {
-		if (Sound.volume != volume) {
-			Sound.volume = volume;
+		if (Sound._volume != volume) {
+			Sound._volume = volume;
 			SoundInstance.refreshVolumes();
 		}
 	}
 	
+	/**
+	 * Returns the global volume.
+	 * 
+	 * @return	The global volume. (0 = Silence, 1 = Full volume)
+	 */
 	public static function getVolume():Float {
-		return Sound.volume;
+		return Sound._volume;
 	}
 	
-	public static function fromAssets(id:String, alternatives:Array<String>=null):Sound {
+	/**
+	 * Returns a Sound object based on one or multiple asset IDs.
+	 * You can use the parameter "alternatives" for alternative asset IDs, this
+	 * function will then try to use one of these when the original one wouldn't
+	 * work. This is due to format type restrictions on specific platforms.
+	 * 
+	 * @param	id				The asset ID to be used.
+	 * @param	alternatives	(Optional) Alternative asset IDs to be used if
+	 * 							necessary.
+	 * @return	A sound object based on the given asset IDs.
+	 */
+	public static function fromAssets(id:String,
+			alternatives:Array<String> = null):Sound {
+		
 		var s:nme.media.Sound;
 		
 		try {
@@ -60,13 +95,25 @@ class Sound {
 		return null;
 	}
 	
-	public function new(sound:nme.media.Sound) {
-		this.sound = sound;
-	}
-	
-	public function play(volume:Float=1, panning:Float=0, startTime:Float=0, loops:Int=0):SoundInstance {
-		var st:SoundTransform = new SoundTransform(Sound.volume * volume, panning);
-		var channel:SoundChannel = this.sound.play(startTime, loops, st);
+	/**
+	 * Plays this sound.
+	 * 
+	 * @param	volume		The volume for this sound. Will automatically be
+	 * 						merged with the global volume.
+	 * 						(0 = Silence, 1 = Full volume)
+	 * @param	panning		The panning for this sound.
+	 * @param	startTime	The time where this sound shall start.
+	 * @param	loops		The amount of loops this sound should perform.
+	 * @return	A sound instance that can be used to - for instance - stop the
+	 * 			sound.
+	 */
+	public function play(volume:Float = 1, panning:Float = 0,
+			startTime:Float = 0, loops:Int = 0):SoundInstance {
+		
+		var st:SoundTransform =
+			new SoundTransform(Sound._volume * volume, panning);
+		
+		var channel:SoundChannel = this._sound.play(startTime, loops, st);
 		if (channel == null)
 			return null;
 		

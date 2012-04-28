@@ -12,57 +12,99 @@ import nme.media.SoundChannel;
 import nme.media.SoundTransform;
 
 /**
- * ...
+ * An instance of a sound. Will be created by the method "play" of the class
+ * Sound.
+ * 
  * @author Robert Böhm
  */
-
 class SoundInstance extends EventDispatcher {
 	
-	private static var instances:Array<SoundInstance> = new Array<SoundInstance>();
+	/** An array with all currently playing sound instances. */
+	private static var _instances:Array<SoundInstance> =
+		new Array<SoundInstance>();
 	
-	private var channel:SoundChannel;
-	private var volume:Float;
 	
+	/** The sound channel this sound instance is based on. */
+	private var _channel:SoundChannel;
+	
+	/** The volume of this instance. (0 = Silence, 1 = Full volume) */
+	private var _volume:Float;
+	
+	
+	/**
+	 * Creates a new sound instance, based on the given channel and with the
+	 * given volume.
+	 * 
+	 * @param	channel	The sound channel this sound instance is based on.
+	 * @param	volume	The volume of this instance.
+	 */
+	public function new(channel:SoundChannel, volume:Float) {
+		super();
+		
+		_instances.push(this);
+		this._channel = channel;
+		if (this._channel.soundTransform == null)
+			this._channel.soundTransform = new SoundTransform();
+		
+		this._channel.addEventListener(Event.SOUND_COMPLETE, onSoundComplete);
+		this.setVolume(volume);
+	}
+	
+	/**
+	 * Refreshes the volumes of all currently playing sound instances.
+	 */
 	public static function refreshVolumes():Void {
-		for (instance in instances) {
+		for (instance in _instances) {
 			instance.refreshVolume();
 		}
 	}
 	
-	public function new(channel:SoundChannel, volume:Float) {
-		super();
-		
-		instances.push(this);
-		this.channel = channel;
-		if (this.channel.soundTransform == null)
-			this.channel.soundTransform = new SoundTransform();
-		
-		this.channel.addEventListener(Event.SOUND_COMPLETE, onSoundComplete);
-		this.setVolume(volume);
-	}
-	
-	private function onSoundComplete(e:Event):Void {
-		this.channel.removeEventListener(Event.SOUND_COMPLETE, onSoundComplete);
-		this.dispatchEvent(new SoundEvent(SoundEvent.SOUND_COMPLETE));
-		instances.remove(this);
-	}
-	
+	/**
+	 * Defines the volume of this sound instance.
+	 * 
+	 * @param	volume	The volume of this sound instance.
+	 * 					(0 = Silence, 1 = Full volume)
+	 */
 	public function setVolume(volume:Float):Void {
-		this.volume = volume;
+		this._volume = volume;
 		this.refreshVolume();
 	}
 	
-	public function refreshVolume():Void {
-		this.channel.soundTransform = new SoundTransform(this.volume * Sound.getVolume(), this.channel.soundTransform.pan);
-	}
-	
+	/**
+	 * Returns the volume of this sound instance.
+	 * 
+	 * @return	The volume of this sound instance.
+	 * 			(0 = Silence, 1 = Full volume)
+	 */
 	public function getVolume():Float {
-		return this.volume;
+		return this._volume;
 	}
 	
+	/**
+	 * Stops this sound instance, you cannot resume playing!
+	 */
 	public function stop():Void {
-		this.channel.dispatchEvent(new Event(Event.SOUND_COMPLETE));
-		this.channel.stop();
+		this._channel.dispatchEvent(new Event(Event.SOUND_COMPLETE));
+		this._channel.stop();
+	}
+	
+	/**
+	 * Refreshes the volume of this sound instance.
+	 * This includes merging the local volume with the global volume.
+	 */
+	private function refreshVolume():Void {
+		this._channel.soundTransform = new SoundTransform(this._volume * Sound.getVolume(), this._channel.soundTransform.pan);
+	}
+	
+	/**
+	 * A callback that will be called as soon as this sound has ended.
+	 * 
+	 * @param	e	Event parameters.
+	 */
+	private function onSoundComplete(e:Event):Void {
+		this._channel.removeEventListener(Event.SOUND_COMPLETE, onSoundComplete);
+		this.dispatchEvent(new SoundEvent(SoundEvent.SOUND_COMPLETE));
+		_instances.remove(this);
 	}
 	
 }

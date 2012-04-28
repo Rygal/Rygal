@@ -9,14 +9,20 @@ package net.robertboehm.rygal.audio;
 import nme.events.Event;
 
 /**
- * ...
+ * A sound event.
+ * 
  * @author Robert Böhm
  */
-
 class SoundEvent extends Event {
 	
+	/** An event that will be called when the sound is complete. */
 	public static var SOUND_COMPLETE:String = "soundComplete";
-
+	
+	/**
+	 * Creates a new sound event.
+	 * 
+	 * @param	type	The type of this event.
+	 */
 	public function new(type:String) {
 		super(type);
 	}
