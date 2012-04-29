@@ -112,7 +112,8 @@ class SoundInstance extends EventDispatcher {
 	 * This includes merging the local volume with the global volume.
 	 */
 	private function refreshVolume():Void {
-		this._channel.soundTransform = new SoundTransform(this._volume * Sound.getVolume(), this._channel.soundTransform.pan);
+		this._channel.soundTransform = new SoundTransform(
+			this._volume * Sound.getVolume(), this._channel.soundTransform.pan);
 	}
 	
 	/**
@@ -121,7 +122,9 @@ class SoundInstance extends EventDispatcher {
 	 * @param	e	Event parameters.
 	 */
 	private function onSoundComplete(e:Event):Void {
-		this._channel.removeEventListener(Event.SOUND_COMPLETE, onSoundComplete);
+		this._channel.removeEventListener(Event.SOUND_COMPLETE,
+			onSoundComplete);
+		
 		this.dispatchEvent(new SoundEvent(SoundEvent.SOUND_COMPLETE));
 		_instances.remove(this);
 	}

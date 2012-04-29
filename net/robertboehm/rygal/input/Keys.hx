@@ -9,10 +9,27 @@ package net.robertboehm.rygal.input;
 import nme.ui.Keyboard;
 
 /**
- * ...
+ * <h2>Description</h2>
+ * <p>
+ * 	A class with every key as a constant. You can use it to avoid magic numbers
+ * 	for keycodes. It also provides helping methods that are related to keys.
+ * </p>
+ * 
+ * <h2>Example <i>(Inside a scene)</i></h2>
+ * <code>
+ * 	if (this.game.keyboard.isKeyPressed(Keys.SPACE)) {<br />
+ * 	&nbsp;&nbsp;// Let the player jump<br />
+ * 	}
+ * </code>
+ * 
+ * <h2>Example <i>(Tracing a key's name)</i></h2>
+ * <code>
+ * 	// Prerequisite: The variable e contains a KeyboardEvent.<br />
+ * 	trace("You pressed: " + Keys.getKeyName(e.keyCode));
+ * </code>
+ * 
  * @author Robert Böhm
  */
-
 class Keys {
 	
 	public static var UNKNOWN:Int = 0;
@@ -120,9 +137,19 @@ class Keys {
 	public static var Y:Int = getLetterKeyCode("Y");
 	public static var Z:Int = getLetterKeyCode("Z");
 	
-	private function new() {
-	}
 	
+	/**
+	 * You shouldn't create an instance of Keys.
+	 */
+	private function new() {}
+	
+	/**
+	 * Used to get the keycode of a letter. This is due to the fact that some
+	 * platforms are using different keycodes for letters than others.
+	 * 
+	 * @param	letter	The letter whose keycode you need.
+	 * @return	The keycode of the given letter.
+	 */
 	private static function getLetterKeyCode(letter:String):Int {
 		#if cpp
 		return letter.toLowerCase().charCodeAt(0);
@@ -131,6 +158,13 @@ class Keys {
 		#end
 	}
 	
+	/**
+	 * Returns a readable name for the given keycode. You can use getKeyCode to
+	 * revert the process.
+	 * 
+	 * @param	keyCode	The keycode whose string representation you want.
+	 * @return	The string representation of the given keycode.
+	 */
 	public static function getKeyName(keyCode:Int):String {
 		return switch(keyCode) {
 			case ALTERNATE: "Alternate";
@@ -239,6 +273,13 @@ class Keys {
 		};
 	}
 	
+	/**
+	 * Returns a keycode for the given string representation. You can use
+	 * getKeyName to revert the process.
+	 * 
+	 * @param	keyName	The string representation of the keycode you want.
+	 * @return	The keycode of the key with the given name.
+	 */
 	public static function getKeyCode(keyName:String):Int {
 		return switch(keyName) {
 			case "Alternate": ALTERNATE;
