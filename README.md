@@ -1,4 +1,4 @@
-[Rygal](http://github.com/rynti/Rygal)
+[Rygal](http://rygal.org)
 ======================================
 
 Rygal is a free open source engine for games using haXe & NME.
@@ -16,13 +16,14 @@ supported:
  - **C++:** Fully supported & tested (Tested on *Windows x86* target)
  - **HTML 5:** Restricted support:
   - Zoom is not working properly (Smoothing can't be disabled)
-  - Fonts are not working properly (Due to [the way they work with jeash](http://haxe.org/com/libs/jeash/embedfont))
+  - Embedded fonts are not working properly (Due to [the way they work with jeash](http://haxe.org/com/libs/jeash/embedfont))
+  - Storage is not supported
  - **Everything else:** Not tested yet
 
-Sometimes, features of the *dev* branch aren't tested on every
+Sometimes, features of the *latest* branch aren't tested on every
 platform, while on the other hand, sometimes there are features
-that are already in the *master* branch without support for some
-platforms that have just been implemented in the *dev* branch.
+that are already in the *stable* branch without support for some
+platforms that have just been implemented in the *latest* branch.
 
 To sum up, you could try another branch if something doesn't
 work on a platform you'd like to use ;)
