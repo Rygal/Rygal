@@ -6,7 +6,7 @@
 
 
 package net.robertboehm.rygal.graphic;
-import net.robertboehm.rygal.GameObject;
+
 import net.robertboehm.rygal.GameTime;
 
 /**

@@ -6,11 +6,10 @@
 
 
 package net.robertboehm.rygal.input;
+
 import net.robertboehm.rygal.Game;
 import nme.display.DisplayObject;
-import nme.display.Stage;
 import nme.events.EventDispatcher;
-import nme.events.IEventDispatcher;
 
 /**
  * <h2>Description</h2>

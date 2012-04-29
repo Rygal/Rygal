@@ -6,12 +6,12 @@
 
 
 package net.robertboehm.rygal.graphic;
+
+import net.robertboehm.rygal.GameObject;
+import net.robertboehm.rygal.GameTime;
 import net.robertboehm.rygal.physics.PhysicalObject;
 import net.robertboehm.rygal.physics.Primitive;
 import net.robertboehm.rygal.physics.Rectangle;
-import net.robertboehm.rygal.GameObject;
-import net.robertboehm.rygal.GameTime;
-import nme.geom.Point;
 import nme.geom.Rectangle;
 
 /**

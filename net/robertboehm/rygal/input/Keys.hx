@@ -6,7 +6,6 @@
 
 
 package net.robertboehm.rygal.input;
-import nme.ui.Keyboard;
 
 /**
  * <h2>Description</h2>

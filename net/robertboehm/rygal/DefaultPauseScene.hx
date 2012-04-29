@@ -6,21 +6,34 @@
 
 
 package net.robertboehm.rygal;
+
 import net.robertboehm.rygal.graphic.Canvas;
 import net.robertboehm.rygal.graphic.Sprite;
 import net.robertboehm.rygal.input.MouseEvent;
 
 /**
- * ...
+ * <h2>Description</h2>
+ * <p>
+ * 	The default pause scene. It's current functionality is very restricted as it
+ * 	only darkens the screen and unpauses as soon as the mouse is pressed.
+ * </p>
+ * 
  * @author Robert Böhm
  */
-
-class DefaultPauseScreen extends Scene {
-
+class DefaultPauseScene extends Scene {
+	
+	/**
+	 * Creates a new pause scene.
+	 */
 	public function new() {
 		super();
 	}
 	
+	/**
+	 * Loads the scene. (Ressources, event listeners, etc.)
+	 * 
+	 * @param	game	The game this scene belongs to.
+	 */
 	override public function load(game:Game) {
 		super.load(game);
 		
@@ -30,12 +43,20 @@ class DefaultPauseScreen extends Scene {
 		this.addChild(new Sprite(c.toTexture()));
 	}
 	
+	/**
+	 * Unloads the scene. (Ressources, event listeners, etc.)
+	 */
 	override public function unload() {
 		game.mouse.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 		
 		super.unload();
 	}
 	
+	/**
+	 * A callback that will be called when the mouse button is pressed.
+	 * 
+	 * @param	e	Event parameters.
+	 */
 	private function onMouseDown(e:MouseEvent):Void {
 		game.unpause();
 	}

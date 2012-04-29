@@ -36,7 +36,7 @@ class Error {
 	/**
 	 * Creates a new error.
 	 * 
-	 * @param	?message	A message of this error.
+	 * @param	?message	A message for this error.
 	 */
 	public function new(?message:String) {
 		this._message = message;

@@ -6,8 +6,8 @@
 
 
 package net.robertboehm.rygal.graphic;
+
 import nme.Assets;
-import nme.filesystem.File;
 
 /**
  * <h2>Description</h2>

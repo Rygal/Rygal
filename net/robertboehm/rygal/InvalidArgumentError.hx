@@ -8,12 +8,23 @@
 package net.robertboehm.rygal;
 
 /**
- * ...
+ * <h2>Description</h2>
+ * <p>
+ * 	An error to be thrown whenever the arguments were invalid.
+ * </p>
+ * <p>
+ * 	Note: The error system is not implemented yet!
+ * </p>
+ * 
  * @author Robert Böhm
  */
-
 class InvalidArgumentError extends Error {
-
+	
+	/**
+	 * Creates a new InvalidArgumentError with the given message.
+	 * 
+	 * @param	?message	A message for this error.
+	 */
 	public function new(?message:String) {
 		super(message);
 	}

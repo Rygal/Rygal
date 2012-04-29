@@ -6,6 +6,7 @@
 
 
 package net.robertboehm.rygal.audio;
+
 import nme.Assets;
 import nme.media.SoundChannel;
 import nme.media.SoundTransform;

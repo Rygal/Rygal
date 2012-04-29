@@ -6,6 +6,7 @@
 
 
 package net.robertboehm.rygal.audio;
+
 import nme.events.Event;
 import nme.events.EventDispatcher;
 import nme.media.SoundChannel;

@@ -6,6 +6,7 @@
 
 
 package net.robertboehm.rygal.graphic;
+
 import nme.Assets;
 
 /**

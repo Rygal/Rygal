@@ -6,6 +6,7 @@
 
 
 package net.robertboehm.rygal.physics;
+
 import net.robertboehm.rygal.GameObject;
 
 /**

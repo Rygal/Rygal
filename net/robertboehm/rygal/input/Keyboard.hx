@@ -6,6 +6,7 @@
 
 
 package net.robertboehm.rygal.input;
+
 import nme.display.DisplayObject;
 import nme.events.EventDispatcher;
 

@@ -6,8 +6,8 @@
 
 
 package net.robertboehm.rygal.graphic;
+
 import nme.display.BitmapData;
-import nme.display.BitmapInt32;
 import nme.geom.ColorTransform;
 import nme.geom.Matrix;
 import nme.geom.Point;
@@ -15,8 +15,6 @@ import nme.geom.Rectangle;
 import nme.text.AntiAliasType;
 import nme.text.TextField;
 import nme.text.TextFieldAutoSize;
-import nme.text.TextFormat;
-import nme.text.TextFormatAlign;
 
 /**
  * <h2>Description</h2>
