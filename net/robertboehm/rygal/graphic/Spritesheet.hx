@@ -10,23 +10,63 @@ import nme.Assets;
 import nme.filesystem.File;
 
 /**
- * ...
+ * <h2>Description</h2>
+ * <p>
+ * 	A spritesheet that can contain multiple named textures. It currently
+ * 	supports a loader for the generic XML format used by
+ * 	<a href="http://www.texturepacker.com/" target="_blank">TexturePacker</a>.
+ * </p>
+ * 
+ * <h2>Example <i>(Inside a scene)</i></h2>
+ * <code>
+ * 	var spritesheet:Spritesheet = Spritesheet.fromGenericXmlAsset(<br />
+ * 	&nbsp;&nbsp;"assets/spritesheet.xml");<br />
+ * 	var sprite:Sprite = new Sprite(spritesheet.getTexture("fire"));<br />
+ * 	this.addChild(sprite);
+ * </code>
+ * 
  * @author Robert Böhm
  */
-
 class Spritesheet {
 	
+	/** The textures that are in this spritesheet. */
 	private var _textures:Hash<Texture>;
 	
-	private function new(textures:Hash<Texture>) {
+	
+	/**
+	 * Creates a new spritesheet based on the given textures. You shouldn't
+	 * create a spritesheet directly, use one of the static fromXYZ-methods.
+	 * 
+	 * @param	textures	The textures.
+	 */
+	public function new(textures:Hash<Texture>) {
 		this._textures = textures;
 	}
 	
+	/**
+	 * Loads a generic XML spritesheet from an asset.
+	 * 
+	 * @param	id	The asset ID of the spritesheet's XML file.
+	 * @return	The spritesheet.
+	 */
 	public static function fromGenericXmlAsset(id:String):Spritesheet {
-		return fromGenericXml(Assets.getText(id), id.substr(0, id.lastIndexOf("/")));
+		return fromGenericXml(
+				Assets.getText(id),
+				id.substr(0, id.lastIndexOf("/"))
+			);
 	}
 	
-	public static function fromGenericXml(xml:String, ?imageFolder:String):Spritesheet {
+	/**
+	 * Interprets a generic XML spritesheet.
+	 * 
+	 * @param	xml				The XML code.
+	 * @param	?imageFolder	The folder where the spritesheet's image is
+	 * 							located in.
+	 * @return	The spritesheet.
+	 */
+	public static function fromGenericXml(xml:String,
+			?imageFolder:String):Spritesheet {
+		
 		if (imageFolder == null) {
 			imageFolder = ".";
 		}
@@ -37,7 +77,10 @@ class Spritesheet {
 		}
 		
 		var textureAtlas:Xml = Xml.parse(xml).firstElement();
-		var texture:Texture = Texture.fromAssets(imageFolder + textureAtlas.get("imagePath"));
+		var texture:Texture = Texture.fromAssets(
+				imageFolder + textureAtlas.get("imagePath")
+			);
+		
 		var textures:Hash<Texture> = new Hash<Texture>();
 		var x:Int;
 		var y:Int;
@@ -55,6 +98,12 @@ class Spritesheet {
 		return new Spritesheet(textures);
 	}
 	
+	/**
+	 * Returns the texture with the given name.
+	 * 
+	 * @param	name	The name of the requested texture.
+	 * @return	The texture with the given name.
+	 */
 	public function getTexture(name:String):Texture {
 		return _textures.get(name);
 	}
