@@ -83,10 +83,12 @@ class Mouse extends EventDispatcher {
 			onMouseWheel);
 		
 		#if cpp
+		#if (!RYGAL_KEEP_MENU)
 		handler.stage.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_DOWN,
 			onRightMouseDown);
 		handler.stage.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_UP,
 			onRightMouseUp);
+		#end
 		handler.stage.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_DOWN,
 			onMiddleMouseDown);
 		handler.stage.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_UP,
@@ -99,10 +101,12 @@ class Mouse extends EventDispatcher {
 		handler.addEventListener(nme.events.MouseEvent.MOUSE_WHEEL, onMouseWheel);
 		
 		#if (!flash || flash11_2)
+		#if (!RYGAL_KEEP_MENU)
 		handler.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_DOWN,
 			onRightMouseDown);
 		handler.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_UP,
 			onRightMouseUp);
+		#end
 		handler.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_DOWN,
 			onMiddleMouseDown);
 		handler.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_UP,
