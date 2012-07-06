@@ -50,7 +50,7 @@ class MouseMoveEvent extends MouseEvent {
 	
 	
 	/**
-	 * Creates a new MouseEvent based on the given mouse and movement data.
+	 * Creates a new MouseMoveEvent based on the given mouse and movement data.
 	 * 
 	 * @param	type		The type of this event, usually only
 	 * 						MouseMoveEvent.MOUSE_MOVE.
@@ -65,11 +65,8 @@ class MouseMoveEvent extends MouseEvent {
 		
 		this.previousX = previousX;
 		this.previousY = previousY;
-		this.x = mouse.x;
-		this.y = mouse.y;
 		this.deltaX = x - previousX;
 		this.deltaY = y - previousY;
-		this.isPressed = mouse.isPressed;
 	}
 	
 }

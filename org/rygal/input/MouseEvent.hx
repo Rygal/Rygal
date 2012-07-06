@@ -41,6 +41,21 @@ class MouseEvent extends Event {
 	/** An event that will be called when the mouse is moved. */
 	public static var MOUSE_MOVE:String = "mouseMove";
 	
+	/** An event that will be called when the mouse wheel is moved. */
+	public static var MOUSE_WHEEL:String = "mouseWheel";
+	
+	/** An event that will be called when the right mouse button is pressed. */
+	public static var RIGHT_MOUSE_DOWN:String = "rightMouseDown";
+	
+	/** An event that will be called when the right mouse button is released. */
+	public static var RIGHT_MOUSE_UP:String = "rightMouseUp";
+	
+	/** An event that will be called when the middle mouse button is pressed. */
+	public static var MIDDLE_MOUSE_DOWN:String = "middleMouseDown";
+	
+	/** An event that will be called when the middle mouse button is released. */
+	public static var MIDDLE_MOUSE_UP:String = "middleMouseUp";
+	
 	/** The x-coordinate of the mouse. */
 	public var x:Int;
 	
@@ -49,6 +64,12 @@ class MouseEvent extends Event {
 	
 	/** Determines whether the mouse button is pressed or not. */
 	public var isPressed:Bool;
+	
+	/** Determines whether the right mouse button is pressed or not. */
+	public var isRightButtonPressed:Bool;
+	
+	/** Determines whether the middle mouse button is pressed or not. */
+	public var isMiddleButtonPressed:Bool;
 	
 	
 	/**
@@ -64,6 +85,8 @@ class MouseEvent extends Event {
 		this.x = mouse.x;
 		this.y = mouse.y;
 		this.isPressed = mouse.isPressed;
+		this.isRightButtonPressed = mouse.isRightButtonPressed;
+		this.isMiddleButtonPressed = mouse.isMiddleButtonPressed;
 	}
 	
 }

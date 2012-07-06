@@ -37,6 +37,12 @@ class Mouse extends EventDispatcher {
 	/** Determines whether this mouse is pressed or not. */
 	public var isPressed:Bool;
 	
+	/** Determines whether the right mouse button is pressed or not. */
+	public var isRightButtonPressed:Bool;
+	
+	/** Determines whether the middle mouse button is pressed or not. */
+	public var isMiddleButtonPressed:Bool;
+	
 	/** The absolute x-coordinate of the mouse. */
 	private var _absoluteX:Int;
 	
@@ -62,7 +68,10 @@ class Mouse extends EventDispatcher {
 		super();
 		
 		_game = game;
-		#if (js || cpp)
+		isPressed = false;
+		isRightButtonPressed = false;
+		isMiddleButtonPressed = false;
+	#if (js || cpp)
 		_handler = handler;
 		handler.stage.addEventListener(nme.events.MouseEvent.MOUSE_MOVE,
 			onMouseMove);
@@ -70,11 +79,34 @@ class Mouse extends EventDispatcher {
 			onMouseDown);
 		handler.stage.addEventListener(nme.events.MouseEvent.MOUSE_UP,
 			onMouseUp);
-		#else
+		handler.stage.addEventListener(nme.events.MouseEvent.MOUSE_WHEEL,
+			onMouseWheel);
+		
+		handler.stage.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_DOWN,
+			onRightMouseDown);
+		handler.stage.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_UP,
+			onRightMouseUp);
+		handler.stage.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_DOWN,
+			onMiddleMouseDown);
+		handler.stage.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_UP,
+			onMiddleMouseUp);
+	#else
 		handler.addEventListener(nme.events.MouseEvent.MOUSE_MOVE, onMouseMove);
 		handler.addEventListener(nme.events.MouseEvent.MOUSE_DOWN, onMouseDown);
 		handler.addEventListener(nme.events.MouseEvent.MOUSE_UP, onMouseUp);
+		handler.addEventListener(nme.events.MouseEvent.MOUSE_WHEEL, onMouseWheel);
+		
+		#if (!flash || flash11_2)
+		handler.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_DOWN,
+			onRightMouseDown);
+		handler.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_UP,
+			onRightMouseUp);
+		handler.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_DOWN,
+			onMiddleMouseDown);
+		handler.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_UP,
+			onMiddleMouseUp);
 		#end
+	#end
 	}
 	
 	/**
@@ -133,6 +165,55 @@ class Mouse extends EventDispatcher {
 		this.dispatchEvent(
 				new MouseMoveEvent(MouseEvent.MOUSE_MOVE, this, prevX, prevY)
 			);
+	}
+	
+	/**
+	 * A callback that will be called whenever the mouse wheel is moved.
+	 * 
+	 * @param	e	Event parameters.
+	 */
+	private function onMouseWheel(e:nme.events.MouseEvent):Void {
+		this.dispatchEvent(new MouseWheelEvent(MouseEvent.MOUSE_WHEEL, this, e.delta));
+	}
+	
+	/**
+	 * A callback that will be called whenever the right mouse button is pressed.
+	 * 
+	 * @param	e	Event parameters.
+	 */
+	private function onRightMouseDown(e:nme.events.MouseEvent):Void {
+		isRightButtonPressed = true;
+		this.dispatchEvent(new MouseEvent(MouseEvent.RIGHT_MOUSE_DOWN, this));
+	}
+	
+	/**
+	 * A callback that will be called whenever the right mouse button is released.
+	 * 
+	 * @param	e	Event parameters.
+	 */
+	private function onRightMouseUp(e:nme.events.MouseEvent):Void {
+		isRightButtonPressed = false;
+		this.dispatchEvent(new MouseEvent(MouseEvent.RIGHT_MOUSE_UP, this));
+	}
+	
+	/**
+	 * A callback that will be called whenever the middle mouse button is pressed.
+	 * 
+	 * @param	e	Event parameters.
+	 */
+	private function onMiddleMouseDown(e:nme.events.MouseEvent):Void {
+		isMiddleButtonPressed = true;
+		this.dispatchEvent(new MouseEvent(MouseEvent.MIDDLE_MOUSE_DOWN, this));
+	}
+	
+	/**
+	 * A callback that will be called whenever the middle mouse button is released.
+	 * 
+	 * @param	e	Event parameters.
+	 */
+	private function onMiddleMouseUp(e:nme.events.MouseEvent):Void {
+		isMiddleButtonPressed = false;
+		this.dispatchEvent(new MouseEvent(MouseEvent.MIDDLE_MOUSE_UP, this));
 	}
 	
 }
