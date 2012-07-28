@@ -119,7 +119,12 @@ class Storage {
 	 * unless you create a new storage object with the same name.
 	 */
 	public function close():Void {
+		// _object.close() only works in flash
+		#if flash
 		_object.close();
+		#end
+		
+		_object = null;
 	}
 	
 	/**

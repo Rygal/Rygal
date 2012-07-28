@@ -345,7 +345,7 @@ class Canvas {
 		//field.width = _bitmapData.width;
 		field.height = _bitmapData.height;
 		
-		#if !flash
+		#if js
 		field.x = x;
 		field.y = y;
 		#end
@@ -360,10 +360,8 @@ class Canvas {
 			x -= field.width;
 		}
 		
-		#if flash
-		var m:Matrix = new Matrix();
-		m.translate(x, y);
-		_bitmapData.draw(field, m);
+		#if !js
+		_bitmapData.draw(field, new Matrix(1, 0, 0, 1, x, y));
 		#else
 		_bitmapData.draw(field);
 		#end
