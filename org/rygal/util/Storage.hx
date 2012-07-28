@@ -38,7 +38,7 @@ import nme.net.SharedObject;
 class Storage {
 	#if !flash
 	
-	// Only Flash seems to support SharedObject.
+	// SharedObject only works in Flash!
 	public function new(name:String) {}
 	public static function canStore():Bool { return false; }
 	public function clear():Void {}
