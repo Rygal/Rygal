@@ -7,6 +7,7 @@
 
 package org.rygal.graphic;
 
+import org.rygal.BasicGameObject;
 import org.rygal.GameObject;
 import org.rygal.GameTime;
 import org.rygal.physics.PhysicalObject;
@@ -28,16 +29,10 @@ import nme.geom.Rectangle;
  * 
  * @author Robert Böhm
  */
-class Sprite implements GameObject, implements PhysicalObject {
+class Sprite extends BasicGameObject, implements PhysicalObject {
 	
 	/** The offsets from the sides used for the collision bounding box. */
 	public var boundOffsets:Rectangle;
-	
-	/** The x-coordinate of this sprite. */
-	public var x:Float;
-	
-	/** The y-coordinate of this sprite. */
-	public var y:Float;
 	
 	/** The width of this sprite. */
 	public var width:Int;
@@ -60,9 +55,8 @@ class Sprite implements GameObject, implements PhysicalObject {
 	 */
 	public function new(texture:Texture, x:Float = 0, y:Float = 0,
 			boundOffsets:Rectangle = null) {
+		super(x, y);
 		
-		this.x = x;
-		this.y = y;
 		this.boundOffsets = boundOffsets;
 		setTexture(texture);
 	}
@@ -85,18 +79,11 @@ class Sprite implements GameObject, implements PhysicalObject {
 	}
 	
 	/**
-	 * Updates this sprite.
-	 * 
-	 * @param	time	The time elapsed since the last update.
-	 */
-	public function update(time:GameTime):Void {}
-	
-	/**
 	 * Draws this sprite onto the given screen.
 	 * 
 	 * @param	screen	The screen this sprite shall be drawn to.
 	 */
-	public function draw(screen:Canvas):Void {
+	override public function draw(screen:Canvas):Void {
 		if(texture != null)
 			screen.draw(texture, x, y);
 	}

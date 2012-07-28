@@ -27,6 +27,9 @@ class GameObjectContainer implements GameObject {
 	/** The y-coordinate of this container. */
 	public var y:Float;
 	
+	/** The parent of this object. */
+	public var parent:GameObject;
+	
 	/** The array with all children of this container. */
 	private var _children:Array<GameObject>;
 	
@@ -41,12 +44,31 @@ class GameObjectContainer implements GameObject {
 	}
 	
 	/**
+	 * Returns the absolute x-coordinate of this object.
+	 * 
+	 * @return	The absolute x-coordinate of this object.
+	 */
+	public function getAbsoluteX():Float {
+		return parent != null ? this.x + parent.x : this.x;
+	}
+	
+	/**
+	 * Returns the absolute y-coordinate of this object.
+	 * 
+	 * @return	The absolute y-coordinate of this object.
+	 */
+	public function getAbsoluteY():Float {
+		return parent != null ? this.y + parent.y : this.y;
+	}
+	
+	/**
 	 * Inserts a child at the given index.
 	 * 
 	 * @param	child	The game object to be inserted.
 	 * @param	index	The index.
 	 */
 	public function addChildAt(child:GameObject, index:Int):Void {
+		child.parent = this;
 		_children.insert(index, child);
 	}
 	
@@ -56,6 +78,7 @@ class GameObjectContainer implements GameObject {
 	 * @param	child	The game object to be added.
 	 */
 	public function addChild(child:GameObject):Void {
+		child.parent = this;
 		_children.push(child);
 	}
 	
@@ -63,6 +86,9 @@ class GameObjectContainer implements GameObject {
 	 * Removes all children.
 	 */
 	public function removeChildren():Void {
+		for (child in _children) {
+			child.parent = null;
+		}
 		_children.splice(0, _children.length);
 	}
 	
@@ -72,6 +98,7 @@ class GameObjectContainer implements GameObject {
 	 * @param	child	The game object to be removed.
 	 */
 	public function removeChild(child:GameObject):Void {
+		child.parent = null;
 		_children.remove(child);
 	}
 	
