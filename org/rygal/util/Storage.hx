@@ -7,7 +7,7 @@
 
 package org.rygal.util;
 
-#if !js
+#if flash
 import nme.net.SharedObject;
 #end
 
@@ -36,9 +36,9 @@ import nme.net.SharedObject;
  * @author Robert Böhm
  */
 class Storage {
-	#if js
+	#if !flash
 	
-	// NME/HTML5 doesn't support SharedObject.
+	// SharedObject only works in Flash!
 	public function new(name:String) {}
 	public static function canStore():Bool { return false; }
 	public function clear():Void {}
