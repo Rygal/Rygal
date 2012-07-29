@@ -10,15 +10,50 @@ Supported platforms
 ----------------------------------------------
 
 Even though Rygal uses haXe with NME, not every platform is (yet)
-supported:
+fully supported:
 
- - **Flash:** Fully supported & tested (Only platform with Multi-Game support)
- - **C++:** Fully supported & tested (Tested on *Windows x86* target)
- - **HTML 5:** Restricted support:
-  - Zoom is not working properly (Smoothing can't be disabled)
-  - Embedded fonts are not working properly (Due to [the way they work with jeash](http://haxe.org/com/libs/jeash/embedfont))
-  - Storage is not supported
- - **Everything else:** Not tested yet
+<table>
+	<tr>
+		<th>Platform</th>
+		<th>Supported</th>
+		<th>Zooming</th>
+		<th>Embedded fonts</th>
+		<th>Storage</th>
+	</tr>
+	<tr>
+		<td>Flash</td>
+		<td>Yes</td>
+		<td>Yes</td>
+		<td>Yes</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>Windows<sup>[1]</sup></td>
+		<td>Yes</td>
+		<td>Yes</td>
+		<td>Yes</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>Mac</td>
+		<td>Yes</td>
+		<td>Yes</td>
+		<td>Yes</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>HTML 5</td>
+		<td>Partially</td>
+		<td>Partially<sup>[2]</sup></td>
+		<td>No<sup>[3]</sup></td>
+		<td>No</td>
+	</tr>
+</table>
+
+<sup>[1]</sup>: Tested with *Windows x86* target<br />
+<sup>[2]</sup>: Smoothing can't be disabled with jeash<br />
+<sup>[3]</sup>: Due to [the way embedded fonts work with jeash](http://haxe.org/com/libs/jeash/embedfont)
+
 
 Sometimes, features of the *latest* branch aren't tested on every
 platform, while on the other hand, sometimes there are features
@@ -53,5 +88,4 @@ The engine is made using haXe & NME.
 Questions?
 ----------
 
-If you have any questions, feel free to ask me per [mail](mailto:robert.boehm94@gmail.com)
-or write me a [message on GitHub](https://github.com/inbox/new/rynti) 
+If you have any questions, feel free to ask me per [mail](mailto:robert.boehm94@gmail.com).
