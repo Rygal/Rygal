@@ -13,7 +13,7 @@ along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
     <description>
 		A free open source engine for games using haXe and NME.
 	</description>
-    <version name="1.1.1">
-		Support for text alignment on bitmap fonts.
+    <version name="1.1.2">
+		Added extra functionality for rectangles.
 	</version>
 </project>

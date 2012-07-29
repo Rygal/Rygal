@@ -59,6 +59,17 @@ class Rectangle implements Primitive {
 	}
 	
 	/**
+	 * Checks whether this rectangle contains the given point.
+	 * 
+	 * @param	x	The x-coordinate.
+	 * @param	y	The y-coordinate.
+	 * @return	True if this rectangle contains the given point.
+	 */
+	public function contains(x:Float, y:Float):Bool {
+		return this.rect.contains(x, y);
+	}
+	
+	/**
 	 * Checks whether this rectangle collides with another physical object.
 	 * 
 	 * @param	obj	The other object.
