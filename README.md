@@ -1,13 +1,24 @@
 [Rygal](http://rygal.org)
-======================================
+=========================
 
-Rygal is a free open source engine for games using haXe & NME.
-Rygal is licensed under the terms of the GNU Lesser General
-Public License (LGPL).
+Rygal is a free open source engine for games using haXe & NME and licensed under
+the terms of the GNU Lesser General Public License (LGPL).
+
+
+Getting started
+---------------
+
+I strongly recommend looking into the
+[Rygal wiki](https://github.com/rynti/Rygal/wiki) if you need help to get
+started, as it provides a lot of information about the
+[setup](https://github.com/rynti/Rygal/wiki/Setup-guide) and links that may
+be interesting to you like
+[demo projects](https://github.com/rynti/Rygal/wiki/Demo-projects) or the
+[documentation](http://www.rygal.org/docs).
 
 
 Supported platforms
-----------------------------------------------
+-------------------
 
 Even though Rygal uses haXe with NME, not every platform is (yet)
 fully supported:
@@ -83,7 +94,7 @@ under which license your project is.
 What is the engine built on?
 ----------------------------
 
-The engine is made using haXe & NME.
+The engine is written in haXe and based on NME.
 
 
 Questions?
