@@ -22,7 +22,7 @@ class Utils {
 	public static var VERSION_MAJOR:Int = 1;
 	
 	/** The minor number of the current Rygal version. (0.x.0) */
-	public static var VERSION_MINOR:Int = 0;
+	public static var VERSION_MINOR:Int = 1;
 	
 	/** The revision number of the current Rygal version. (0.0.x) */
 	public static var VERSION_REVISION:Int = 0;

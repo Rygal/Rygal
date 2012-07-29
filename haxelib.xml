@@ -13,8 +13,8 @@ along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
     <description>
 		A free open source engine for games using haXe and NME.
 	</description>
-    <version name="1.0.0">
-		Full documentation, audio support, fonts, pause screen, basic physics,
-		storage, camera system, etc.
+    <version name="1.1.0">
+		Support for 3-button mouses, better support for nested gameobjects and
+        various bugfixes related to text.
 	</version>
 </project>
