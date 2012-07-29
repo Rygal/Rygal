@@ -43,16 +43,17 @@ fully supported:
 	</tr>
 	<tr>
 		<td>HTML 5</td>
-		<td>Partially</td>
-		<td>Partially<sup>[2]</sup></td>
-		<td>No<sup>[3]</sup></td>
+		<td>No<sup>[2]</sup></td>
+		<td>Partially<sup>[3]</sup></td>
+		<td>No<sup>[4]</sup></td>
 		<td>No</td>
 	</tr>
 </table>
 
 <sup>[1]</sup>: Tested with *Windows x86* target<br />
-<sup>[2]</sup>: Smoothing can't be disabled with jeash<br />
-<sup>[3]</sup>: Due to [the way embedded fonts work with jeash](http://haxe.org/com/libs/jeash/embedfont)
+<sup>[2]</sup>: Unless either clipRect in the draw()-method or alpha in the copyPixels()-method is working, I can't support it.<br />
+<sup>[3]</sup>: Smoothing can't be disabled with jeash<br />
+<sup>[4]</sup>: Due to [the way embedded fonts work with jeash](http://haxe.org/com/libs/jeash/embedfont)
 
 
 Sometimes, features of the *latest* branch aren't tested on every

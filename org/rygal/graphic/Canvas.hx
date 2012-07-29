@@ -301,6 +301,15 @@ class Canvas {
 				font.charWidth, font.charHeight, (color >> 24) != 0, color
 			);
 		
+		#if !flash
+		var alphaMultiplier:Float = (color >> 24) / 255;
+		var redMultiplier:Float = ((color >> 16) & 0xFF) / 255;
+		var greenMultiplier:Float = ((color >> 8) & 0xFF) / 255;
+		var blueMultiplier:Float = (color & 0xFF) / 255;
+		
+		if (alphaMultiplier == 0) alphaMultiplier = 1;
+		#end
+		
 		for (i in 0...text.length) {
 			if (text.charAt(i) == " ") {
 				cX += font.charWidth;
@@ -309,9 +318,18 @@ class Canvas {
 				cY += font.charHeight;
 			} else {
 				txt = font.getCharacterTexture(text.charAt(i));
+				#if flash
 				_bitmapData.copyPixels(charBitmap, charBitmap.rect,
 					new Point(cX, cY), txt.bitmapData,
 					txt.bitmapDataRect.topLeft, true);
+				#else
+				_bitmapData.draw(txt.bitmapData, new Matrix(1, 0, 0, 1,
+					cX - txt.bitmapDataRect.left, cY - txt.bitmapDataRect.top),
+					new ColorTransform(redMultiplier, greenMultiplier,
+						blueMultiplier, alphaMultiplier),
+					null, new Rectangle(cX, cY, txt.bitmapDataRect.width,
+						txt.bitmapDataRect.height));
+				#end
 				
 				cX += font.charWidth;
 			}
