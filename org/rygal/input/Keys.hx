@@ -107,6 +107,8 @@ class Keys {
 	public static var SPACE:Int = 32;
 	public static var TAB:Int = 9;
 	public static var UP:Int = 38;
+	public static var SCROLL:Int = 145;
+	public static var PAUSE:Int = 19;
 	
 	// A-Z
 	public static var A:Int = getLetterKeyCode("A");
@@ -150,11 +152,7 @@ class Keys {
 	 * @return	The keycode of the given letter.
 	 */
 	private static function getLetterKeyCode(letter:String):Int {
-		#if cpp
-		return letter.toLowerCase().charCodeAt(0);
-		#else
 		return letter.toUpperCase().charCodeAt(0);
-		#end
 	}
 	
 	/**
@@ -240,6 +238,8 @@ class Keys {
 			case SPACE: "Space";
 			case TAB: "Tab";
 			case UP: "Up arrow";
+			case SCROLL: "Scroll";
+			case PAUSE: "Pause";
 			
 			case A: "A";
 			case B: "B";
@@ -355,6 +355,8 @@ class Keys {
 			case "Space": SPACE;
 			case "Tab": TAB;
 			case "Up arrow": UP;
+			case "Scroll": SCROLL;
+			case "Pause": PAUSE;
 			
 			case "A": A;
 			case "B": B;

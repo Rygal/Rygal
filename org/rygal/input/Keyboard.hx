@@ -73,6 +73,9 @@ class Keyboard extends EventDispatcher {
 	 */
 	private function onKeyDown(e:nme.events.KeyboardEvent):Void {
 		var intKeyCode:Int = cast(e.keyCode, Int);
+		if (e.charCode >= "a".charCodeAt(0) && e.charCode <= 'z'.charCodeAt(0)) {
+			intKeyCode = String.fromCharCode(e.charCode).toUpperCase().charCodeAt(0);
+		}
 		
 		if (intKeyCode >= 0 && intKeyCode < _keys.length) {
 			var previous:Bool = _keys[intKeyCode];
@@ -96,6 +99,9 @@ class Keyboard extends EventDispatcher {
 	 */
 	private function onKeyUp(e:nme.events.KeyboardEvent):Void {
 		var intKeyCode:Int = cast(e.keyCode, Int);
+		if (e.charCode >= "a".charCodeAt(0) && e.charCode <= 'z'.charCodeAt(0)) {
+			intKeyCode = String.fromCharCode(e.charCode).toUpperCase().charCodeAt(0);
+		}
 		
 		if (intKeyCode >= 0 && intKeyCode < _keys.length) {
 			var previous:Bool = _keys[intKeyCode];
