@@ -260,9 +260,12 @@ class Canvas {
 					cast(font, EmbeddedFont), text, color, x, y, alignment
 				);
 		} else if (Std.is(font, BitmapFont)) {
-			drawStringByBitmapFont(
-					cast(font, BitmapFont), text, color, x, y, alignment
-				);
+			var lines:Array<String> = text.split("\n");
+			var bitmapFont:BitmapFont = cast(font, BitmapFont);
+			for (i in 0...lines.length) {
+				drawStringByBitmapFont(bitmapFont, lines[i], color, x,
+					y + i * bitmapFont.charHeight, alignment);
+			}
 		}
 	}
 	
@@ -292,8 +295,6 @@ class Canvas {
 	private function drawStringByBitmapFont(font:BitmapFont, text:String,
 			color:Int, x:Float, y:Float, alignment:Int):Void {
 		
-		var cX:Float = x;
-		var cY:Float = y;
 		var m:Matrix;
 		var ct:ColorTransform;
 		var txt:Texture;
@@ -310,12 +311,20 @@ class Canvas {
 		if (alphaMultiplier == 0) alphaMultiplier = 1;
 		#end
 		
+		var startX:Float = x;
+		
+		if (alignment == Font.CENTER) {
+			startX -= text.length * font.charWidth / 2;
+		} else if (alignment == Font.RIGHT) {
+			startX -= text.length * font.charWidth;
+		}
+		
+		var cX:Float = startX;
+		var cY:Float = y;
+		
 		for (i in 0...text.length) {
 			if (text.charAt(i) == " ") {
 				cX += font.charWidth;
-			} else if (text.charAt(i) == "\n") {
-				cX = x;
-				cY += font.charHeight;
 			} else {
 				txt = font.getCharacterTexture(text.charAt(i));
 				#if flash
