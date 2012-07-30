@@ -43,6 +43,7 @@ class Scene extends GameObjectContainer {
 	
 	/**
 	 * Loads the scene. (Ressources, event listeners, etc.)
+	 * Will be called everytime this scene gets active.
 	 * 
 	 * @param	game	The game this scene belongs to.
 	 */
@@ -52,6 +53,8 @@ class Scene extends GameObjectContainer {
 	
 	/**
 	 * Unloads the scene. (Ressources, event listeners, etc.)
+	 * Will be called everytime this scene gets inactive (= Game changes to
+	 * another scene).
 	 */
 	public function unload() {
 		this.removeChildren();
