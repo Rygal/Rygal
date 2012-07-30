@@ -30,13 +30,13 @@ package org.rygal.util;
 class Utils {
 	
 	/** The major number of the current Rygal version. (x.0.0) */
-	public static var VERSION_MAJOR:Int = 1;
+	public static inline var VERSION_MAJOR:Int = 1;
 	
 	/** The minor number of the current Rygal version. (0.x.0) */
-	public static var VERSION_MINOR:Int = 1;
+	public static inline var VERSION_MINOR:Int = 1;
 	
 	/** The revision number of the current Rygal version. (0.0.x) */
-	public static var VERSION_REVISION:Int = 2;
+	public static inline var VERSION_REVISION:Int = 2;
 	
 	
 	/**

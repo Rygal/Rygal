@@ -45,7 +45,7 @@ package org.rygal.input;
 class MouseMoveEvent extends MouseEvent {
 	
 	/** An event that will be called when the mouse is moved. */
-	public static var MOUSE_MOVE:String = MouseEvent.MOUSE_MOVE;
+	public static inline var MOUSE_MOVE:String = MouseEvent.MOUSE_MOVE;
 	
 	/** The x-coordinate of the mouse prior to the movement. */
 	public var previousX:Int;

@@ -31,7 +31,7 @@ import nme.events.Event;
 class SoundEvent extends Event {
 	
 	/** An event that will be called when the sound is complete. */
-	public static var SOUND_COMPLETE:String = "soundComplete";
+	public static inline var SOUND_COMPLETE:String = "soundComplete";
 	
 	/**
 	 * Creates a new sound event.

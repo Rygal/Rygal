@@ -47,13 +47,13 @@ package org.rygal.graphic;
 class Font {
 	
 	/** Left alignment. */
-	public static var LEFT:Int = 0;
+	public static inline var LEFT:Int = 0;
 	
 	/** Center alignment. */
-	public static var CENTER:Int = 1;
+	public static inline var CENTER:Int = 1;
 	
 	/** Right alignment. */
-	public static var RIGHT:Int = 2;
+	public static inline var RIGHT:Int = 2;
 	
 	
 	/**

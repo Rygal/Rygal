@@ -45,13 +45,13 @@ import nme.events.Event;
 class KeyboardEvent extends Event {
 	
 	/** An event that will be called when a key is pressed. */
-	public static var KEY_DOWN:String = "keyDown";
+	public static inline var KEY_DOWN:String = "keyDown";
 	
 	/** An event that will be called when a key is released. */
-	public static var KEY_UP:String = "keyUp";
+	public static inline var KEY_UP:String = "keyUp";
 	
 	/** An event that will be called when a character is typed. */
-	public static var CHAR_TYPED:String = "charTyped";
+	public static inline var CHAR_TYPED:String = "charTyped";
 	
 	/** The keycode of the related key. */
 	public var keyCode:Int;

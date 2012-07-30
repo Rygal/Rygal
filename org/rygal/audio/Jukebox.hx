@@ -38,10 +38,10 @@ package org.rygal.audio;
 class Jukebox {
 	
 	/** Looping playmode. */
-	public static var MODE_LOOP:Int = 0;
+	public static inline var MODE_LOOP:Int = 0;
 	
 	/** Random playmode. */
-	public static var MODE_RANDOM:Int = 1;
+	public static inline var MODE_RANDOM:Int = 1;
 	
 	/** Current playmode. */
 	public var mode:Int;

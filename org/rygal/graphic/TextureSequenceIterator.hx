@@ -29,10 +29,10 @@ package org.rygal.graphic;
 class TextureSequenceIterator {
 	
 	/** Don't loop through a texture sequence. */
-	public static var NO_LOOP:Int = 0;
+	public static inline var NO_LOOP:Int = 0;
 	
 	/** Infinitely loop through a texture sequence. */
-	public static var INFINITE_LOOP:Int = -1;
+	public static inline var INFINITE_LOOP:Int = -1;
 	
 	/** The sequence this iterator iterates through. */
 	private var _sequence:TextureSequence;

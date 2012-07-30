@@ -45,7 +45,7 @@ package org.rygal.input;
 class MouseWheelEvent extends MouseEvent {
 	
 	/** An event that will be called when the mouse wheel is moved. */
-	public static var MOUSE_WHEEL:String = MouseEvent.MOUSE_WHEEL;
+	public static inline var MOUSE_WHEEL:String = MouseEvent.MOUSE_WHEEL;
 	
 	/** The movement of the mouse wheel. (If the value is negative, the wheel
 	  * was moved down) */
