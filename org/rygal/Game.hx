@@ -108,6 +108,9 @@ class Game {
 	  * focus loss. */
 	private var _autoPaused:Bool;
 	
+	/** The upcoming scene. */
+	private var _nextScene:Scene;
+	
 	
 	/**
 	 * Creates a new game based on the given parameters.
@@ -166,11 +169,7 @@ class Game {
 	 * @param	name	The name of the scene to be used.
 	 */
 	public function useScene(name:String = ""):Void {
-		if (_currentScene != null)
-			_currentScene.unload();
-		
-		_currentScene = _scenes.get(name);
-		_currentScene.load(this);
+		_nextScene = _scenes.get(name);
 	}
 	
 	/**
@@ -213,6 +212,15 @@ class Game {
 	 * @param	time	The time elapsed since the last update.
 	 */
 	private function update(time:GameTime):Void {
+		if (this._nextScene != null) {
+			if (_currentScene != null)
+				_currentScene.unload();
+			
+			_currentScene = _nextScene;
+			_nextScene = null;
+			_currentScene.load(this);
+		}
+		
 		if (this._paused != this._reallyPaused) {
 			if (this._paused) {
 				this._pauseScene.load(this);
