@@ -118,7 +118,7 @@ class Sprite extends BasicGameObject, implements PhysicalObject {
 	 * @return	The width of this sprite.
 	 */
 	private function getWidth():Int {
-		return texture.width;
+		return texture == null ? 0 : texture.width;
 	}
 	
 	/**
@@ -127,7 +127,7 @@ class Sprite extends BasicGameObject, implements PhysicalObject {
 	 * @return	The height of this sprite.
 	 */
 	private function getHeight():Int {
-		return texture.height;
+		return texture == null ? 0 : texture.height;
 	}
 	
 }

@@ -24,8 +24,7 @@
     <description>
 		A free open source engine for games using haXe and NME.
 	</description>
-    <version name="1.1.6">
-		Made constants inlined, added read-only properties, changed ENTER to
-		RETURN and various bugfixes.
+    <version name="1.1.7">
+		Hotfix for null-pointer references on Sprite::getWidth or getHeight.
 	</version>
 </project>
