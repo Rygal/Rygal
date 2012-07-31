@@ -24,7 +24,8 @@
     <description>
 		A free open source engine for games using haXe and NME.
 	</description>
-    <version name="1.1.2">
-		Added extra functionality for rectangles.
+    <version name="1.1.6">
+		Made constants inlined, added read-only properties, changed ENTER to
+		RETURN and various bugfixes.
 	</version>
 </project>

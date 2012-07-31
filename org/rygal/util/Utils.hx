@@ -36,7 +36,7 @@ class Utils {
 	public static inline var VERSION_MINOR:Int = 1;
 	
 	/** The revision number of the current Rygal version. (0.0.x) */
-	public static inline var VERSION_REVISION:Int = 2;
+	public static inline var VERSION_REVISION:Int = 6;
 	
 	
 	/**
