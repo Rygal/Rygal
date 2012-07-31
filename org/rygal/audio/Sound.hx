@@ -42,6 +42,7 @@ class Sound {
 	/** The global volume. */
 	private static var _volume:Float = 1;
 	
+	
 	/** The internal nme.media.Sound object. */
 	private var _sound:nme.media.Sound;
 	
@@ -54,6 +55,7 @@ class Sound {
 	public function new(sound:nme.media.Sound) {
 		this._sound = sound;
 	}
+	
 	
 	/**
 	 * Sets the global volume.
@@ -116,6 +118,7 @@ class Sound {
 		
 		return null;
 	}
+	
 	
 	/**
 	 * Plays this sound.

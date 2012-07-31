@@ -47,17 +47,18 @@ class MouseMoveEvent extends MouseEvent {
 	/** An event that will be called when the mouse is moved. */
 	public static inline var MOUSE_MOVE:String = MouseEvent.MOUSE_MOVE;
 	
+	
 	/** The x-coordinate of the mouse prior to the movement. */
-	public var previousX:Int;
+	public var previousX(default, null):Int;
 	
 	/** The y-coordinate of the mouse prior to the movement. */
-	public var previousY:Int;
+	public var previousY(default, null):Int;
 	
 	/** The movement done on the x-axis. */
-	public var deltaX:Int;
+	public var deltaX(default, null):Int;
 	
 	/** The movement done on the y-axis. */
-	public var deltaY:Int;
+	public var deltaY(default, null):Int;
 	
 	
 	/**

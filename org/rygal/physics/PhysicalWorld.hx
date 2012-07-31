@@ -60,6 +60,7 @@ class PhysicalWorld implements PhysicalObject {
 		_objects = new Array<PhysicalObject>();
 	}
 	
+	
 	/**
 	 * Returns a primitive version of this world. (Always null)
 	 * 

@@ -29,19 +29,19 @@ package org.rygal.physics;
 class Rectangle implements Primitive {
 	
 	/** The x-coordinate of this rectangle. */
-	public var x:Float;
+	public var x(default, null):Float;
 	
 	/** The y-coordinate of this rectangle. */
-	public var y:Float;
+	public var y(default, null):Float;
 	
 	/** The width of this rectangle. */
-	public var width:Float;
+	public var width(default, null):Float;
 	
 	/** The height of this rectangle. */
-	public var height:Float;
+	public var height(default, null):Float;
 	
 	/** The nme.geom.Rectangle this rectangle is based on. */
-	public var rect:nme.geom.Rectangle;
+	public var rect(default, null):nme.geom.Rectangle;
 	
 	
 	/**
@@ -59,6 +59,7 @@ class Rectangle implements Primitive {
 		this.height = height;
 		this.rect = new nme.geom.Rectangle(x, y, width, height);
 	}
+	
 	
 	/**
 	 * Returns this rectangle.

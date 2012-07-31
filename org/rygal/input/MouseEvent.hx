@@ -55,32 +55,37 @@ class MouseEvent extends Event {
 	/** An event that will be called when the mouse wheel is moved. */
 	public static inline var MOUSE_WHEEL:String = "mouseWheel";
 	
-	/** An event that will be called when the right mouse button is pressed. */
+	/** An event that will be called when the right mouse button is
+	 * 	pressed. */
 	public static inline var RIGHT_MOUSE_DOWN:String = "rightMouseDown";
 	
-	/** An event that will be called when the right mouse button is released. */
+	/** An event that will be called when the right mouse button is
+	 * 	released. */
 	public static inline var RIGHT_MOUSE_UP:String = "rightMouseUp";
 	
-	/** An event that will be called when the middle mouse button is pressed. */
+	/** An event that will be called when the middle mouse button is
+	 * 	pressed. */
 	public static inline var MIDDLE_MOUSE_DOWN:String = "middleMouseDown";
 	
-	/** An event that will be called when the middle mouse button is released. */
+	/** An event that will be called when the middle mouse button is
+	 * 	released. */
 	public static inline var MIDDLE_MOUSE_UP:String = "middleMouseUp";
 	
+	
 	/** The x-coordinate of the mouse. */
-	public var x:Int;
+	public var x(default, null):Int;
 	
 	/** The y-coordinate of the mouse. */
-	public var y:Int;
+	public var y(default, null):Int;
 	
 	/** Determines whether the mouse button is pressed or not. */
-	public var isPressed:Bool;
+	public var isPressed(default, null):Bool;
 	
 	/** Determines whether the right mouse button is pressed or not. */
-	public var isRightButtonPressed:Bool;
+	public var isRightButtonPressed(default, null):Bool;
 	
 	/** Determines whether the middle mouse button is pressed or not. */
-	public var isMiddleButtonPressed:Bool;
+	public var isMiddleButtonPressed(default, null):Bool;
 	
 	
 	/**

@@ -61,6 +61,7 @@ class Keyboard extends EventDispatcher {
 			onKeyUp);
 	}
 	
+	
 	/**
 	 * Determines if the given key is currently pressed.
 	 * 
@@ -76,6 +77,7 @@ class Keyboard extends EventDispatcher {
 		
 		return false;
 	}
+	
 	
 	/**
 	 * A callback that will be called whenever a key is pressed.

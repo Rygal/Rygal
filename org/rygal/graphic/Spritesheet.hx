@@ -54,6 +54,7 @@ class Spritesheet {
 		this._textures = textures;
 	}
 	
+	
 	/**
 	 * Loads a generic XML spritesheet from an asset.
 	 * 
@@ -108,6 +109,7 @@ class Spritesheet {
 		}
 		return new Spritesheet(textures);
 	}
+	
 	
 	/**
 	 * Returns the texture with the given name.

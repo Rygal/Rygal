@@ -55,7 +55,7 @@ class Keys {
 	public static inline var DELETE:Int = 46;
 	public static inline var DOWN:Int = 40;
 	public static inline var END:Int = 35;
-	public static inline var ENTER:Int = 13;
+	public static inline var RETURN:Int = 13;
 	public static inline var EQUAL:Int = 187;
 	public static inline var ESCAPE:Int = 27;
 	public static inline var F1:Int = 112;
@@ -155,6 +155,7 @@ class Keys {
 	 */
 	private function new() {}
 	
+	
 	/**
 	 * Used to get the keycode of a letter. This is due to the fact that some
 	 * platforms are using different keycodes for letters than others.
@@ -186,7 +187,7 @@ class Keys {
 			case DELETE: "Delete";
 			case DOWN: "Down arrow";
 			case END: "End";
-			case ENTER: "Enter";
+			case RETURN: "Return";
 			case EQUAL: "Equal";
 			case ESCAPE: "Escape";
 			case F1: "F1";
@@ -303,7 +304,7 @@ class Keys {
 			case "Delete": DELETE;
 			case "Down arrow": DOWN;
 			case "End": END;
-			case "Enter": ENTER;
+			case "Return": RETURN;
 			case "Equal": EQUAL;
 			case "Escape": ESCAPE;
 			case "F1": F1;

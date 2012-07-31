@@ -40,19 +40,20 @@ import nme.events.EventDispatcher;
 class Mouse extends EventDispatcher {
 	
 	/** The x-coordinate of the mouse. */
-	public var x:Int;
+	public var x(default, null):Int;
 	
 	/** The y-coordinate of the mouse. */
-	public var y:Int;
+	public var y(default, null):Int;
 	
 	/** Determines whether this mouse is pressed or not. */
-	public var isPressed:Bool;
+	public var isPressed(default, null):Bool;
 	
 	/** Determines whether the right mouse button is pressed or not. */
-	public var isRightButtonPressed:Bool;
+	public var isRightButtonPressed(default, null):Bool;
 	
 	/** Determines whether the middle mouse button is pressed or not. */
-	public var isMiddleButtonPressed:Bool;
+	public var isMiddleButtonPressed(default, null):Bool;
+	
 	
 	/** The absolute x-coordinate of the mouse. */
 	private var _absoluteX:Int;
@@ -126,6 +127,7 @@ class Mouse extends EventDispatcher {
 	#end
 	}
 	
+	
 	/**
 	 * Displays the system cursor.
 	 */
@@ -139,6 +141,7 @@ class Mouse extends EventDispatcher {
 	public function hide() {
 		nme.ui.Mouse.hide();
 	}
+	
 	
 	/**
 	 * A callback that will be called whenever the mouse is pressed.

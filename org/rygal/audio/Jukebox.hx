@@ -43,6 +43,7 @@ class Jukebox {
 	/** Random playmode. */
 	public static inline var MODE_RANDOM:Int = 1;
 	
+	
 	/** Current playmode. */
 	public var mode:Int;
 	
@@ -73,6 +74,7 @@ class Jukebox {
 		this._sounds = new Array<Sound>();
 		this._nextIndex = 0;
 	}
+	
 	
 	/**
 	 * Adds a sound to this jukebox.
@@ -163,6 +165,7 @@ class Jukebox {
 	public function isRunning():Bool {
 		return _running;
 	}
+	
 	
 	/**
 	 * A callback that will be called as soon as the current sound has ended.

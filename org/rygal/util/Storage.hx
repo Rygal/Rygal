@@ -77,6 +77,7 @@ class Storage {
 		_object = SharedObject.getLocal(name);
 	}
 	
+	
 	/**
 	 * Determines if this storage is able to hold data.
 	 * 
@@ -85,6 +86,7 @@ class Storage {
 	public static function canStore():Bool {
 		return true;
 	}
+	
 	
 	/**
 	 * Clears the data of this storage object.

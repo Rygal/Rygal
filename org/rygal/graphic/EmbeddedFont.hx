@@ -42,7 +42,8 @@ import nme.text.TextFormat;
 class EmbeddedFont extends Font {
 	
 	/** The TextFormat-object this font is described by. */
-	public var textFormat:TextFormat;
+	public var textFormat(default, null):TextFormat;
+	
 	
 	/** The font this object is based on. */
 	private var _font:nme.text.Font;
@@ -64,6 +65,7 @@ class EmbeddedFont extends Font {
 		this._size = size;
 		this.textFormat = new TextFormat(this._font.fontName, size);
 	}
+	
 	
 	/**
 	 * Creates a new embedded font from the assets.

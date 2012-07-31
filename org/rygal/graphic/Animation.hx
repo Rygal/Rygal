@@ -41,10 +41,10 @@ package org.rygal.graphic;
 class Animation {
 	
 	/** The delay between multiple frames. */
-	public var frameDelay(default, default):Int;
+	public var frameDelay:Int;
 	
 	/** The texture sequence this animation is based on. */
-	public var sequence(default, default):TextureSequence;
+	public var sequence:TextureSequence;
 	
 	
 	/**
@@ -58,6 +58,7 @@ class Animation {
 		this.frameDelay = frameDelay;
 		this.sequence = sequence;
 	}
+	
 	
 	/**
 	 * Creates a new animation based on a tileset.

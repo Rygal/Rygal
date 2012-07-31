@@ -39,17 +39,17 @@ import nme.geom.Rectangle;
  */
 class Texture {
 	
-	/** The bitmap data this texture is based on. */
-	public var bitmapData:BitmapData;
-	
-	/** The area of the bitmap data this texture uses. */
-	public var bitmapDataRect:Rectangle;
-	
 	/** The width of this texture. */
-	public var width:Int;
+	public var width(getWidth, never):Int;
 	
 	/** The height of this texture. */
-	public var height:Int;
+	public var height(getHeight, never):Int;
+	
+	/** The bitmap data this texture is based on. */
+	public var bitmapData(default, null):BitmapData;
+	
+	/** The area of the bitmap data this texture uses. */
+	public var bitmapDataRect(default, null):Rectangle;
 	
 	
 	/**
@@ -64,9 +64,8 @@ class Texture {
 			bitmapDataRect = bitmapData.rect;
 		
 		this.bitmapDataRect = bitmapDataRect;
-		this.width = Std.int(bitmapDataRect.width);
-		this.height = Std.int(bitmapDataRect.height);
 	}
+	
 	
 	/**
 	 * Loads a texture from the assets.
@@ -105,6 +104,7 @@ class Texture {
 		canvas.drawString(font, text, color, x, 0, alignment);
 		return canvas.toTexture();
 	}
+	
 	
 	/**
 	 * Returns a sliced version of this texture.
@@ -149,6 +149,25 @@ class Texture {
 		
 		data.copyPixels(bitmapData, bitmapDataRect, new Point());
 		return new Texture(data);
+	}
+	
+	
+	/**
+	 * Returns the width of this texture.
+	 * 
+	 * @return	The width of this texture.
+	 */
+	private function getWidth():Int {
+		return Std.int(bitmapDataRect.width);
+	}
+	
+	/**
+	 * Returns the height of this texture.
+	 * 
+	 * @return	The height of this texture.
+	 */
+	private function getHeight():Int {
+		return Std.int(bitmapDataRect.height);
 	}
 	
 }

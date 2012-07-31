@@ -47,28 +47,32 @@ import nme.Lib;
 class Game {
 	
 	/** The screen canvas that will be displayed. */
-	public var screen:Canvas;
+	public var screen(default, null):Canvas;
 	
 	/** The zoom factor this game is using. */
-	public var zoom:Int;
+	public var zoom(default, null):Int;
 	
 	/** The width of this game. */
-	public var width:Int;
+	public var width(default, null):Int;
 	
 	/** The height of this game. */
-	public var height:Int;
+	public var height(default, null):Int;
 	
 	/** The mouse of this game. */
-	public var mouse:Mouse;
+	public var mouse(default, null):Mouse;
 	
 	/** The keyboard of this game. */
-	public var keyboard:Keyboard;
+	public var keyboard(default, null):Keyboard;
 	
 	/** The camera's x-position. */
 	public var cameraX:Int;
 	
 	/** The camera's y-position. */
 	public var cameraY:Int;
+	
+	/** The game's speed modifier. (Affects the "elapsed" times of update-calls) */
+	public var speed:Float;
+	
 	
 	/** The last update in milliseconds. */
 	private var _lastUpdate:Int;
@@ -124,7 +128,7 @@ class Game {
 		
 		_sprite.addChild(_bitmap);
 		
-		
+		this.speed = 1;
 		this._autoPaused = false;
 		this._paused = false;
 		this._reallyPaused = false;
@@ -144,6 +148,7 @@ class Game {
 		registerScene(initialScene, initialSceneName);
 		_sprite.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 	}
+	
 	
 	/**
 	 * Registers the given scene in this game.
@@ -201,6 +206,7 @@ class Game {
 		return this._paused;
 	}
 	
+	
 	/**
 	 * Updates this game and it's currently active scene.
 	 * 
@@ -257,7 +263,7 @@ class Game {
 	 */
 	private function onEnterFrame(e:Event):Void {
 		_now = Lib.getTimer();
-		update(new GameTime(_now, _lastUpdate));
+		update(new GameTime(_now, _lastUpdate, speed));
 		_lastUpdate = _now;
 	}
 	

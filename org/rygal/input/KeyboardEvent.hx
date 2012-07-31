@@ -53,14 +53,16 @@ class KeyboardEvent extends Event {
 	/** An event that will be called when a character is typed. */
 	public static inline var CHAR_TYPED:String = "charTyped";
 	
+	
 	/** The keycode of the related key. */
-	public var keyCode:Int;
+	public var keyCode(default, null):Int;
 	
 	/** The charcode of the related key. */
-	public var charCode:Int;
+	public var charCode(default, null):Int;
 	
 	/** The string representation of the related key. */
-	public var charString:String;
+	public var charString(default, null):String;
+	
 	
 	/** The related keyboard. */
 	private var _keyboard:Keyboard;
@@ -89,6 +91,7 @@ class KeyboardEvent extends Event {
 			this.charString = "";
 		}
 	}
+	
 	
 	/**
 	 * Determines whether a key is pressed or not.

@@ -40,6 +40,7 @@ class DefaultPauseScene extends Scene {
 		super();
 	}
 	
+	
 	/**
 	 * Loads the scene. (Ressources, event listeners, etc.)
 	 * 
@@ -62,6 +63,7 @@ class DefaultPauseScene extends Scene {
 		
 		super.unload();
 	}
+	
 	
 	/**
 	 * A callback that will be called when the mouse button is pressed.

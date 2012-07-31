@@ -53,6 +53,7 @@ class Error {
 		this._message = message;
 	}
 	
+	
 	/**
 	 * Returns this error, formatted as a string.
 	 * 

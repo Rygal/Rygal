@@ -44,6 +44,7 @@ class Utils {
 	 */
 	private function new() { }
 	
+	
 	/**
 	 * Returns the current Rygal version as a string in the regular format:
 	 * 1.2.3

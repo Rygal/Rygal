@@ -31,7 +31,8 @@ package org.rygal.graphic;
 class TextureSequence {
 	
 	/** The length of this sequence. */
-	public var length:Int;
+	public var length(getLength, never):Int;
+	
 	
 	/** An array with all textures of this sequence. */
 	private var _textures:Array<Texture>;
@@ -44,8 +45,8 @@ class TextureSequence {
 	 */
 	public function new(textures:Array<Texture>) {
 		this._textures = textures;
-		this.length = textures.length;
 	}
+	
 	
 	/**
 	 * Creates a new texture sequence based on a tileset with the given tile ID
@@ -78,6 +79,7 @@ class TextureSequence {
 		return new TextureSequence(textures);
 	}
 	
+	
 	/**
 	 * Creates a new texture sequence based on a spritesheet.
 	 * 
@@ -92,6 +94,7 @@ class TextureSequence {
 		}
 		return new TextureSequence(textures);
 	}
+	
 	
 	/**
 	 * Returns the texture with the given index.
@@ -125,6 +128,16 @@ class TextureSequence {
 	 */
 	public function getIterator(repeatCount:Int=0):TextureSequenceIterator {
 		return new TextureSequenceIterator(this, repeatCount);
+	}
+	
+	
+	/**
+	 * Returns the length of this sequence.
+	 * 
+	 * @return	The length of this sequence.
+	 */
+	private function getLength():Int {
+		return _textures.length;
 	}
 	
 }

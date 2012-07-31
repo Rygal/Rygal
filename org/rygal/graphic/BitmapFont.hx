@@ -71,10 +71,11 @@ import nme.Assets;
 class BitmapFont extends Font {
 	
 	/** The width of each character. */
-	public var charWidth:Int;
+	public var charWidth(getCharWidth, never):Int;
 	
 	/** The height of each character. */
-	public var charHeight:Int;
+	public var charHeight(getCharHeight, never):Int;
+	
 	
 	/** The tileset this font is based on. */
 	private var _charset:Tileset;
@@ -93,8 +94,6 @@ class BitmapFont extends Font {
 		super();
 		
 		this._charset = charset;
-		this.charWidth = charset.tileWidth;
-		this.charHeight = charset.tileHeight;
 		
 		this._characters = new Hash<Int>();
 		var x:Int = 0;
@@ -115,6 +114,7 @@ class BitmapFont extends Font {
 			}
 		}
 	}
+	
 	
 	/**
 	 * Creates a new bitmap font, based on Rygal's bitmap font definition
@@ -142,6 +142,7 @@ class BitmapFont extends Font {
 			Texture.fromAssets(imageFile), width, height), characters);
 	}
 	
+	
 	/**
 	 * Returns the texture for the given character.
 	 * 
@@ -150,6 +151,25 @@ class BitmapFont extends Font {
 	 */
 	public function getCharacterTexture(character:String):Texture {
 		return _charset.getTextureById(_characters.get(character));
+	}
+	
+	
+	/**
+	 * Returns the width of a character in this font.
+	 * 
+	 * @return	The width of a character in this font.
+	 */
+	private function getCharWidth():Int {
+		return _charset.tileWidth;
+	}
+	
+	/**
+	 * Returns the height of a character in this font.
+	 * 
+	 * @return	The height of a character in this font.
+	 */
+	private function getCharHeight():Int {
+		return _charset.tileHeight;
 	}
 	
 }

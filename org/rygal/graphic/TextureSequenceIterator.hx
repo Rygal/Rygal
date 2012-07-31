@@ -34,6 +34,7 @@ class TextureSequenceIterator {
 	/** Infinitely loop through a texture sequence. */
 	public static inline var INFINITE_LOOP:Int = -1;
 	
+	
 	/** The sequence this iterator iterates through. */
 	private var _sequence:TextureSequence;
 	
@@ -59,6 +60,7 @@ class TextureSequenceIterator {
 		_nextId = 0;
 	}
 	
+	
 	/**
 	 * A dummy iterator that will basically only iterate through a single
 	 * texture.
@@ -73,6 +75,7 @@ class TextureSequenceIterator {
 		
 		return new TextureSequenceIterator(new TextureSequence([texture]), repeatCount);
 	}
+	
 	
 	/**
 	 * Returns the next texture in the sequence.

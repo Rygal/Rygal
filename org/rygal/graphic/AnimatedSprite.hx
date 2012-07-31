@@ -68,6 +68,7 @@ class AnimatedSprite extends Sprite {
 		_animations = new Hash<Animation>();
 	}
 	
+	
 	/**
 	 * Returns the name of the currently playing animation.
 	 * 
@@ -165,7 +166,7 @@ class AnimatedSprite extends Sprite {
 			while (_elapsedMs >= _currentAnimation.frameDelay) {
 				_elapsedMs -= _currentAnimation.frameDelay;
 				if (_currentIterator != null && _currentIterator.hasNext()) {
-					setTexture(_currentIterator.next());
+					this.texture = _currentIterator.next();
 				} else {
 					_currentIterator = null;
 					_currentAnimationName = null;

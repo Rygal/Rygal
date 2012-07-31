@@ -42,14 +42,14 @@ import nme.geom.Rectangle;
  */
 class Sprite extends BasicGameObject, implements PhysicalObject {
 	
-	/** The offsets from the sides used for the collision bounding box. */
-	public var boundOffsets:Rectangle;
-	
 	/** The width of this sprite. */
-	public var width:Int;
+	public var width(getWidth, never):Int;
 	
 	/** The height of this sprite. */
-	public var height:Int;
+	public var height(getHeight, never):Int;
+	
+	/** The offsets from the sides used for the collision bounding box. */
+	public var boundOffsets:Rectangle;
 	
 	/** The texture of this sprite. Use setTexture() to change it! */
 	public var texture:Texture;
@@ -69,35 +69,9 @@ class Sprite extends BasicGameObject, implements PhysicalObject {
 		super(x, y);
 		
 		this.boundOffsets = boundOffsets;
-		setTexture(texture);
-	}
-	
-	/**
-	 * Defines the texture of this sprite.
-	 * 
-	 * @param	texture	The new texture this sprite will be based on.
-	 */
-	public function setTexture(texture:Texture):Void {
 		this.texture = texture;
-		
-		if (texture != null) {
-			this.width = texture.width;
-			this.height = texture.height;
-		} else {
-			this.width = 0;
-			this.height = 0;
-		}
 	}
 	
-	/**
-	 * Draws this sprite onto the given screen.
-	 * 
-	 * @param	screen	The screen this sprite shall be drawn to.
-	 */
-	override public function draw(screen:Canvas):Void {
-		if(texture != null)
-			screen.draw(texture, x, y);
-	}
 	
 	/**
 	 * Returns the bounding box for this sprite.
@@ -125,6 +99,35 @@ class Sprite extends BasicGameObject, implements PhysicalObject {
 	 */
 	public function collides(object:PhysicalObject):Bool {
 		return this.getPrimitive().collides(object.getPrimitive());
+	}
+	
+	/**
+	 * Draws this sprite onto the given screen.
+	 * 
+	 * @param	screen	The screen this sprite shall be drawn to.
+	 */
+	override public function draw(screen:Canvas):Void {
+		if(texture != null)
+			screen.draw(texture, x, y);
+	}
+	
+	
+	/**
+	 * Returns the width of this sprite.
+	 * 
+	 * @return	The width of this sprite.
+	 */
+	private function getWidth():Int {
+		return texture.width;
+	}
+	
+	/**
+	 * Returns the height of this sprite.
+	 * 
+	 * @return	The height of this sprite.
+	 */
+	private function getHeight():Int {
+		return texture.height;
 	}
 	
 }

@@ -61,6 +61,7 @@ class Font {
 	 */
 	private function new() { }
 	
+	
 	/**
 	 * Loads a font from the assets. If you define a size, it's considered to be
 	 * an embedded font, else it's considered to be a bitmap font.

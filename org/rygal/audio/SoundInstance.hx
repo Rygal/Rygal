@@ -81,6 +81,7 @@ class SoundInstance extends EventDispatcher {
 		this.setVolume(volume);
 	}
 	
+	
 	/**
 	 * Refreshes the volumes of all currently playing sound instances.
 	 */
@@ -89,6 +90,7 @@ class SoundInstance extends EventDispatcher {
 			instance.refreshVolume();
 		}
 	}
+	
 	
 	/**
 	 * Defines the volume of this sound instance.
@@ -118,6 +120,7 @@ class SoundInstance extends EventDispatcher {
 		this._channel.dispatchEvent(new Event(Event.SOUND_COMPLETE));
 		this._channel.stop();
 	}
+	
 	
 	/**
 	 * Refreshes the volume of this sound instance.

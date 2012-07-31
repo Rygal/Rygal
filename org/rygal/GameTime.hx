@@ -29,13 +29,13 @@ package org.rygal;
 class GameTime {
 	
 	/** The system time in milliseconds. */
-	public var totalMs:Int;
+	public var totalMs(default, null):Int;
 	
 	/** The elapsed time in milliseconds. */
-	public var elapsedMs:Int;
+	public var elapsedMs(default, null):Int;
 	
 	/** The elapsed time in seconds. */
-	public var elapsedS:Float;
+	public var elapsedS(default, null):Float;
 	
 	
 	/**
@@ -44,11 +44,13 @@ class GameTime {
 	 * @param	now			The current system time.
 	 * @param	lastUpdate	The last system time, used to calculate the delta
 	 * 						values.
+	 * @param	speed		The speed modifier, will be multiplied to the
+	 * 						elapsed values.
 	 */
-	public function new(now:Int, lastUpdate:Int) {
+	public function new(now:Int, lastUpdate:Int, speed:Float = 1) {
 		totalMs = now;
-		elapsedMs = now - lastUpdate;
-		elapsedS = elapsedMs / 1000.0;
+		elapsedMs = Math.round(speed * (now - lastUpdate));
+		elapsedS = speed * elapsedMs / 1000.0;
 	}
 	
 }

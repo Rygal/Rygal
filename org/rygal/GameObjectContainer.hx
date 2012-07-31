@@ -41,6 +41,7 @@ class GameObjectContainer implements GameObject {
 	/** The parent of this object. */
 	public var parent:GameObject;
 	
+	
 	/** The array with all children of this container. */
 	private var _children:Array<GameObject>;
 	
@@ -53,6 +54,7 @@ class GameObjectContainer implements GameObject {
 		this.y = 0;
 		_children = new Array<GameObject>();
 	}
+	
 	
 	/**
 	 * Returns the absolute x-coordinate of this object.

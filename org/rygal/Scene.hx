@@ -31,7 +31,7 @@ package org.rygal;
 class Scene extends GameObjectContainer {
 	
 	/** The game this scene belongs to. */
-	public var game:Game;
+	public var game(default, null):Game;
 	
 	
 	/**
@@ -40,6 +40,7 @@ class Scene extends GameObjectContainer {
 	public function new() {
 		super();
 	}
+	
 	
 	/**
 	 * Loads the scene. (Ressources, event listeners, etc.)

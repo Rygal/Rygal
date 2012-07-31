@@ -47,9 +47,10 @@ class MouseWheelEvent extends MouseEvent {
 	/** An event that will be called when the mouse wheel is moved. */
 	public static inline var MOUSE_WHEEL:String = MouseEvent.MOUSE_WHEEL;
 	
+	
 	/** The movement of the mouse wheel. (If the value is negative, the wheel
 	  * was moved down) */
-	public var movement:Int;
+	public var movement(default, null):Int;
 	
 	
 	/**
