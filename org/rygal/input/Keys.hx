@@ -44,7 +44,7 @@ class Keys {
 	public static var DELETE:Int = 46;
 	public static var DOWN:Int = 40;
 	public static var END:Int = 35;
-	public static var ENTER:Int = 13;
+	public static var RETURN:Int = 13;
 	public static var EQUAL:Int = 187;
 	public static var ESCAPE:Int = 27;
 	public static var F1:Int = 112;
