@@ -66,6 +66,9 @@ class Mouse extends EventDispatcher {
 	
 	#if (js || cpp)
 	// Mouse events in HTML5/C++ don't work on sprites, but they do on the stage
+	
+	/** The handler used to register events on. Is also used to determine the
+	 * 	relative coordinates of the mouse. */
 	private var _handler:DisplayObject;
 	#end
 	
