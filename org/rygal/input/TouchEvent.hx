@@ -1,4 +1,4 @@
-// Copyright (C) 2012 Robert Böhm
+// Copyright (C) 2012 Robert Böhm, Christopher Kaster
 // This file is part of Rygal.
 // 
 // You should have received a copy of the GNU Lesser General Public License
@@ -18,6 +18,11 @@ class TouchEvent extends Event {
 	public static var TOUCH_BEGIN:String = "touchBegin";
 	public static var TOUCH_END:String = "touchEnd";
 	public static var TOUCH_MOVE:String = "touchMove";
+	public static var TOUCH_OUT:String = "touchOut";
+	public static var TOUCH_OVER:String = "touchOver";
+	public static var TOUCH_ROLL_OUT:String = "touchRollOut";
+	public static var TOUCH_ROLL_OVER:String = "touchRollOver";
+	public static var TOUCH_TAP:String = "touchTap";
 	
 	public var x(default, null):Float;
 	public var y(default, null):Float;

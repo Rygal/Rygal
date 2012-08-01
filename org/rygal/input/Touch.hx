@@ -1,4 +1,4 @@
-// Copyright (C) 2012 Robert Böhm
+// Copyright (C) 2012 Robert Böhm, Christopher Kaster
 // This file is part of Rygal.
 // 
 // You should have received a copy of the GNU Lesser General Public License
@@ -46,6 +46,16 @@ class Touch extends EventDispatcher {
 			onTouchMove);
 		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_BEGIN,
 			onTouchEnd);
+		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_OVER,
+			onTouchOver);
+		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_OUT,
+			onTouchOut);
+		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_ROLL_OVER,
+			onTouchRollOver);
+		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_ROLL_OUT,
+			onTouchRollOut);
+		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_TAP,
+			onTouchTap);
 	}
 	
 	private function onTouchBegin(e:nme.events.TouchEvent):Void {
@@ -63,10 +73,38 @@ class Touch extends EventDispatcher {
 		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_MOVE, this));
 	}
 	
+	private function onTouchOver(e:nme.events.TouchEvent):Void {
+		updateEvent(e);
+		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_OVER, this));
+	}
+
+	private function onTouchOut(e:nme.events.TouchEvent):Void {
+		updateEvent(e);
+		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_OUT, this));
+	}
+	
+	private function onTouchRollOver(e:nme.events.TouchEvent):Void {
+		updateEvent(e);
+		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_ROLL_OVER, this));
+	}
+	
+	private function onTouchRollOut(e:nme.events.TouchEvent):Void {
+		updateEvent(e);
+		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_ROLL_OUT, this));
+	}
+
+	private function onTouchTap(e:nme.events.TouchEvent):Void {
+		updateEvent(e);
+		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_TAP, this));
+	}
+	
 	private function updateEvent(e:nme.events.TouchEvent):Void {
 		this.x = e.localX;
 		this.y = e.localY;
-		this.pressure = e.pressure != null ? e.pressure : 1.0;
+		
+		// pressure seems not to work in NME 3.4
+		this.pressure = 1.0;
+		
 		this.touchPointID = e.touchPointID;
 		this.isPrimaryTouchPoint = e.isPrimaryTouchPoint;
 	}
