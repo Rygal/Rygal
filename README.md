@@ -14,7 +14,7 @@ started, as it provides a lot of information about the
 [setup](https://github.com/rynti/Rygal/wiki/Setup-guide) and links that may
 be interesting to you like
 [demo projects](https://github.com/rynti/Rygal/wiki/Demo-projects) or the
-[documentation](http://www.rygal.org/docs).
+[documentation](http://docs.rygal.org).
 
 
 Supported platforms

@@ -1,5 +1,16 @@
 // Copyright (C) 2012 Robert Böhm
+// 
 // This file is part of Rygal.
+// 
+// Rygal is free software: you can redistribute it and/or modify it under the
+// terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+// 
+// Rygal is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+// more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
@@ -18,19 +29,19 @@ package org.rygal.physics;
 class Rectangle implements Primitive {
 	
 	/** The x-coordinate of this rectangle. */
-	public var x:Float;
+	public var x(default, null):Float;
 	
 	/** The y-coordinate of this rectangle. */
-	public var y:Float;
+	public var y(default, null):Float;
 	
 	/** The width of this rectangle. */
-	public var width:Float;
+	public var width(default, null):Float;
 	
 	/** The height of this rectangle. */
-	public var height:Float;
+	public var height(default, null):Float;
 	
 	/** The nme.geom.Rectangle this rectangle is based on. */
-	public var rect:nme.geom.Rectangle;
+	public var rect(default, null):nme.geom.Rectangle;
 	
 	
 	/**
@@ -49,6 +60,7 @@ class Rectangle implements Primitive {
 		this.rect = new nme.geom.Rectangle(x, y, width, height);
 	}
 	
+	
 	/**
 	 * Returns this rectangle.
 	 * 
@@ -56,6 +68,17 @@ class Rectangle implements Primitive {
 	 */
 	public function getPrimitive():Primitive {
 		return this;
+	}
+	
+	/**
+	 * Checks whether this rectangle contains the given point.
+	 * 
+	 * @param	x	The x-coordinate.
+	 * @param	y	The y-coordinate.
+	 * @return	True if this rectangle contains the given point.
+	 */
+	public function contains(x:Float, y:Float):Bool {
+		return this.rect.contains(x, y);
 	}
 	
 	/**

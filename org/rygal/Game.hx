@@ -1,5 +1,16 @@
 // Copyright (C) 2012 Robert Böhm
+// 
 // This file is part of Rygal.
+// 
+// Rygal is free software: you can redistribute it and/or modify it under the
+// terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+// 
+// Rygal is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+// more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
@@ -37,22 +48,22 @@ import nme.Lib;
 class Game {
 	
 	/** The screen canvas that will be displayed. */
-	public var screen:Canvas;
+	public var screen(default, null):Canvas;
 	
 	/** The zoom factor this game is using. */
-	public var zoom:Int;
+	public var zoom(default, null):Int;
 	
 	/** The width of this game. */
-	public var width:Int;
+	public var width(default, null):Int;
 	
 	/** The height of this game. */
-	public var height:Int;
+	public var height(default, null):Int;
 	
 	/** The mouse of this game. */
-	public var mouse:Mouse;
+	public var mouse(default, null):Mouse;
 	
 	/** The keyboard of this game. */
-	public var keyboard:Keyboard;
+	public var keyboard(default, null):Keyboard;
 	
 	/** The touch surface of this game. */
 	public var touch:Touch;
@@ -62,6 +73,10 @@ class Game {
 	
 	/** The camera's y-position. */
 	public var cameraY:Int;
+	
+	/** The game's speed modifier. (Affects the "elapsed" times of update-calls) */
+	public var speed:Float;
+	
 	
 	/** The last update in milliseconds. */
 	private var _lastUpdate:Int;
@@ -97,6 +112,9 @@ class Game {
 	  * focus loss. */
 	private var _autoPaused:Bool;
 	
+	/** The upcoming scene. */
+	private var _nextScene:Scene;
+	
 	
 	/**
 	 * Creates a new game based on the given parameters.
@@ -117,7 +135,7 @@ class Game {
 		
 		_sprite.addChild(_bitmap);
 		
-		
+		this.speed = 1;
 		this._autoPaused = false;
 		this._paused = false;
 		this._reallyPaused = false;
@@ -138,6 +156,7 @@ class Game {
 		_sprite.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 	}
 	
+	
 	/**
 	 * Registers the given scene in this game.
 	 * 
@@ -154,11 +173,7 @@ class Game {
 	 * @param	name	The name of the scene to be used.
 	 */
 	public function useScene(name:String = ""):Void {
-		if (_currentScene != null)
-			_currentScene.unload();
-		
-		_currentScene = _scenes.get(name);
-		_currentScene.load(this);
+		_nextScene = _scenes.get(name);
 	}
 	
 	/**
@@ -194,12 +209,22 @@ class Game {
 		return this._paused;
 	}
 	
+	
 	/**
 	 * Updates this game and it's currently active scene.
 	 * 
 	 * @param	time	The time elapsed since the last update.
 	 */
 	private function update(time:GameTime):Void {
+		if (this._nextScene != null) {
+			if (_currentScene != null)
+				_currentScene.unload();
+			
+			_currentScene = _nextScene;
+			_nextScene = null;
+			_currentScene.load(this);
+		}
+		
 		if (this._paused != this._reallyPaused) {
 			if (this._paused) {
 				this._pauseScene.load(this);
@@ -251,7 +276,7 @@ class Game {
 	 */
 	private function onEnterFrame(e:Event):Void {
 		_now = Lib.getTimer();
-		update(new GameTime(_now, _lastUpdate));
+		update(new GameTime(_now, _lastUpdate, speed));
 		_lastUpdate = _now;
 	}
 	

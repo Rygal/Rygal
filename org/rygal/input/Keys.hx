@@ -1,5 +1,16 @@
 // Copyright (C) 2012 Robert Böhm
+// 
 // This file is part of Rygal.
+// 
+// Rygal is free software: you can redistribute it and/or modify it under the
+// terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+// 
+// Rygal is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+// more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
@@ -31,118 +42,119 @@ package org.rygal.input;
  */
 class Keys {
 	
-	public static var UNKNOWN:Int = 0;
+	public static inline var UNKNOWN:Int = 0;
 	
-	public static var ALTERNATE:Int = 18;
-	public static var BACKQUOTE:Int = 192;
-	public static var BACKSLASH:Int = 220;
-	public static var BACKSPACE:Int = 8;
-	public static var CAPS_LOCK:Int = 20;
-	public static var COMMA:Int = 188;
-	public static var COMMAND:Int = 15;
-	public static var CONTROL:Int = 17;
-	public static var DELETE:Int = 46;
-	public static var DOWN:Int = 40;
-	public static var END:Int = 35;
-	public static var ENTER:Int = 13;
-	public static var EQUAL:Int = 187;
-	public static var ESCAPE:Int = 27;
-	public static var F1:Int = 112;
-	public static var F2:Int = 113;
-	public static var F3:Int = 114;
-	public static var F4:Int = 115;
-	public static var F5:Int = 116;
-	public static var F6:Int = 117;
-	public static var F7:Int = 118;
-	public static var F8:Int = 119;
-	public static var F9:Int = 120;
-	public static var F10:Int = 121;
-	public static var F11:Int = 122;
-	public static var F12:Int = 123;
-	public static var F13:Int = 124;
-	public static var F14:Int = 125;
-	public static var F15:Int = 126;
-	public static var HOME:Int = 36;
-	public static var INSERT:Int = 45;
-	public static var LEFT:Int = 37;
-	public static var LEFTBRACKET:Int = 219;
-	public static var MINUS:Int = 189;
-	public static var NUMBER_0:Int = 48;
-	public static var NUMBER_1:Int = 49;
-	public static var NUMBER_2:Int = 50;
-	public static var NUMBER_3:Int = 51;
-	public static var NUMBER_4:Int = 52;
-	public static var NUMBER_5:Int = 53;
-	public static var NUMBER_6:Int = 54;
-	public static var NUMBER_7:Int = 55;
-	public static var NUMBER_8:Int = 56;
-	public static var NUMBER_9:Int = 57;
-	public static var NUMPAD:Int = 21;
-	public static var NUMLOCK:Int = 144;
-	public static var NUMPAD_0:Int = 96;
-	public static var NUMPAD_1:Int = 97;
-	public static var NUMPAD_2:Int = 98;
-	public static var NUMPAD_3:Int = 99;
-	public static var NUMPAD_4:Int = 100;
-	public static var NUMPAD_5:Int = 101;
-	public static var NUMPAD_6:Int = 102;
-	public static var NUMPAD_7:Int = 103;
-	public static var NUMPAD_8:Int = 104;
-	public static var NUMPAD_9:Int = 105;
-	public static var NUMPAD_ADD:Int = 107;
-	public static var NUMPAD_DECIMAL:Int = 110;
-	public static var NUMPAD_DIVIDE:Int = 111;
-	public static var NUMPAD_ENTER:Int = 108;
-	public static var NUMPAD_MULTIPLY:Int = 106;
-	public static var NUMPAD_SUBTRACT:Int = 109;
-	public static var PAGE_DOWN:Int = 34;
-	public static var PAGE_UP:Int = 33;
-	public static var PERIOD:Int = 190;
-	public static var QUOTE:Int = 222;
-	public static var RIGHT:Int = 39;
-	public static var RIGHTBRACKET:Int = 221;
-	public static var SEMICOLON:Int = 186;
-	public static var SHIFT:Int = 16;
-	public static var SLASH:Int = 191;
-	public static var SPACE:Int = 32;
-	public static var TAB:Int = 9;
-	public static var UP:Int = 38;
-	public static var SCROLL:Int = 145;
-	public static var PAUSE:Int = 19;
+	public static inline var ALTERNATE:Int = 18;
+	public static inline var BACKQUOTE:Int = 192;
+	public static inline var BACKSLASH:Int = 220;
+	public static inline var BACKSPACE:Int = 8;
+	public static inline var CAPS_LOCK:Int = 20;
+	public static inline var COMMA:Int = 188;
+	public static inline var COMMAND:Int = 15;
+	public static inline var CONTROL:Int = 17;
+	public static inline var DELETE:Int = 46;
+	public static inline var DOWN:Int = 40;
+	public static inline var END:Int = 35;
+	public static inline var RETURN:Int = 13;
+	public static inline var EQUAL:Int = 187;
+	public static inline var ESCAPE:Int = 27;
+	public static inline var F1:Int = 112;
+	public static inline var F2:Int = 113;
+	public static inline var F3:Int = 114;
+	public static inline var F4:Int = 115;
+	public static inline var F5:Int = 116;
+	public static inline var F6:Int = 117;
+	public static inline var F7:Int = 118;
+	public static inline var F8:Int = 119;
+	public static inline var F9:Int = 120;
+	public static inline var F10:Int = 121;
+	public static inline var F11:Int = 122;
+	public static inline var F12:Int = 123;
+	public static inline var F13:Int = 124;
+	public static inline var F14:Int = 125;
+	public static inline var F15:Int = 126;
+	public static inline var HOME:Int = 36;
+	public static inline var INSERT:Int = 45;
+	public static inline var LEFT:Int = 37;
+	public static inline var LEFTBRACKET:Int = 219;
+	public static inline var MINUS:Int = 189;
+	public static inline var NUMBER_0:Int = 48;
+	public static inline var NUMBER_1:Int = 49;
+	public static inline var NUMBER_2:Int = 50;
+	public static inline var NUMBER_3:Int = 51;
+	public static inline var NUMBER_4:Int = 52;
+	public static inline var NUMBER_5:Int = 53;
+	public static inline var NUMBER_6:Int = 54;
+	public static inline var NUMBER_7:Int = 55;
+	public static inline var NUMBER_8:Int = 56;
+	public static inline var NUMBER_9:Int = 57;
+	public static inline var NUMPAD:Int = 21;
+	public static inline var NUMLOCK:Int = 144;
+	public static inline var NUMPAD_0:Int = 96;
+	public static inline var NUMPAD_1:Int = 97;
+	public static inline var NUMPAD_2:Int = 98;
+	public static inline var NUMPAD_3:Int = 99;
+	public static inline var NUMPAD_4:Int = 100;
+	public static inline var NUMPAD_5:Int = 101;
+	public static inline var NUMPAD_6:Int = 102;
+	public static inline var NUMPAD_7:Int = 103;
+	public static inline var NUMPAD_8:Int = 104;
+	public static inline var NUMPAD_9:Int = 105;
+	public static inline var NUMPAD_ADD:Int = 107;
+	public static inline var NUMPAD_DECIMAL:Int = 110;
+	public static inline var NUMPAD_DIVIDE:Int = 111;
+	public static inline var NUMPAD_ENTER:Int = 108;
+	public static inline var NUMPAD_MULTIPLY:Int = 106;
+	public static inline var NUMPAD_SUBTRACT:Int = 109;
+	public static inline var PAGE_DOWN:Int = 34;
+	public static inline var PAGE_UP:Int = 33;
+	public static inline var PERIOD:Int = 190;
+	public static inline var QUOTE:Int = 222;
+	public static inline var RIGHT:Int = 39;
+	public static inline var RIGHTBRACKET:Int = 221;
+	public static inline var SEMICOLON:Int = 186;
+	public static inline var SHIFT:Int = 16;
+	public static inline var SLASH:Int = 191;
+	public static inline var SPACE:Int = 32;
+	public static inline var TAB:Int = 9;
+	public static inline var UP:Int = 38;
+	public static inline var SCROLL:Int = 145;
+	public static inline var PAUSE:Int = 19;
 	
 	// A-Z
-	public static var A:Int = getLetterKeyCode("A");
-	public static var B:Int = getLetterKeyCode("B");
-	public static var C:Int = getLetterKeyCode("C");
-	public static var D:Int = getLetterKeyCode("D");
-	public static var E:Int = getLetterKeyCode("E");
-	public static var F:Int = getLetterKeyCode("F");
-	public static var G:Int = getLetterKeyCode("G");
-	public static var H:Int = getLetterKeyCode("H");
-	public static var I:Int = getLetterKeyCode("I");
-	public static var J:Int = getLetterKeyCode("J");
-	public static var K:Int = getLetterKeyCode("K");
-	public static var L:Int = getLetterKeyCode("L");
-	public static var M:Int = getLetterKeyCode("M");
-	public static var N:Int = getLetterKeyCode("N");
-	public static var O:Int = getLetterKeyCode("O");
-	public static var P:Int = getLetterKeyCode("P");
-	public static var Q:Int = getLetterKeyCode("Q");
-	public static var R:Int = getLetterKeyCode("R");
-	public static var S:Int = getLetterKeyCode("S");
-	public static var T:Int = getLetterKeyCode("T");
-	public static var U:Int = getLetterKeyCode("U");
-	public static var V:Int = getLetterKeyCode("V");
-	public static var W:Int = getLetterKeyCode("W");
-	public static var X:Int = getLetterKeyCode("X");
-	public static var Y:Int = getLetterKeyCode("Y");
-	public static var Z:Int = getLetterKeyCode("Z");
+	public static inline var A:Int = getLetterKeyCode("A");
+	public static inline var B:Int = getLetterKeyCode("B");
+	public static inline var C:Int = getLetterKeyCode("C");
+	public static inline var D:Int = getLetterKeyCode("D");
+	public static inline var E:Int = getLetterKeyCode("E");
+	public static inline var F:Int = getLetterKeyCode("F");
+	public static inline var G:Int = getLetterKeyCode("G");
+	public static inline var H:Int = getLetterKeyCode("H");
+	public static inline var I:Int = getLetterKeyCode("I");
+	public static inline var J:Int = getLetterKeyCode("J");
+	public static inline var K:Int = getLetterKeyCode("K");
+	public static inline var L:Int = getLetterKeyCode("L");
+	public static inline var M:Int = getLetterKeyCode("M");
+	public static inline var N:Int = getLetterKeyCode("N");
+	public static inline var O:Int = getLetterKeyCode("O");
+	public static inline var P:Int = getLetterKeyCode("P");
+	public static inline var Q:Int = getLetterKeyCode("Q");
+	public static inline var R:Int = getLetterKeyCode("R");
+	public static inline var S:Int = getLetterKeyCode("S");
+	public static inline var T:Int = getLetterKeyCode("T");
+	public static inline var U:Int = getLetterKeyCode("U");
+	public static inline var V:Int = getLetterKeyCode("V");
+	public static inline var W:Int = getLetterKeyCode("W");
+	public static inline var X:Int = getLetterKeyCode("X");
+	public static inline var Y:Int = getLetterKeyCode("Y");
+	public static inline var Z:Int = getLetterKeyCode("Z");
 	
 	
 	/**
 	 * You shouldn't create an instance of Keys.
 	 */
 	private function new() {}
+	
 	
 	/**
 	 * Used to get the keycode of a letter. This is due to the fact that some
@@ -151,7 +163,7 @@ class Keys {
 	 * @param	letter	The letter whose keycode you need.
 	 * @return	The keycode of the given letter.
 	 */
-	private static function getLetterKeyCode(letter:String):Int {
+	private static inline function getLetterKeyCode(letter:String):Int {
 		return letter.toUpperCase().charCodeAt(0);
 	}
 	
@@ -175,7 +187,7 @@ class Keys {
 			case DELETE: "Delete";
 			case DOWN: "Down arrow";
 			case END: "End";
-			case ENTER: "Enter";
+			case RETURN: "Return";
 			case EQUAL: "Equal";
 			case ESCAPE: "Escape";
 			case F1: "F1";
@@ -292,7 +304,7 @@ class Keys {
 			case "Delete": DELETE;
 			case "Down arrow": DOWN;
 			case "End": END;
-			case "Enter": ENTER;
+			case "Return": RETURN;
 			case "Equal": EQUAL;
 			case "Escape": ESCAPE;
 			case "F1": F1;

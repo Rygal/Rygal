@@ -1,5 +1,16 @@
 // Copyright (C) 2012 Robert Böhm
+// 
 // This file is part of Rygal.
+// 
+// Rygal is free software: you can redistribute it and/or modify it under the
+// terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+// 
+// Rygal is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+// more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
@@ -33,43 +44,48 @@ import nme.events.Event;
 class MouseEvent extends Event {
 	
 	/** An event that will be called when the mouse button is pressed. */
-	public static var MOUSE_DOWN:String = "mouseDown";
+	public static inline var MOUSE_DOWN:String = "mouseDown";
 	
 	/** An event that will be called when the mouse button is released. */
-	public static var MOUSE_UP:String = "mouseUp";
+	public static inline var MOUSE_UP:String = "mouseUp";
 	
 	/** An event that will be called when the mouse is moved. */
-	public static var MOUSE_MOVE:String = "mouseMove";
+	public static inline var MOUSE_MOVE:String = "mouseMove";
 	
 	/** An event that will be called when the mouse wheel is moved. */
-	public static var MOUSE_WHEEL:String = "mouseWheel";
+	public static inline var MOUSE_WHEEL:String = "mouseWheel";
 	
-	/** An event that will be called when the right mouse button is pressed. */
-	public static var RIGHT_MOUSE_DOWN:String = "rightMouseDown";
+	/** An event that will be called when the right mouse button is
+	 * 	pressed. */
+	public static inline var RIGHT_MOUSE_DOWN:String = "rightMouseDown";
 	
-	/** An event that will be called when the right mouse button is released. */
-	public static var RIGHT_MOUSE_UP:String = "rightMouseUp";
+	/** An event that will be called when the right mouse button is
+	 * 	released. */
+	public static inline var RIGHT_MOUSE_UP:String = "rightMouseUp";
 	
-	/** An event that will be called when the middle mouse button is pressed. */
-	public static var MIDDLE_MOUSE_DOWN:String = "middleMouseDown";
+	/** An event that will be called when the middle mouse button is
+	 * 	pressed. */
+	public static inline var MIDDLE_MOUSE_DOWN:String = "middleMouseDown";
 	
-	/** An event that will be called when the middle mouse button is released. */
-	public static var MIDDLE_MOUSE_UP:String = "middleMouseUp";
+	/** An event that will be called when the middle mouse button is
+	 * 	released. */
+	public static inline var MIDDLE_MOUSE_UP:String = "middleMouseUp";
+	
 	
 	/** The x-coordinate of the mouse. */
-	public var x:Int;
+	public var x(default, null):Int;
 	
 	/** The y-coordinate of the mouse. */
-	public var y:Int;
+	public var y(default, null):Int;
 	
 	/** Determines whether the mouse button is pressed or not. */
-	public var isPressed:Bool;
+	public var isPressed(default, null):Bool;
 	
 	/** Determines whether the right mouse button is pressed or not. */
-	public var isRightButtonPressed:Bool;
+	public var isRightButtonPressed(default, null):Bool;
 	
 	/** Determines whether the middle mouse button is pressed or not. */
-	public var isMiddleButtonPressed:Bool;
+	public var isMiddleButtonPressed(default, null):Bool;
 	
 	
 	/**

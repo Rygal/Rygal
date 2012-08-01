@@ -1,5 +1,16 @@
 // Copyright (C) 2012 Robert Böhm
+// 
 // This file is part of Rygal.
+// 
+// Rygal is free software: you can redistribute it and/or modify it under the
+// terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+// 
+// Rygal is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+// more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
@@ -34,19 +45,20 @@ package org.rygal.input;
 class MouseMoveEvent extends MouseEvent {
 	
 	/** An event that will be called when the mouse is moved. */
-	public static var MOUSE_MOVE:String = MouseEvent.MOUSE_MOVE;
+	public static inline var MOUSE_MOVE:String = MouseEvent.MOUSE_MOVE;
+	
 	
 	/** The x-coordinate of the mouse prior to the movement. */
-	public var previousX:Int;
+	public var previousX(default, null):Int;
 	
 	/** The y-coordinate of the mouse prior to the movement. */
-	public var previousY:Int;
+	public var previousY(default, null):Int;
 	
 	/** The movement done on the x-axis. */
-	public var deltaX:Int;
+	public var deltaX(default, null):Int;
 	
 	/** The movement done on the y-axis. */
-	public var deltaY:Int;
+	public var deltaY(default, null):Int;
 	
 	
 	/**

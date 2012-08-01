@@ -1,5 +1,16 @@
 // Copyright (C) 2012 Robert Böhm
+// 
 // This file is part of Rygal.
+// 
+// Rygal is free software: you can redistribute it and/or modify it under the
+// terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+// 
+// Rygal is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+// more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
@@ -20,7 +31,7 @@ package org.rygal;
 class Scene extends GameObjectContainer {
 	
 	/** The game this scene belongs to. */
-	public var game:Game;
+	public var game(default, null):Game;
 	
 	
 	/**
@@ -30,8 +41,10 @@ class Scene extends GameObjectContainer {
 		super();
 	}
 	
+	
 	/**
 	 * Loads the scene. (Ressources, event listeners, etc.)
+	 * Will be called everytime this scene gets active.
 	 * 
 	 * @param	game	The game this scene belongs to.
 	 */
@@ -41,6 +54,8 @@ class Scene extends GameObjectContainer {
 	
 	/**
 	 * Unloads the scene. (Ressources, event listeners, etc.)
+	 * Will be called everytime this scene gets inactive (= Game changes to
+	 * another scene).
 	 */
 	public function unload() {
 		this.removeChildren();

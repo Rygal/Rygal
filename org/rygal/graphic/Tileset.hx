@@ -1,5 +1,16 @@
 // Copyright (C) 2012 Robert Böhm
+// 
 // This file is part of Rygal.
+// 
+// Rygal is free software: you can redistribute it and/or modify it under the
+// terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+// 
+// Rygal is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+// more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
@@ -28,19 +39,20 @@ package org.rygal.graphic;
 class Tileset {
 	
 	/** The width of each tile. */
-	public var tileWidth:Int;
+	public var tileWidth(default, null):Int;
 	
 	/** The height of each tile. */
-	public var tileHeight:Int;
+	public var tileHeight(default, null):Int;
 	
 	/** The amount of columns. */
-	public var columns:Int;
+	public var columns(default, null):Int;
 	
 	/** The amount of rows. */
-	public var rows:Int;
+	public var rows(default, null):Int;
 	
 	/** The amount of tiles. */
-	public var length:Int;
+	public var length(getLength, never):Int;
+	
 	
 	/** The textures this tileset contains. */
 	private var _textures:Array<Texture>;
@@ -66,9 +78,8 @@ class Tileset {
 				_textures.push(texture.slice(col * tileWidth, row * tileHeight, tileWidth, tileHeight));
 			}
 		}
-		
-		length = _textures.length;
 	}
+	
 	
 	/**
 	 * Creates a new tileset based on the given texture and tile metrics.
@@ -81,6 +92,7 @@ class Tileset {
 	public static function fromTileSize(texture:Texture, tileWidth:Int, tileHeight:Int):Tileset {
 		return new Tileset(texture, Std.int(texture.width / tileWidth), Std.int(texture.height / tileHeight));
 	}
+	
 	
 	/**
 	 * Returns the tile ID of the given tile position.
@@ -118,6 +130,16 @@ class Tileset {
 			return null;
 		
 		return _textures[x + y * columns];
+	}
+	
+	
+	/**
+	 * Returns the amount of tiles.
+	 * 
+	 * @return	The amount of tiles.
+	 */
+	private function getLength():Int {
+		return _textures.length;
 	}
 	
 }

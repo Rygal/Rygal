@@ -1,5 +1,16 @@
 // Copyright (C) 2012 Robert Böhm
+// 
 // This file is part of Rygal.
+// 
+// Rygal is free software: you can redistribute it and/or modify it under the
+// terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+// 
+// Rygal is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+// more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
@@ -18,10 +29,11 @@ package org.rygal.graphic;
 class TextureSequenceIterator {
 	
 	/** Don't loop through a texture sequence. */
-	public static var NO_LOOP:Int = 0;
+	public static inline var NO_LOOP:Int = 0;
 	
 	/** Infinitely loop through a texture sequence. */
-	public static var INFINITE_LOOP:Int = -1;
+	public static inline var INFINITE_LOOP:Int = -1;
+	
 	
 	/** The sequence this iterator iterates through. */
 	private var _sequence:TextureSequence;
@@ -48,6 +60,7 @@ class TextureSequenceIterator {
 		_nextId = 0;
 	}
 	
+	
 	/**
 	 * A dummy iterator that will basically only iterate through a single
 	 * texture.
@@ -62,6 +75,7 @@ class TextureSequenceIterator {
 		
 		return new TextureSequenceIterator(new TextureSequence([texture]), repeatCount);
 	}
+	
 	
 	/**
 	 * Returns the next texture in the sequence.

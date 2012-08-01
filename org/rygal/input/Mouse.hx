@@ -1,5 +1,16 @@
 // Copyright (C) 2012 Robert Böhm
+// 
 // This file is part of Rygal.
+// 
+// Rygal is free software: you can redistribute it and/or modify it under the
+// terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+// 
+// Rygal is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+// more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
@@ -29,19 +40,20 @@ import nme.events.EventDispatcher;
 class Mouse extends EventDispatcher {
 	
 	/** The x-coordinate of the mouse. */
-	public var x:Int;
+	public var x(default, null):Int;
 	
 	/** The y-coordinate of the mouse. */
-	public var y:Int;
+	public var y(default, null):Int;
 	
 	/** Determines whether this mouse is pressed or not. */
-	public var isPressed:Bool;
+	public var isPressed(default, null):Bool;
 	
 	/** Determines whether the right mouse button is pressed or not. */
-	public var isRightButtonPressed:Bool;
+	public var isRightButtonPressed(default, null):Bool;
 	
 	/** Determines whether the middle mouse button is pressed or not. */
-	public var isMiddleButtonPressed:Bool;
+	public var isMiddleButtonPressed(default, null):Bool;
+	
 	
 	/** The absolute x-coordinate of the mouse. */
 	private var _absoluteX:Int;
@@ -115,6 +127,7 @@ class Mouse extends EventDispatcher {
 	#end
 	}
 	
+	
 	/**
 	 * Displays the system cursor.
 	 */
@@ -128,6 +141,7 @@ class Mouse extends EventDispatcher {
 	public function hide() {
 		nme.ui.Mouse.hide();
 	}
+	
 	
 	/**
 	 * A callback that will be called whenever the mouse is pressed.

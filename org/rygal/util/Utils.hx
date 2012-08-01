@@ -1,5 +1,16 @@
 // Copyright (C) 2012 Robert Böhm
+// 
 // This file is part of Rygal.
+// 
+// Rygal is free software: you can redistribute it and/or modify it under the
+// terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+// 
+// Rygal is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+// more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
@@ -19,19 +30,20 @@ package org.rygal.util;
 class Utils {
 	
 	/** The major number of the current Rygal version. (x.0.0) */
-	public static var VERSION_MAJOR:Int = 1;
+	public static inline var VERSION_MAJOR:Int = 1;
 	
 	/** The minor number of the current Rygal version. (0.x.0) */
-	public static var VERSION_MINOR:Int = 1;
+	public static inline var VERSION_MINOR:Int = 1;
 	
 	/** The revision number of the current Rygal version. (0.0.x) */
-	public static var VERSION_REVISION:Int = 0;
+	public static inline var VERSION_REVISION:Int = 7;
 	
 	
 	/**
 	 * You should never create an instance of this class!
 	 */
 	private function new() { }
+	
 	
 	/**
 	 * Returns the current Rygal version as a string in the regular format:

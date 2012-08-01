@@ -1,5 +1,16 @@
 // Copyright (C) 2012 Robert Böhm
+// 
 // This file is part of Rygal.
+// 
+// Rygal is free software: you can redistribute it and/or modify it under the
+// terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+// 
+// Rygal is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+// more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
@@ -20,7 +31,8 @@ package org.rygal.graphic;
 class TextureSequence {
 	
 	/** The length of this sequence. */
-	public var length:Int;
+	public var length(getLength, never):Int;
+	
 	
 	/** An array with all textures of this sequence. */
 	private var _textures:Array<Texture>;
@@ -33,8 +45,8 @@ class TextureSequence {
 	 */
 	public function new(textures:Array<Texture>) {
 		this._textures = textures;
-		this.length = textures.length;
 	}
+	
 	
 	/**
 	 * Creates a new texture sequence based on a tileset with the given tile ID
@@ -67,6 +79,7 @@ class TextureSequence {
 		return new TextureSequence(textures);
 	}
 	
+	
 	/**
 	 * Creates a new texture sequence based on a spritesheet.
 	 * 
@@ -81,6 +94,7 @@ class TextureSequence {
 		}
 		return new TextureSequence(textures);
 	}
+	
 	
 	/**
 	 * Returns the texture with the given index.
@@ -114,6 +128,16 @@ class TextureSequence {
 	 */
 	public function getIterator(repeatCount:Int=0):TextureSequenceIterator {
 		return new TextureSequenceIterator(this, repeatCount);
+	}
+	
+	
+	/**
+	 * Returns the length of this sequence.
+	 * 
+	 * @return	The length of this sequence.
+	 */
+	private function getLength():Int {
+		return _textures.length;
 	}
 	
 }

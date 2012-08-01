@@ -1,5 +1,16 @@
 // Copyright (C) 2012 Robert Böhm
+// 
 // This file is part of Rygal.
+// 
+// Rygal is free software: you can redistribute it and/or modify it under the
+// terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+// 
+// Rygal is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+// more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
@@ -34,22 +45,24 @@ import nme.events.Event;
 class KeyboardEvent extends Event {
 	
 	/** An event that will be called when a key is pressed. */
-	public static var KEY_DOWN:String = "keyDown";
+	public static inline var KEY_DOWN:String = "keyDown";
 	
 	/** An event that will be called when a key is released. */
-	public static var KEY_UP:String = "keyUp";
+	public static inline var KEY_UP:String = "keyUp";
 	
 	/** An event that will be called when a character is typed. */
-	public static var CHAR_TYPED:String = "charTyped";
+	public static inline var CHAR_TYPED:String = "charTyped";
+	
 	
 	/** The keycode of the related key. */
-	public var keyCode:Int;
+	public var keyCode(default, null):Int;
 	
 	/** The charcode of the related key. */
-	public var charCode:Int;
+	public var charCode(default, null):Int;
 	
 	/** The string representation of the related key. */
-	public var charString:String;
+	public var charString(default, null):String;
+	
 	
 	/** The related keyboard. */
 	private var _keyboard:Keyboard;
@@ -78,6 +91,7 @@ class KeyboardEvent extends Event {
 			this.charString = "";
 		}
 	}
+	
 	
 	/**
 	 * Determines whether a key is pressed or not.

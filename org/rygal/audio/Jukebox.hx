@@ -1,5 +1,16 @@
 // Copyright (C) 2012 Robert Böhm
+// 
 // This file is part of Rygal.
+// 
+// Rygal is free software: you can redistribute it and/or modify it under the
+// terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+// 
+// Rygal is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+// more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
@@ -27,10 +38,11 @@ package org.rygal.audio;
 class Jukebox {
 	
 	/** Looping playmode. */
-	public static var MODE_LOOP:Int = 0;
+	public static inline var MODE_LOOP:Int = 0;
 	
 	/** Random playmode. */
-	public static var MODE_RANDOM:Int = 1;
+	public static inline var MODE_RANDOM:Int = 1;
+	
 	
 	/** Current playmode. */
 	public var mode:Int;
@@ -62,6 +74,7 @@ class Jukebox {
 		this._sounds = new Array<Sound>();
 		this._nextIndex = 0;
 	}
+	
 	
 	/**
 	 * Adds a sound to this jukebox.
@@ -152,6 +165,7 @@ class Jukebox {
 	public function isRunning():Bool {
 		return _running;
 	}
+	
 	
 	/**
 	 * A callback that will be called as soon as the current sound has ended.

@@ -1,5 +1,16 @@
 // Copyright (C) 2012 Robert Böhm
+// 
 // This file is part of Rygal.
+// 
+// Rygal is free software: you can redistribute it and/or modify it under the
+// terms of the GNU Lesser General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+// 
+// Rygal is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+// more details.
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
@@ -36,19 +47,20 @@ package org.rygal.graphic;
 class Font {
 	
 	/** Left alignment. */
-	public static var LEFT:Int = 0;
+	public static inline var LEFT:Int = 0;
 	
 	/** Center alignment. */
-	public static var CENTER:Int = 1;
+	public static inline var CENTER:Int = 1;
 	
 	/** Right alignment. */
-	public static var RIGHT:Int = 2;
+	public static inline var RIGHT:Int = 2;
 	
 	
 	/**
 	 * You can't create a font directly, use Bitmap- or EmbeddedFont instead.
 	 */
 	private function new() { }
+	
 	
 	/**
 	 * Loads a font from the assets. If you define a size, it's considered to be
