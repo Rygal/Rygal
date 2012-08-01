@@ -40,6 +40,7 @@ class Touch extends EventDispatcher {
 		
 		this.handler = handler;
 		
+		#if !flash
 		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_BEGIN,
 			onTouchBegin);
 		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_MOVE,
@@ -56,6 +57,7 @@ class Touch extends EventDispatcher {
 			onTouchRollOut);
 		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_TAP,
 			onTouchTap);
+		#end
 	}
 	
 	private function onTouchBegin(e:nme.events.TouchEvent):Void {
