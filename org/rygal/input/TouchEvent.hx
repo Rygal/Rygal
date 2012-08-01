@@ -19,16 +19,24 @@ class TouchEvent extends Event {
 	public static var TOUCH_END:String = "touchEnd";
 	public static var TOUCH_MOVE:String = "touchMove";
 	
-	public var x:Float;
-	public var y:Float;
-	public var isPressed:Bool;
+	public var x(default, null):Float;
+	public var y(default, null):Float;
+	public var pressure(default, null):Float;
+	
+	public var isPrimaryTouchPoint(default, null):Bool;
+	public var touchPointID(default, null):Int;
+	public var isMultiTouchEnabled(default, null):Bool;
 	
 	public function new(type:String, touch:Touch) {
 		super(type);
 		
 		this.x = touch.x;
 		this.y = touch.y;
-		this.isPressed = touch.isPressed;
+		this.pressure = touch.pressure;
+		
+		this.isPrimaryTouchPoint = touch.isPrimaryTouchPoint;
+		this.touchPointID = touch.touchPointID;
+		this.isMultiTouchEnabled = touch.isMultiTouchEnabled;
 	}
 	
 }

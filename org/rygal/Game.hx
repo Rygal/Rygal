@@ -66,7 +66,7 @@ class Game {
 	public var keyboard(default, null):Keyboard;
 	
 	/** The touch surface of this game. */
-	public var touch:Touch;
+	public var touch(default, null):Touch;
 	
 	/** The camera's x-position. */
 	public var cameraX:Int;
@@ -260,7 +260,8 @@ class Game {
 		
 		this.mouse = new Mouse(_sprite, this);
 		this.keyboard = new Keyboard(_sprite);
-		this.touch = new Touch();
+		this.touch = new Touch(_sprite);
+		
 		_sprite.addEventListener(Event.DEACTIVATE, onDeactivate);
 		_sprite.addEventListener(Event.ACTIVATE, onActivate);
 		
