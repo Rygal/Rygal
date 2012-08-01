@@ -21,6 +21,7 @@ package org.rygal;
 import org.rygal.graphic.Canvas;
 import org.rygal.input.Keyboard;
 import org.rygal.input.Mouse;
+import org.rygal.input.Touch;
 import nme.display.Bitmap;
 import nme.display.BitmapData;
 import nme.display.DisplayObject;
@@ -63,6 +64,9 @@ class Game {
 	
 	/** The keyboard of this game. */
 	public var keyboard(default, null):Keyboard;
+	
+	/** The touch surface of this game. */
+	public var touch(default, null):Touch;
 	
 	/** The camera's x-position. */
 	public var cameraX:Int;
@@ -256,6 +260,8 @@ class Game {
 		
 		this.mouse = new Mouse(_sprite, this);
 		this.keyboard = new Keyboard(_sprite);
+		this.touch = new Touch(_sprite);
+		
 		_sprite.addEventListener(Event.DEACTIVATE, onDeactivate);
 		_sprite.addEventListener(Event.ACTIVATE, onActivate);
 		
