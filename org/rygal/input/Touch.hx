@@ -82,7 +82,7 @@ class Touch extends EventDispatcher {
 			onTouchBegin);
 		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_MOVE,
 			onTouchMove);
-		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_BEGIN,
+		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_END,
 			onTouchEnd);
 		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_OVER,
 			onTouchOver);
