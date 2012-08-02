@@ -27,9 +27,15 @@ import nme.ui.MultitouchInputMode;
 /**
  * <h2>Description</h2>
  * <p>
- * 	Sorry, there's no description available yet.
+ * 	The touch surface. It will automatically be created by the Game-class.
  * </p>
  * 
+ * <h2>Example <i>(Inside a scene)</i></h2>
+ * <code>
+ * 	if (game.touch.x >= enemy.x && game.touch.x <= enemy.width) {<br />
+ * 	&nbsp;&nbsp;// touch point is under or above the enemy<br />
+ * 	}
+ * </code>
  * @author Christopher Kaster
  */
 class Touch extends EventDispatcher {

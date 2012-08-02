@@ -23,9 +23,21 @@ import nme.events.Event;
 /**
  * <h2>Description</h2>
  * <p>
- * 	Sorry, there's no description available yet.
+ * 	A touch event. It contains information about the related touch surface.
  * </p>
  * 
+ * <h2>Example <i>(Inside a scene)</i></h2>
+ * <code>
+ * 	public function load(game:Game):Void {<br />
+ * 	&nbsp;&nbsp;super.load(game);<br />
+ * 	&nbsp;&nbsp;this.game.touch.addEventListener(TouchEvent.TOUCH_MOVE,<br />
+ * 	&nbsp;&nbsp;&nbsp;&nbsp;onTouchMove);<br />
+ * 	}<br />
+ * 	<br />
+ * 	public function onTouchMove(e:TouchEvent):Void {<br />
+ * 	&nbsp;&nbsp;trace("Touch point moved! (x=" + e.x + ", y=" + e.y + ")");<br />
+ * 	}
+ * </code>
  * @author Christopher Kaster
  */
 class TouchEvent extends Event {
