@@ -235,6 +235,8 @@ class Canvas {
 	public function fillRect(color:Int, x:Float, y:Float, width:Float,
 			height:Float):Void {
 		
+		x += xTranslation;
+		y += yTranslation;
 		_bitmapData.fillRect(new Rectangle(x, y, width, height), color);
 	}
 	
