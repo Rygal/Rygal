@@ -18,6 +18,7 @@
 
 package org.rygal;
 
+import nme.events.EventDispatcher;
 import org.rygal.graphic.Canvas;
 
 /**
@@ -28,7 +29,7 @@ import org.rygal.graphic.Canvas;
  * 
  * @author Robert Böhm
  */
-class BasicGameObject implements GameObject {
+class BasicGameObject extends EventDispatcher, implements GameObject {
 	
 	/** The x-coordinate of this object. */
 	public var x:Float;
@@ -44,6 +45,8 @@ class BasicGameObject implements GameObject {
 	 * Creates a new basic game object.
 	 */
 	private function new(x:Float = 0, y:Float = 0) {
+		super();
+		
 		this.x = x;
 		this.y = y;
 		this.parent = null;
