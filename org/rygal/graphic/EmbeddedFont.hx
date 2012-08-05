@@ -19,7 +19,11 @@
 package org.rygal.graphic;
 
 import nme.Assets;
+import nme.text.AntiAliasType;
+import nme.text.TextField;
+import nme.text.TextFieldAutoSize;
 import nme.text.TextFormat;
+import org.rygal.physics.Rectangle;
 
 /**
  * <h2>Description</h2>
@@ -76,6 +80,24 @@ class EmbeddedFont extends Font {
 	 */
 	public static function fromAssets(id:String, size:Int):EmbeddedFont {
 		return new EmbeddedFont(Assets.getFont(id), size);
+	}
+	
+	
+	/**
+	 * Returns the metrics of the given text using this font.
+	 * 
+	 * @param	text	The text to be used.
+	 * @return	The metrics of the given text.
+	 */
+	override public function getTextMetrics(text:String):Rectangle {
+		var field:TextField = new TextField();
+		field.embedFonts = true;
+		field.antiAliasType = AntiAliasType.NORMAL;
+		field.autoSize = TextFieldAutoSize.LEFT;
+		field.defaultTextFormat = this.textFormat;
+		field.text = text;
+		field.setTextFormat(field.defaultTextFormat);
+		return new Rectangle(0, 0, field.width, field.height);
 	}
 	
 }

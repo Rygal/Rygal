@@ -53,18 +53,18 @@ fully supported:
 		<td>Yes</td>
 	</tr>
 	<tr>
-		<td>HTML 5</td>
-		<td>No<sup>[3]</sup></td>
-		<td>Partially<sup>[4]</sup></td>
-		<td>No<sup>[5]</sup></td>
-		<td>No</td>
-	</tr>
-	<tr>
 		<td>iOS</td>
 		<td>Yes</td>
 		<td>Yes</td>
 		<td>Yes</td>
 		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>HTML 5</td>
+		<td>No<sup>[3]</sup></td>
+		<td>Partially<sup>[4]</sup></td>
+		<td>No<sup>[5]</sup></td>
+		<td>No</td>
 	</tr>
 </table>
 

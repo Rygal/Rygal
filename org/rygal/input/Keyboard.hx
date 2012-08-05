@@ -38,6 +38,8 @@ import nme.events.EventDispatcher;
  */
 class Keyboard extends EventDispatcher {
 	
+	private static inline var KEYS_SIZE:Int = 512;
+	
 	/** An array with all key states. */
 	private var _keys:Array<Bool>;
 
@@ -51,7 +53,7 @@ class Keyboard extends EventDispatcher {
 		super();
 		
 		_keys = new Array<Bool>();
-		for (i in 0...256) {
+		for (i in 0...512) {
 			_keys.push(false);
 		}
 		

@@ -19,6 +19,7 @@
 package org.rygal.graphic;
 
 import nme.Assets;
+import org.rygal.physics.Rectangle;
 
 /**
  * <h2>Description</h2>
@@ -151,6 +152,26 @@ class BitmapFont extends Font {
 	 */
 	public function getCharacterTexture(character:String):Texture {
 		return _charset.getTextureById(_characters.get(character));
+	}
+	
+	/**
+	 * Returns the metrics of the given text using this font.
+	 * 
+	 * @param	text	The text to be used.
+	 * @return	The metrics of the given text.
+	 */
+	override public function getTextMetrics(text:String):Rectangle {
+		var width:Int = 0;
+		var lineWidth:Int;
+		var lines:Array<String> = text.split("\n");
+		for (line in lines) {
+			lineWidth = line.length * charWidth;
+			if (lineWidth > width) {
+				width = lineWidth;
+			}
+		}
+		var height:Int = lines.length * charHeight;
+		return new Rectangle(0, 0, width, height);
 	}
 	
 	

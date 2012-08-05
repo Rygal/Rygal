@@ -19,6 +19,8 @@
 package org.rygal.graphic;
 
 import nme.display.BitmapData;
+import nme.display.BlendMode;
+import nme.display.IBitmapDrawable;
 import nme.geom.ColorTransform;
 import nme.geom.Matrix;
 import nme.geom.Point;
@@ -251,7 +253,7 @@ class Canvas {
 	 * Draws the given string onto this canvas with the given font and
 	 * properties.
 	 * Note: This may be slow on various platforms when used repeatedly, use
-	 * Texture.fromString() to pre-cache a texture where possible and useful!
+	 * a Label whenever possible!
 	 * 
 	 * @param	font		The font to be used.
 	 * @param	text		The text to be drawn.
@@ -280,6 +282,28 @@ class Canvas {
 				drawStringByBitmapFont(bitmapFont, lines[i], color, x,
 					y + i * bitmapFont.charHeight, alignment, alpha);
 			}
+		}
+	}
+	
+	/**
+	 * Draws an NME IBitmapDrawable on this canvas. You shouldn't use this
+	 * unless you really have to!
+	 * 
+	 * @param	source			The drawable object to draw on this canvas.
+	 * @param	?matrix			A matrix for object transformations.
+	 * @param	?colorTransform	A color transformation.
+	 */
+	public function drawNmeDrawable(source:IBitmapDrawable, ?matrix:Matrix,
+			?colorTransform:ColorTransform):Void {
+		
+		if (matrix == null) {
+			_bitmapData.draw(source, new Matrix(1, 0, 0, 1, xTranslation,
+				yTranslation), colorTransform);
+			
+		} else {
+			var m:Matrix = matrix.clone();
+			m.translate(xTranslation, yTranslation);
+			_bitmapData.draw(source, m, colorTransform);
 		}
 	}
 	
@@ -399,6 +423,8 @@ class Canvas {
 	 */
 	private function drawStringByEmbeddedFont(font:EmbeddedFont, text:String,
 			color:Int, x:Float, y:Float, alignment:Int, alpha:Float):Void {
+		
+		color = color | (Std.int(alpha * 255) << 24);
 		
 		#if cpp
 		font.textFormat.color = color;

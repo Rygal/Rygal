@@ -100,12 +100,22 @@ class Keys {
 	public static inline var NUMPAD_7:Int = 103;
 	public static inline var NUMPAD_8:Int = 104;
 	public static inline var NUMPAD_9:Int = 105;
+	
+	#if cpp
+	public static inline var NUMPAD_DECIMAL:Int = 266;
+	public static inline var NUMPAD_DIVIDE:Int = 267;
+	public static inline var NUMPAD_MULTIPLY:Int = 268;
+	public static inline var NUMPAD_SUBTRACT:Int = 269;
+	public static inline var NUMPAD_ADD:Int = 270;
+	#else
+	public static inline var NUMPAD_MULTIPLY:Int = 106;
 	public static inline var NUMPAD_ADD:Int = 107;
+	public static inline var NUMPAD_SUBTRACT:Int = 109;
 	public static inline var NUMPAD_DECIMAL:Int = 110;
 	public static inline var NUMPAD_DIVIDE:Int = 111;
+	#end
 	public static inline var NUMPAD_ENTER:Int = 108;
-	public static inline var NUMPAD_MULTIPLY:Int = 106;
-	public static inline var NUMPAD_SUBTRACT:Int = 109;
+	
 	public static inline var PAGE_DOWN:Int = 34;
 	public static inline var PAGE_UP:Int = 33;
 	public static inline var PERIOD:Int = 190;

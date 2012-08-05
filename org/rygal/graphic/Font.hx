@@ -17,6 +17,8 @@
 
 
 package org.rygal.graphic;
+import nme.text.TextFormatAlign;
+import org.rygal.physics.Rectangle;
 
 /**
  * <h2>Description</h2>
@@ -76,6 +78,36 @@ class Font {
 		} else {
 			return EmbeddedFont.fromAssets(id, size);
 		}
+	}
+	
+	/**
+	 * Returns the TextFormatAlign corresponding to the given Rygal alignment.
+	 * 
+	 * @param	alignment	The alignment. (e.g. Font.CENTER)
+	 * @return	The corresponding TextFormatAlign.
+	 * 			(e.g. TextFormatAlign.CENTER)
+	 */
+	#if cpp
+	public static function getTextFormatAlign(alignment:Int):String {
+	#else
+	public static function getTextFormatAlign(alignment:Int):TextFormatAlign {
+	#end
+		return switch(alignment) {
+			case Font.CENTER:	TextFormatAlign.CENTER;
+			case Font.RIGHT:	TextFormatAlign.RIGHT;
+			default:			TextFormatAlign.LEFT;
+		};
+	}
+	
+	
+	/**
+	 * Returns the metrics of the given text using this font.
+	 * 
+	 * @param	text	The text to be used.
+	 * @return	The metrics of the given text.
+	 */
+	public function getTextMetrics(text:String):Rectangle {
+		return new Rectangle(0, 0, 0, 0);
 	}
 	
 }

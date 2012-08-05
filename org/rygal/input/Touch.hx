@@ -74,12 +74,16 @@ class Touch extends EventDispatcher {
 	public function new(handler:DisplayObject) {
 		super();
 		
+		#if (!flash || flash10_1)
 		if(Multitouch.supportsTouchEvents) {
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			isMultiTouchEnabled = true;
 		} else {
 			isMultiTouchEnabled = false;
 		}
+		#else
+		isMultiTouchEnabled = false;
+		#end
 		
 		this._handler = handler;
 		
