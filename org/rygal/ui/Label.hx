@@ -195,6 +195,9 @@ class Label extends BasicGameObject {
 	 * @return	The new font.
 	 */
 	private function setFont(font:Font):Font {
+		if (font == this._font)
+			return font;
+		
 		if ((Std.is(_font, EmbeddedFont) && !Std.is(font, EmbeddedFont)) ||
 			(Std.is(_font, BitmapFont) && !Std.is(font, BitmapFont))) {
 			
@@ -223,6 +226,9 @@ class Label extends BasicGameObject {
 	 * @return	The new text.
 	 */
 	private function setText(text:String):String {
+		if (text == this._text)
+			return text;
+		
 		this._text = text;
 		refreshText();
 		return this._text;
@@ -244,6 +250,9 @@ class Label extends BasicGameObject {
 	 * @return	The new text alignment.
 	 */
 	private function setAlignment(alignment:Int):Int {
+		if (alignment == this._alignment)
+			return alignment;
+		
 		_alignment = alignment;
 		refreshTextFormat();
 		return _alignment;
@@ -265,6 +274,9 @@ class Label extends BasicGameObject {
 	 * @return	The new color.
 	 */
 	private function setColor(color:Int):Int {
+		if (color == this._color)
+			return color;
+		
 		_color = color;
 		refreshTextFormat();
 		return _color;
@@ -287,7 +299,11 @@ class Label extends BasicGameObject {
 	 * @return	The new transparency.
 	 */
 	private function setAlpha(alpha:Float):Float {
-		_alpha = Math.min(1, Math.max(0, alpha));
+		alpha = Math.min(1, Math.max(0, alpha));
+		if (alpha == this._alpha)
+			return alpha;
+		
+		_alpha = alpha;
 		refreshAlpha();
 		return _alpha;
 	}
