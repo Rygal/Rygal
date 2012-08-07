@@ -18,7 +18,14 @@
 package org.rygal.graphic;
 
 /**
- * ...
+ * <h2>Description</h2>
+ * <p>
+ * 	This class holds the most used color keys.
+ * </p>
+ * <h2>Example</h2>
+ * <code>
+ * screen.drawString(font, "IM IN SPACE!", Color.RED, 10, 10);
+ * </code>
  * @author Christopher Kaster
  */
 class Color {
