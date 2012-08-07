@@ -155,6 +155,17 @@ class BitmapFont extends Font {
 	}
 	
 	/**
+	 * Determines if this bitmap font contains a specific character.
+	 * 
+	 * @param	character	The character to be checked for existance.
+	 * @return	True if the given character exists in this bitmap font, false
+	 * 			if not.
+	 */
+	public function hasCharacterTexture(character:String):Bool {
+		return _characters.exists(character);
+	}
+	
+	/**
 	 * Returns the metrics of the given text using this font.
 	 * 
 	 * @param	text	The text to be used.
