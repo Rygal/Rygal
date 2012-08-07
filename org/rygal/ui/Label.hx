@@ -43,7 +43,7 @@ import org.rygal.physics.Rectangle;
  * 
  * <h2>Example <i>(Inside a scene)</i></h2>
  * <code>
- * 	this.addChild(new Label(font, "Hello world!", Font.CENTER, 0xFF0000,<br />
+ * 	this.addChild(new Label(font, "Hello world!", Font.CENTER, Color.RED,<br />
  * 	&nbsp;&nbsp;1, this.game.width / 2, 0));
  * </code>
  * 
