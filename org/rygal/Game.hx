@@ -22,6 +22,7 @@ import org.rygal.graphic.Canvas;
 import org.rygal.input.Keyboard;
 import org.rygal.input.Mouse;
 import org.rygal.input.Touch;
+import org.rygal.input.Joystick;
 import nme.display.Bitmap;
 import nme.display.BitmapData;
 import nme.display.DisplayObject;
@@ -68,6 +69,9 @@ class Game {
 	/** The touch surface of this game. */
 	public var touch(default, null):Touch;
 	
+	/** The connected joystick or gamepad */
+	public var joystick(default, null):Joystick;
+	
 	/** The camera's x-position. */
 	public var cameraX:Int;
 	
@@ -76,7 +80,6 @@ class Game {
 	
 	/** The game's speed modifier. (Affects the "elapsed" times of update-calls) */
 	public var speed:Float;
-	
 	
 	/** The last update in milliseconds. */
 	private var _lastUpdate:Int;
@@ -261,6 +264,7 @@ class Game {
 		this.mouse = new Mouse(_sprite, this);
 		this.keyboard = new Keyboard(_sprite);
 		this.touch = new Touch(_sprite);
+		this.joystick = new Joystick(_sprite);
 		
 		_sprite.addEventListener(Event.DEACTIVATE, onDeactivate);
 		_sprite.addEventListener(Event.ACTIVATE, onActivate);
