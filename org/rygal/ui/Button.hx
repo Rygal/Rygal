@@ -175,6 +175,9 @@ class Button extends BasicGameObject {
 	override public function draw(screen:Canvas):Void {
 		super.draw(screen);
 		
+		screen.push();
+		screen.translate(x, y);
+		
 		if (this.absoluteBounds.contains(
 				this._game.mouse.x, this._game.mouse.y)) {
 			
@@ -191,6 +194,8 @@ class Button extends BasicGameObject {
 			screen.fillRect(color, 0, 0, width, height);
 		}
 		this._label.draw(screen);
+		
+		screen.pop();
 	}
 	
 	
