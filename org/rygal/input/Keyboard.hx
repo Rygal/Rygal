@@ -99,7 +99,8 @@ class Keyboard extends EventDispatcher {
 			dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_TYPED, this,
 				intKeyCode, e.charCode));
 			
-			if (e.charCode != 0) {
+			if (e.charCode != 0 || intKeyCode == Keys.DELETE) {
+				// Delete didn't have a charCode on C++ target.
 				dispatchEvent(new KeyboardEvent(KeyboardEvent.CHAR_TYPED, this,
 					intKeyCode, e.charCode));
 			}
