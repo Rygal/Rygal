@@ -36,6 +36,7 @@ import nme.ui.MultitouchInputMode;
  * 	&nbsp;&nbsp;// touch point is under or above the enemy<br />
  * 	}
  * </code>
+ * 
  * @author Christopher Kaster
  */
 class Touch extends EventDispatcher {
