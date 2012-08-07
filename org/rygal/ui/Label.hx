@@ -123,6 +123,79 @@ class Label extends BasicGameObject {
 	
 	
 	/**
+	 * Draws this label on the given screen with a clipping rectangle.
+	 * 
+	 * @param	screen		The screen this label should be drawn to.
+	 * @param	clipRect	The clipping rectangle
+	 */
+	public function drawClipped(screen:Canvas, clipRect:Rectangle):Void {
+		var x:Float = this.x;
+		if (Std.is(font, EmbeddedFont)) {
+			var nmeClipRect:nme.geom.Rectangle = new nme.geom.Rectangle(
+				screen.xTranslation + clipRect.x,
+				screen.yTranslation + clipRect.y,
+				clipRect.width, clipRect.height);
+			
+			if (this.alignment == Font.CENTER) {
+				// Draw every line on it's own when center alignment is used.
+				// This is due to a bug that appear under certain
+				// circumstances, where some lines have decimal widths whereas
+				// other lines have a width with a whole number, thus some of
+				// the lines are displayed blurry.
+				
+				var wholeText:String = this._text;
+				var lines:Array<String> = wholeText.split("\n");
+				var y:Float = this.y;
+				for (line in lines) {
+					this.text = line;
+					x = this.x - Std.int(_textField.width / 2);
+					
+					#if cpp
+					screen.drawNmeDrawable(_textField,
+						new Matrix(1, 0, 0, 1, x, y), null,
+						nmeClipRect);
+					#else
+					screen.drawNmeDrawable(_textField,
+						new Matrix(1, 0, 0, 1, x, y),
+						new ColorTransform(1, 1, 1, this.alpha),
+						nmeClipRect);
+					#end
+					
+					y += _textField.textHeight;
+				}
+				this.text = wholeText;
+				
+				
+			} else {
+				if (this.alignment == Font.RIGHT) {
+					x -= _textField.width;
+				}
+				#if cpp
+				screen.drawNmeDrawable(_textField,
+					new Matrix(1, 0, 0, 1, x, y), null,
+					nmeClipRect);
+				#else
+				screen.drawNmeDrawable(_textField,
+					new Matrix(1, 0, 0, 1, x, y),
+					new ColorTransform(1, 1, 1, this.alpha),
+					nmeClipRect);
+				#end
+			}
+			
+		} else {
+			if (this.alignment == Font.CENTER) {
+				x -= _canvas.width / 2;
+			} else if (this.alignment == Font.RIGHT) {
+				x -= _canvas.width;
+			}
+			screen.drawPart(_canvas.toTexture(), x,
+				y, clipRect.x, clipRect.y,
+				_canvas.width - (clipRect.x + clipRect.width),
+				_canvas.height - (clipRect.y + clipRect.height));
+		}
+	}
+	
+	/**
 	 * Draws this label on the given screen.
 	 * 
 	 * @param	screen	The screen this label should be drawn to.
@@ -359,6 +432,12 @@ class Label extends BasicGameObject {
 	 */
 	private function recreateCanvas():Void {
 		var metrics:Rectangle = font.getTextMetrics(text);
+		if (metrics.width == 0) {
+			metrics = new Rectangle(metrics.x, metrics.y, 1, metrics.height);
+		}
+		if (metrics.height == 0) {
+			metrics = new Rectangle(metrics.x, metrics.y, metrics.width, 1);
+		}
 		_canvas = new Canvas(new BitmapData(
 			Std.int(metrics.width), Std.int(metrics.height)));
 	}
