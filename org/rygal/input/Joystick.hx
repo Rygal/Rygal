@@ -100,6 +100,6 @@ class Joystick extends EventDispatcher {
 	}
 	
 	public function isButtonPressed(deviceID:Int, buttonID:Int):Bool {
-		return _buttonsPressed.get(e.device + ":" + e.id);
+		return _buttonsPressed.get(deviceID + ":" + buttonID);
 	}
 }
