@@ -49,6 +49,9 @@ class EmbeddedFont extends Font {
 	public var textFormat(default, null):TextFormat;
 	
 	
+	/** A textfield used to determine the metrics of text. */
+	private var _metricsField:TextField;
+	
 	/** The font this object is based on. */
 	private var _font:nme.text.Font;
 	
@@ -68,6 +71,12 @@ class EmbeddedFont extends Font {
 		this._font = font;
 		this._size = size;
 		this.textFormat = new TextFormat(this._font.fontName, size);
+		
+		this._metricsField = new TextField();
+		this._metricsField.embedFonts = true;
+		this._metricsField.antiAliasType = AntiAliasType.NORMAL;
+		this._metricsField.autoSize = TextFieldAutoSize.LEFT;
+		this._metricsField.defaultTextFormat = this.textFormat;
 	}
 	
 	
@@ -90,14 +99,10 @@ class EmbeddedFont extends Font {
 	 * @return	The metrics of the given text.
 	 */
 	override public function getTextMetrics(text:String):Rectangle {
-		var field:TextField = new TextField();
-		field.embedFonts = true;
-		field.antiAliasType = AntiAliasType.NORMAL;
-		field.autoSize = TextFieldAutoSize.LEFT;
-		field.defaultTextFormat = this.textFormat;
-		field.text = text;
-		field.setTextFormat(field.defaultTextFormat);
-		return new Rectangle(0, 0, field.width, field.height);
+		this._metricsField.text = text;
+		this._metricsField.setTextFormat(this._metricsField.defaultTextFormat);
+		return new Rectangle(0, 0, this._metricsField.textWidth,
+			this._metricsField.textHeight);
 	}
 	
 }

@@ -50,6 +50,9 @@ class KeyboardEvent extends Event {
 	/** An event that will be called when a key is released. */
 	public static inline var KEY_UP:String = "keyUp";
 	
+	/** An event that will be called when a key is typed. */
+	public static inline var KEY_TYPED:String = "keyTyped";
+	
 	/** An event that will be called when a character is typed. */
 	public static inline var CHAR_TYPED:String = "charTyped";
 	

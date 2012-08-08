@@ -204,8 +204,8 @@ class Canvas {
 	 * @param	bottomOffset	The offset from the bottom side of the texture.
 	 */
 	public function drawPart(texture:Texture, x:Float, y:Float,
-			leftOffset:Int = 0, topOffset:Int = 0, rightOffset:Int = 0,
-			bottomOffset:Int = 0):Void {
+			leftOffset:Float = 0, topOffset:Float = 0, rightOffset:Float = 0,
+			bottomOffset:Float = 0):Void {
 		
 		if (texture == null)
 			return;
@@ -294,18 +294,19 @@ class Canvas {
 	 * @param	source			The drawable object to draw on this canvas.
 	 * @param	?matrix			A matrix for object transformations.
 	 * @param	?colorTransform	A color transformation.
+	 * @param	?clipRect		A clipping rectangle.
 	 */
 	public function drawNmeDrawable(source:IBitmapDrawable, ?matrix:Matrix,
-			?colorTransform:ColorTransform):Void {
+			?colorTransform:ColorTransform, ?clipRect:Rectangle):Void {
 		
 		if (matrix == null) {
 			_bitmapData.draw(source, new Matrix(1, 0, 0, 1, xTranslation,
-				yTranslation), colorTransform);
+				yTranslation), colorTransform, null, clipRect);
 			
 		} else {
 			var m:Matrix = matrix.clone();
 			m.translate(xTranslation, yTranslation);
-			_bitmapData.draw(source, m, colorTransform);
+			_bitmapData.draw(source, m, colorTransform, null, clipRect);
 		}
 	}
 	

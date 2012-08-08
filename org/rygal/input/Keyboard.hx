@@ -96,10 +96,15 @@ class Keyboard extends EventDispatcher {
 			var previous:Bool = _keys[intKeyCode];
 			_keys[intKeyCode] = true;
 			
-			if (e.charCode != 0) {
+			dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_TYPED, this,
+				intKeyCode, e.charCode));
+			
+			if (e.charCode != 0 || intKeyCode == Keys.DELETE) {
+				// Delete didn't have a charCode on C++ target.
 				dispatchEvent(new KeyboardEvent(KeyboardEvent.CHAR_TYPED, this,
 					intKeyCode, e.charCode));
 			}
+			
 			if (!previous) {
 				dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_DOWN, this,
 					intKeyCode, e.charCode));

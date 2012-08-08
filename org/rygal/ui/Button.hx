@@ -22,6 +22,7 @@ import nme.events.IEventDispatcher;
 import org.rygal.BasicGameObject;
 import org.rygal.Game;
 import org.rygal.graphic.Canvas;
+import org.rygal.graphic.Color;
 import org.rygal.graphic.Font;
 import org.rygal.input.MouseEvent;
 import org.rygal.physics.Rectangle;
@@ -41,10 +42,7 @@ import org.rygal.physics.Rectangle;
  * 	override public function load(game:Game):Void {<br />
  * 	&nbsp;&nbsp;super.load(game);<br />
  * 	&nbsp;&nbsp;<br />
- * 	&nbsp;&nbsp;this.button = new Button(game, 52, 12, font, "Press me!",<br />
- * 	&nbsp;&nbsp;&nbsp;&nbsp;0x333333, 0xCCCCCC, 0x555555, 0xEEEEEE,<br />
- * 	&nbsp;&nbsp;&nbsp;&nbsp;0x111111, 0xAAAAAA);<br />
- * 	&nbsp;&nbsp;<br />
+ * 	&nbsp;&nbsp;this.button = new Button(game, 52, 12, font, "Click me");<br />
  * 	&nbsp;&nbsp;this.addChild(this.button);<br />
  * 	}<br />
  * 	<br />
@@ -132,8 +130,11 @@ class Button extends BasicGameObject {
 	 * @param	y				The y-coordinate of this button.
 	 */
 	public function new(game:Game, width:Float, height:Float, font:Font,
-			caption:String, textColor:Int, color:Int, hoverTextColor:Int, hoverColor:Int, activeTextColor:Int, activeColor:Int, x:Float = 0,
-			y:Float = 0) {
+			caption:String, textColor:Int = Color.DIM_GRAY,
+			color:Int = Color.SILVER, hoverTextColor:Int = Color.DIM_GRAY,
+			hoverColor:Int = Color.LIGHT_GRAY,
+			activeTextColor:Int = Color.DIM_GRAY,
+			activeColor:Int = Color.DARK_GRAY, x:Float = 0, y:Float = 0) {
 		
 		super(x, y);
 		
@@ -175,6 +176,9 @@ class Button extends BasicGameObject {
 	override public function draw(screen:Canvas):Void {
 		super.draw(screen);
 		
+		screen.push();
+		screen.translate(x, y);
+		
 		if (this.absoluteBounds.contains(
 				this._game.mouse.x, this._game.mouse.y)) {
 			
@@ -191,6 +195,8 @@ class Button extends BasicGameObject {
 			screen.fillRect(color, 0, 0, width, height);
 		}
 		this._label.draw(screen);
+		
+		screen.pop();
 	}
 	
 	
