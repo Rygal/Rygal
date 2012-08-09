@@ -74,6 +74,13 @@ fully supported:
 		<td>Yes</td>
 	</tr>
 	<tr>
+		<td>BlackBerry</td>
+		<td>Yes</td>
+		<td>Yes</td>
+		<td>Yes</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
 		<td>HTML 5</td>
 		<td>No<sup>[4]</sup></td>
 		<td>Partially<sup>[5]</sup></td>
