@@ -9,11 +9,11 @@ Getting started
 ---------------
 
 I strongly recommend looking into the
-[Rygal wiki](https://github.com/rynti/Rygal/wiki) if you need help to get
+[Rygal wiki](https://github.com/Rygal/Rygal/wiki) if you need help to get
 started, as it provides a lot of information about the
-[setup](https://github.com/rynti/Rygal/wiki/Setup-guide) and links that may
+[setup](https://github.com/Rygal/Rygal/wiki/Setup-guide) and links that may
 be interesting to you like
-[demo projects](https://github.com/rynti/Rygal/wiki/Demo-projects) or the
+[demo projects](https://github.com/Rygal/Rygal/wiki/Demo-projects) or the
 [documentation](http://docs.rygal.org).
 
 
@@ -57,7 +57,7 @@ fully supported:
 		<td>Yes</td>
 		<td>Yes</td>
 		<td>Yes</td>
-		<td>No</td>
+		<td>Partially<sup>[4]</sup></td>
 	</tr>
 	<tr>
 		<td>iOS</td>
@@ -82,9 +82,9 @@ fully supported:
 	</tr>
 	<tr>
 		<td>HTML 5</td>
-		<td>No<sup>[4]</sup></td>
-		<td>Partially<sup>[5]</sup></td>
-		<td>No<sup>[6]</sup></td>
+		<td>No<sup>[5]</sup></td>
+		<td>Partially<sup>[6]</sup></td>
+		<td>No<sup>[7]</sup></td>
 		<td>No</td>
 	</tr>
 </table>
@@ -92,9 +92,12 @@ fully supported:
 <sup>[1]</sup>: Tested with *Windows x86* target<br />
 <sup>[2]</sup>: Tested on *Intel Macs*.<br/>
 <sup>[3]</sup>: Tested on *Ubuntu 12.04 32bit*.<br/>
-<sup>[4]</sup>: Unless either clipRect in the draw()-method or alpha in the copyPixels()-method is working, I can't support it.<br />
-<sup>[5]</sup>: Smoothing can't be disabled with jeash<br />
-<sup>[6]</sup>: Due to [the way embedded fonts work with jeash](http://haxe.org/com/libs/jeash/embedfont)
+<sup>[4]</sup>: It seems to only work with root permissions.<br/>
+<sup>[5]</sup>: Unless either clipRect in the draw()-method or alpha in the
+				copyPixels()-method is working, I can't support it.<br />
+<sup>[6]</sup>: Smoothing can't be disabled with jeash<br />
+<sup>[7]</sup>: Due to [the way embedded fonts work with
+				jeash](http://haxe.org/com/libs/jeash/embedfont)
 
 
 Sometimes, features of the *latest* branch aren't tested on every
@@ -130,4 +133,5 @@ The engine is written in haXe and based on NME.
 Questions?
 ----------
 
-If you have any questions, feel free to ask me per [mail](mailto:robert.boehm94@gmail.com).
+If you have any questions, feel free to ask me per
+[mail](mailto:robert.boehm94@gmail.com).
