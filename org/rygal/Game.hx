@@ -19,6 +19,8 @@
 package org.rygal;
 
 import org.rygal.graphic.Canvas;
+import org.rygal.input.DeviceManager;
+import org.rygal.input.InputDevice;
 import org.rygal.input.Keyboard;
 import org.rygal.input.Mouse;
 import org.rygal.input.Touch;
@@ -47,6 +49,9 @@ import nme.Lib;
  */
 class Game {
 	
+	private static var _deviceManagerTypes:Array<Class<DeviceManager>> = new Array<Class<DeviceManager>>();
+	
+	
 	/** The screen canvas that will be displayed. */
 	public var screen(default, null):Canvas;
 	
@@ -60,13 +65,13 @@ class Game {
 	public var height(default, null):Int;
 	
 	/** The mouse of this game. */
-	public var mouse(default, null):Mouse;
+	public var mouse(getMouse, null):Mouse;
 	
 	/** The keyboard of this game. */
-	public var keyboard(default, null):Keyboard;
+	public var keyboard(getKeyboard, null):Keyboard;
 	
 	/** The touch surface of this game. */
-	public var touch(default, null):Touch;
+	//public var touch(default, null):Touch;
 	
 	/** The camera's x-position. */
 	public var cameraX:Int;
@@ -77,6 +82,10 @@ class Game {
 	/** The game's speed modifier. (Affects the "elapsed" times of update-calls) */
 	public var speed:Float;
 	
+	
+	private var _deviceManagers:Array<DeviceManager>;
+	
+	private var _devices:Hash<IntHash<InputDevice>>;
 	
 	/** The last update in milliseconds. */
 	private var _lastUpdate:Int;
@@ -129,6 +138,11 @@ class Game {
 	public function new(width:Int, height:Int, zoom:Int, initialScene:Scene,
 			initialSceneName:String = "", pauseScene:Scene = null) {
 		
+		DeviceManager.useDefaultDeviceManagers();
+		
+		_devices = new Hash<IntHash<InputDevice>>();
+		_deviceManagers = new Array<DeviceManager>();
+		
 		_bitmap = new Bitmap(new BitmapData(width, height));
 		_bitmap.scaleX = _bitmap.scaleY = zoom;
 		_sprite = new Sprite();
@@ -156,6 +170,64 @@ class Game {
 		_sprite.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 	}
 	
+	
+	public static function hasDeviceManager(deviceManager:Class<DeviceManager>):Bool {
+		for (manager in _deviceManagerTypes) {
+			if (manager == deviceManager)
+				return true;
+		}
+		
+		return false;
+	}
+	
+	public static function registerDeviceManager(deviceManager:Class<DeviceManager>):Void {
+		if (!hasDeviceManager(deviceManager)) {
+			_deviceManagerTypes.push(deviceManager);
+		}
+	}
+	
+	public static function unregisterDeviceManager(deviceManager:Class<DeviceManager>):Void {
+		_deviceManagerTypes.remove(deviceManager);
+	}
+	
+	
+	public function getDeviceManager < T : DeviceManager > (type:Class<T>):T {
+		for (deviceManager in _deviceManagers) {
+			if (Std.is(deviceManager, type)) {
+				return untyped deviceManager;
+			}
+		}
+		return null;
+	}
+	
+	public function getDevice < T : InputDevice > (type:Class<T>, id:Int = 0):T {
+		var ih:IntHash<InputDevice> = _devices.get(Type.getClassName(type));
+		return untyped ih.get(id);
+	}
+	
+	public function getInput < T : InputDevice > (type:Class<T>, id:Int = 0):T {
+		return getDevice(type, id);
+	}
+	
+	public function registerDevice < T : InputDevice > (device:T, id:Int = 0):Void {
+		var className:String = Type.getClassName(Type.getClass(device));
+		if (!_devices.exists(className)) {
+			_devices.set(className, new IntHash<InputDevice>());
+		}
+		_devices.get(className).set(id, device);
+	}
+	
+	public function unregisterDevice < T : InputDevice > (type:Class<T>, id:Int = 0):Void {
+		var className:String = Type.getClassName(type);
+		
+		if (_devices.exists(className)) {
+			var ih:IntHash<InputDevice> = _devices.get(className);
+			if (ih.exists(id)) {
+				ih.get(id).dispose();
+				ih.remove(id);
+			}
+		}
+	}
 	
 	/**
 	 * Registers the given scene in this game.
@@ -211,6 +283,24 @@ class Game {
 	
 	
 	/**
+	 * Returns the mouse for this game.
+	 * 
+	 * @return	The mouse for this game.
+	 */
+	private function getMouse():Mouse {
+		return getDevice(Mouse);
+	}
+	
+	/**
+	 * Returns the keyboard for this game.
+	 * 
+	 * @return	The keyboard for this game.
+	 */
+	private function getKeyboard():Keyboard {
+		return getDevice(Keyboard);
+	}
+	
+	/**
 	 * Updates this game and it's currently active scene.
 	 * 
 	 * @param	time	The time elapsed since the last update.
@@ -257,10 +347,13 @@ class Game {
 	 */
 	private function onAddedToStage(e:Event):Void {
 		_sprite.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+		_sprite.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		
-		this.mouse = new Mouse(_sprite, this);
-		this.keyboard = new Keyboard(_sprite);
-		this.touch = new Touch(_sprite);
+		for (deviceManagerType in _deviceManagerTypes) {
+			_deviceManagers.push(
+					Type.createInstance(deviceManagerType, [this])
+				);
+		}
 		
 		_sprite.addEventListener(Event.DEACTIVATE, onDeactivate);
 		_sprite.addEventListener(Event.ACTIVATE, onActivate);
@@ -268,6 +361,25 @@ class Game {
 		useScene(_initialSceneName);
 		_lastUpdate = Lib.getTimer();
 		_sprite.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+	}
+	
+	/**
+	 * A callback that will be called when this game is removed from the stage.
+	 * 
+	 * @param	e	Event parameters.
+	 */
+	private function onRemovedFromStage(e:Event):Void {
+		_sprite.removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+		_sprite.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+		
+		for (deviceManager in _deviceManagers) {
+			deviceManager.dispose();
+			_deviceManagers.remove(deviceManager);
+		}
+		
+		_sprite.removeEventListener(Event.DEACTIVATE, onDeactivate);
+		_sprite.removeEventListener(Event.ACTIVATE, onActivate);
+		_sprite.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 	}
 	
 	/**
