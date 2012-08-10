@@ -49,7 +49,9 @@ import nme.Lib;
  */
 class Game {
 	
-	private static var _deviceManagerTypes:Array<Class<DeviceManager>> = new Array<Class<DeviceManager>>();
+	/** The registered device managers. */
+	private static var _deviceManagerTypes:Array<Class<DeviceManager>> =
+		new Array<Class<DeviceManager>>();
 	
 	
 	/** The screen canvas that will be displayed. */
@@ -79,12 +81,15 @@ class Game {
 	/** The camera's y-position. */
 	public var cameraY:Int;
 	
-	/** The game's speed modifier. (Affects the "elapsed" times of update-calls) */
+	/** The game's speed modifier.
+	 * 	(Affects the "elapsed" times of update-calls) */
 	public var speed:Float;
 	
 	
+	/** An array with the device managers of this game. */
 	private var _deviceManagers:Array<DeviceManager>;
 	
+	/** Contains all the registered devices of this game. */
 	private var _devices:Hash<IntHash<InputDevice>>;
 	
 	/** The last update in milliseconds. */
@@ -138,6 +143,8 @@ class Game {
 	public function new(width:Int, height:Int, zoom:Int, initialScene:Scene,
 			initialSceneName:String = "", pauseScene:Scene = null) {
 		
+		// Automatically load the default device manager so the "user" doesn't
+		// have to worry about it:
 		DeviceManager.useDefaultDeviceManagers();
 		
 		_devices = new Hash<IntHash<InputDevice>>();
@@ -171,6 +178,12 @@ class Game {
 	}
 	
 	
+	/**
+	 * Determines whether a device manager is already registered or not.
+	 * 
+	 * @param	deviceManager	The device manager to be queried.
+	 * @return	True if the device manager is registered, else false.
+	 */
 	public static function hasDeviceManager(deviceManager:Class<DeviceManager>):Bool {
 		for (manager in _deviceManagerTypes) {
 			if (manager == deviceManager)
@@ -180,17 +193,36 @@ class Game {
 		return false;
 	}
 	
+	/**
+	 * Registers the given device manager.
+	 * 
+	 * @param	deviceManager	The device manager to be registered.
+	 */
 	public static function registerDeviceManager(deviceManager:Class<DeviceManager>):Void {
 		if (!hasDeviceManager(deviceManager)) {
 			_deviceManagerTypes.push(deviceManager);
 		}
 	}
 	
-	public static function unregisterDeviceManager(deviceManager:Class<DeviceManager>):Void {
+	/**
+	 * Unregisters the given device manager
+	 * 
+	 * @param	deviceManager	The device manager to be unregistered.
+	 */
+	public static function unregisterDeviceManager(
+			deviceManager:Class<DeviceManager>):Void {
+		
 		_deviceManagerTypes.remove(deviceManager);
 	}
 	
 	
+	/**
+	 * Returns the device manager of the given type.
+	 * 
+	 * @param	type	The type of the requested device manager.
+	 * @return	Either the device manager or null if the given type is not
+	 * 			registered.
+	 */
 	public function getDeviceManager < T : DeviceManager > (type:Class<T>):T {
 		for (deviceManager in _deviceManagers) {
 			if (Std.is(deviceManager, type)) {
@@ -200,15 +232,38 @@ class Game {
 		return null;
 	}
 	
-	public function getDevice < T : InputDevice > (type:Class<T>, id:Int = 0):T {
+	/**
+	 * Returns the device of the given type and with the given ID.
+	 * 
+	 * @param	type	The type of the requested device.
+	 * @param	id		The ID of the device. (Only used on some device types)
+	 * @return	The requested device or null if it doesn't exist.
+	 */
+	public function getDevice < T : InputDevice > (type:Class<T>,
+			id:Int = 0):T {
+		
 		var ih:IntHash<InputDevice> = _devices.get(Type.getClassName(type));
 		return untyped ih.get(id);
 	}
 	
+	/**
+	 * Returns the input of the given type and with the given ID. This method is
+	 * an alias for getDevice.
+	 * 
+	 * @param	type	The type of the requested input.
+	 * @param	id		The ID of the input. (Only used on some device types)
+	 * @return	The requested input or null if it doesn't exist.
+	 */
 	public function getInput < T : InputDevice > (type:Class<T>, id:Int = 0):T {
 		return getDevice(type, id);
 	}
 	
+	/**
+	 * Registers the given device.
+	 * 
+	 * @param	device	The device to be registered.
+	 * @param	id		The ID of the device to be registered.
+	 */
 	public function registerDevice < T : InputDevice > (device:T, id:Int = 0):Void {
 		var className:String = Type.getClassName(Type.getClass(device));
 		if (!_devices.exists(className)) {
@@ -217,6 +272,12 @@ class Game {
 		_devices.get(className).set(id, device);
 	}
 	
+	/**
+	 * Unregisters the device of the given type.
+	 * 
+	 * @param	type	The type of the device to be unregistered.
+	 * @param	id		The ID of the device to be unregistered.
+	 */
 	public function unregisterDevice < T : InputDevice > (type:Class<T>, id:Int = 0):Void {
 		var className:String = Type.getClassName(type);
 		
@@ -376,6 +437,14 @@ class Game {
 			deviceManager.dispose();
 			_deviceManagers.remove(deviceManager);
 		}
+		
+		// Remove registered devices:
+		for (deviceHash in _devices) {
+			for (device in deviceHash) {
+				device.dispose();
+			}
+		}
+		_devices = new Hash<IntHash<InputDevice>>();
 		
 		_sprite.removeEventListener(Event.DEACTIVATE, onDeactivate);
 		_sprite.removeEventListener(Event.ACTIVATE, onActivate);
