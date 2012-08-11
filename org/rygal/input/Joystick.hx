@@ -41,13 +41,15 @@ class Joystick extends InputDevice {
 	public var z(default, null):Float;
 
 	private var _game:Game;
-	
+	private var _buttonStates:IntHash<Bool>;
 	
 	public function new(game:Game, deviceID:Int) {
 		super();
 		
 		this.deviceID = deviceID;
 		this._game = game;
+		
+		this._buttonStates = new IntHash<Bool>();
 	}
 	
 	public function updateFromEvent(e:nme.events.JoystickEvent) {
@@ -55,6 +57,18 @@ class Joystick extends InputDevice {
 		this.x = e.x;
 		this.y = e.y;
 		this.z = e.z;
+	}
+	
+	public function setButtonState(e:JoystickEvent, pressed:Bool) {
+		_buttonStates.set(e.id, pressed);
+	}
+	
+	public function isButtonPressed(id:Int) {
+		if(_buttonStates.exists(id)) {
+			return _buttonStates.get(id);
+		} else {
+			return false;
+		}
 	}
 	
 }

@@ -99,6 +99,9 @@ class JoystickDeviceManager extends DeviceManager {
 		
 		var joystick:Joystick = game.getDevice(Joystick, e.device);
 		var je:JoystickEvent = new JoystickEvent(JoystickEvent.BUTTON_DOWN, joystick);
+		
+		joystick.setButtonState(je, true);
+		
 		joystick.dispatchEvent(je);
 		this.dispatchEvent(je);
 	}
@@ -109,6 +112,9 @@ class JoystickDeviceManager extends DeviceManager {
 		
 		var joystick:Joystick = game.getDevice(Joystick, e.device);
 		var je:JoystickEvent = new JoystickEvent(JoystickEvent.BUTTON_UP, joystick);
+		
+		joystick.setButtonState(je, false);
+		
 		joystick.dispatchEvent(je);
 		this.dispatchEvent(je);
 	}
