@@ -91,7 +91,6 @@ class TouchEvent extends Event {
 	/** Determines if multi-touch is enabled. */
 	public var isMultiTouchEnabled(default, null):Bool;
 	
-	
 	/**
 	 * Creates a new TouchEvent based on the given touch.
 	 * 
