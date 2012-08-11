@@ -33,73 +33,28 @@ import nme.events.EventDispatcher;
  */
 class Joystick extends EventDispatcher {
 	
-	public var id:Int;
-	public var deviceID:Int;
+	public var id(default, null):Int;
+	public var deviceID(default, null):Int;
 	
-	public var x:Float;
-	public var y:Float;
-	public var z:Float;
-	
-	private var _buttonsPressed:Hash<Bool>;
-	
-	/** The handler used to register events on. Is also used to determine the
-	 * 	relative coordinates of touch events. */
-	private var _handler:DisplayObject;
+	public var x(default, null):Float;
+	public var y(default, null):Float;
+	public var z(default, null):Float;
+
+	private var _game:Game;
 	
 	
-	public function new(handler:DisplayObject) {
+	public function new(game:Game, deviceID:Int) {
 		super();
 		
-		_buttonsPressed = new Hash<Bool>();
-		_buttonsPressed.set("0:13", true);
-		
-		this._handler = handler;
-		
-		#if (cpp && !mobile)
-		_handler.stage.addEventListener(nme.events.JoystickEvent.AXIS_MOVE, onAxisMove);
-		_handler.stage.addEventListener(nme.events.JoystickEvent.BALL_MOVE, onBallMove);
-		_handler.stage.addEventListener(nme.events.JoystickEvent.BUTTON_DOWN, onButtonDown);
-		_handler.stage.addEventListener(nme.events.JoystickEvent.BUTTON_UP, onButtonUp);
-		_handler.stage.addEventListener(nme.events.JoystickEvent.HAT_MOVE, onHatMove);
-		#end
+		this.deviceID = deviceID;
+		this._game = game;
 	}
 	
-	private function onAxisMove(e:nme.events.JoystickEvent) {
-		updateEvent(e);
-		this.dispatchEvent(new JoystickEvent(JoystickEvent.AXIS_MOVE, this));
-	}
-	
-	private function onBallMove(e:nme.events.JoystickEvent) {
-		updateEvent(e);
-		this.dispatchEvent(new JoystickEvent(JoystickEvent.BALL_MOVE, this));
-	}
-	
-	private function onButtonDown(e:nme.events.JoystickEvent) {
-		updateEvent(e);
-		_buttonsPressed.set(e.device + ":" + e.id, true);
-		this.dispatchEvent(new JoystickEvent(JoystickEvent.BUTTON_DOWN, this));
-	}
-	
-	private function onButtonUp(e:nme.events.JoystickEvent) {
-		updateEvent(e);
-		_buttonsPressed.set(e.device + ":" + e.id, false);
-		this.dispatchEvent(new JoystickEvent(JoystickEvent.BUTTON_UP, this));
-	}
-	
-	private function onHatMove(e:nme.events.JoystickEvent) {
-		updateEvent(e);
-		this.dispatchEvent(new JoystickEvent(JoystickEvent.HAT_MOVE, this));
-	}
-	
-	private function updateEvent(e:nme.events.JoystickEvent) {
+	public function updateFromEvent(e:nme.events.JoystickEvent) {
 		this.id = e.id;
-		this.deviceID = e.device;
 		this.x = e.x;
 		this.y = e.y;
 		this.z = e.z;
 	}
 	
-	public function isButtonPressed(deviceID:Int, buttonID:Int):Bool {
-		return _buttonsPressed.get(deviceID + ":" + buttonID);
-	}
 }

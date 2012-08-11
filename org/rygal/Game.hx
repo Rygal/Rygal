@@ -78,7 +78,7 @@ class Game {
 	public var touch(getTouch, null):Touch;
 	
 	/** The connected joystick or gamepad */
-	public var joystick(default, null):Joystick;
+	public var joystick(getJoystick, null):Joystick;
 	
 	/** The camera's x-position. */
 	public var cameraX:Int;
@@ -420,6 +420,13 @@ class Game {
 	}
 	
 	/**
+	 * coming soon...
+	 */
+	private function getJoystick():Joystick {
+		return getDevice(Joystick);
+	}
+	
+	/**
 	 * Updates this game and it's currently active scene.
 	 * 
 	 * @param	time	The time elapsed since the last update.
@@ -468,18 +475,11 @@ class Game {
 		_sprite.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		_sprite.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		
-<<<<<<< HEAD
-		this.mouse = new Mouse(_sprite, this);
-		this.keyboard = new Keyboard(_sprite);
-		this.touch = new Touch(_sprite, touch);
-		this.joystick = new Joystick(_sprite);
-=======
 		for (deviceManagerType in _deviceManagerTypes) {
 			_deviceManagers.push(
 					Type.createInstance(deviceManagerType, [this])
 				);
 		}
->>>>>>> 96249fc476a728b5b87a0c426997bd290c71d88c
 		
 		_sprite.addEventListener(Event.DEACTIVATE, onDeactivate);
 		_sprite.addEventListener(Event.ACTIVATE, onActivate);
