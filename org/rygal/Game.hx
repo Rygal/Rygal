@@ -232,7 +232,6 @@ class Game {
 	 * @return	Either the device manager or null if the given type is not
 	 * 			registered.
 	 */
-
 	public function getDeviceManager<T:DeviceManager>(type:Class<T>):T {
 		for (deviceManager in _deviceManagers) {
 			if (Std.is(deviceManager, type)) {
@@ -243,16 +242,38 @@ class Game {
 	}
 	
 	/**
+	 * Determines if a device of the given type and with the given ID is
+	 * registered.
+	 * 
+	 * @param	type	The type of the device.
+	 * @param	id		The ID of the device. (Only used on some device types)
+	 * @return	True if the device exists, else false.
+	 */
+	public function hasDevice<T:InputDevice>(type:Class<T>, id:Int = 0):Bool {
+		if (_devices.exists(Type.getClassName(type))) {
+			var ih:IntHash<T> = cast _devices.get(Type.getClassName(type));
+			if (ih.exists(id)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * Returns the device of the given type and with the given ID.
 	 * 
 	 * @param	type	The type of the requested device.
 	 * @param	id		The ID of the device. (Only used on some device types)
 	 * @return	The requested device or null if it doesn't exist.
 	 */
-
 	public function getDevice<T:InputDevice>(type:Class<T>, id:Int = 0):T {
-		var ih:IntHash<T> = cast _devices.get(Type.getClassName(type));
-		return ih.get(id);
+		if (_devices.exists(Type.getClassName(type))) {
+			var ih:IntHash<T> = cast _devices.get(Type.getClassName(type));
+			if (ih.exists(id)) {
+				return ih.get(id);
+			}
+		}
+		return null;
 	}
 	
 	/**
@@ -262,13 +283,24 @@ class Game {
 	 * @return	An iterator over all devices of the given type.
 	 */
 	public function getDevices<T:InputDevice>(type:Class<T>):Iterator<T> {
-		var ih:IntHash<T> = cast _devices.get(Type.getClassName(type));
-		if (ih == null) {
-			// Return a dummy iterator rather than null.
-			return new IntHash<T>().iterator();
-		} else {
+		if (_devices.exists(Type.getClassName(type))) {
+			var ih:IntHash<T> = cast _devices.get(Type.getClassName(type));
 			return ih.iterator();
 		}
+		// Return a dummy iterator rather than null.
+		return new IntHash<T>().iterator();
+	}
+	
+	/**
+	 * Determines if an input of the given type and with the given ID is
+	 * registered.
+	 * 
+	 * @param	type	The type of the input.
+	 * @param	id		The ID of the input. (Only used on some device types)
+	 * @return	True if the input exists, else false.
+	 */
+	public function hasInput<T:InputDevice>(type:Class<T>, id:Int = 0):Bool {
+		return hasDevice(type, id);
 	}
 	
 	/**
@@ -291,7 +323,7 @@ class Game {
 	 * @return	An iterator over all inputs of the given type.
 	 */
 	public function getInputs<T:InputDevice>(type:Class<T>):Iterator<T> {
-		return getInputs(type);
+		return getDevices(type);
 	}
 	
 	/**
@@ -301,10 +333,18 @@ class Game {
 	 * @param	id		The ID of the device to be registered.
 	 */
 	public function registerDevice<T:InputDevice>(device:T, id:Int = 0):Void {
-		
 		var className:String = Type.getClassName(Type.getClass(device));
 		if (!_devices.exists(className)) {
 			_devices.set(className, new IntHash<InputDevice>());
+		}
+		var ih:IntHash<InputDevice> = _devices.get(className);
+		if (ih.exists(id)) {
+			if (ih.get(id) != device) {
+				ih.get(id).dispose();
+			} else {
+				// If the same device is already registered
+				return;
+			}
 		}
 		_devices.get(className).set(id, device);
 	}
