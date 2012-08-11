@@ -125,9 +125,6 @@ class TouchDeviceManager extends DeviceManager {
 	 * @param	e	Event parameters.
 	 */
 	private function onTouchBegin(e:nme.events.TouchEvent):Void {
-		var t:Touch = new Touch(game, e.touchPointID);
-		game.registerDevice(t, e.touchPointID);
-		
 		updateEvent(e);
 		
 		var touch:Touch = game.getInput(Touch, e.touchPointID);
@@ -252,6 +249,11 @@ class TouchDeviceManager extends DeviceManager {
 	 * @param	e	Event parameters used to obtain the new values.
 	 */
 	private function updateEvent(e:nme.events.TouchEvent):Void {
+		if (!game.hasInput(Touch, e.touchPointID)) {
+			var t:Touch = new Touch(game, e.touchPointID);
+			game.registerDevice(t, e.touchPointID);
+		}
+		
 		var touch:Touch = game.getInput(Touch, e.touchPointID);
 		
 		touch.updateFromEvent(e);
