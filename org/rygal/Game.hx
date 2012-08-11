@@ -420,9 +420,7 @@ class Game {
 	}
 	
 	/**
-	 * Returns the primary touch handler for this game.
-	 * 
-	 * @return	The primary touch handler for this game.
+	 * Returns the joystick of this game.
 	 */
 	private function getJoystick():Touch {
 		return getDevice(Joystick);
