@@ -18,6 +18,7 @@
 
 package org.rygal.input;
 
+import nme.events.EventDispatcher;
 import org.rygal.Game;
 
 /**
@@ -30,7 +31,7 @@ import org.rygal.Game;
  * 
  * @author Robert Böhm
  */
-class DeviceManager {
+class DeviceManager extends EventDispatcher {
 	
 	/** The game this device manager is registered on. */
 	public var game(default, null):Game;
@@ -42,6 +43,8 @@ class DeviceManager {
 	 * @param	game	The game this device manager is registered on.
 	 */
 	public function new(game:Game) {
+		super();
+		
 		this.game = game;
 	}
 	

@@ -30,6 +30,7 @@ import nme.display.DisplayObject;
 import nme.display.Sprite;
 import nme.events.Event;
 import nme.Lib;
+import org.rygal.input.TouchDeviceManager;
 
 /**
  * <h2>Description</h2>
@@ -72,7 +73,7 @@ class Game {
 	/** The keyboard of this game. */
 	public var keyboard(getKeyboard, null):Keyboard;
 	
-	/** The touch surface of this game. */
+	/** The primay touch handler of this game. */
 	public var touch(getTouch, null):Touch;
 	
 	/** The camera's x-position. */
@@ -230,7 +231,7 @@ class Game {
 	public function getDeviceManager < T : DeviceManager > (type:Class<T>):T {
 		for (deviceManager in _deviceManagers) {
 			if (Std.is(deviceManager, type)) {
-				return untyped deviceManager;
+				return cast deviceManager;
 			}
 		}
 		return null;
@@ -246,8 +247,24 @@ class Game {
 	public function getDevice < T : InputDevice > (type:Class<T>,
 			id:Int = 0):T {
 		
-		var ih:IntHash<InputDevice> = _devices.get(Type.getClassName(type));
-		return untyped ih.get(id);
+		var ih:IntHash<T> = cast _devices.get(Type.getClassName(type));
+		return ih.get(id);
+	}
+	
+	/**
+	 * Returns all devices of the given type.
+	 * 
+	 * @param	type	The type of the requested devices.
+	 * @return	An iterator over all devices of the given type.
+	 */
+	public function getDevices < T : InputDevice > (type:Class<T>):Iterator<T> {
+		var ih:IntHash<T> = cast _devices.get(Type.getClassName(type));
+		if (ih == null) {
+			// Return a dummy iterator rather than null.
+			return new IntHash<T>().iterator();
+		} else {
+			return ih.iterator();
+		}
 	}
 	
 	/**
@@ -260,6 +277,17 @@ class Game {
 	 */
 	public function getInput < T : InputDevice > (type:Class<T>, id:Int = 0):T {
 		return getDevice(type, id);
+	}
+	
+	/**
+	 * Returns all inputs of the given type. This method is an alias for
+	 * getInputs.
+	 * 
+	 * @param	type	The type of the requested inputs.
+	 * @return	An iterator over all inputs of the given type.
+	 */
+	public function getInputs < T : InputDevice > (type:Class<T>):Iterator<T> {
+		return getInputs(type);
 	}
 	
 	/**
@@ -370,12 +398,21 @@ class Game {
 	}
 	
 	/**
-	 * Returns the touch handler for this game.
+	 * Returns the primary touch handler for this game.
 	 * 
-	 * @return	The touch handler for this game.
+	 * @return	The primary touch handler for this game.
 	 */
 	private function getTouch():Touch {
-		return getDevice(Touch);
+		return getDeviceManager(TouchDeviceManager).primaryTouch;
+	}
+	
+	/**
+	 * Returnss all touch handlers for this game.
+	 * 
+	 * @return	All touch handlers for this game.
+	 */
+	private function getTouches():Iterator<Touch> {
+		return getInputs(Touch);
 	}
 	
 	/**
