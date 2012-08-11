@@ -60,6 +60,8 @@ class Touch extends EventDispatcher {
 	/** The pressure on the touch pointer. */
 	public var pressure(default, null):Float;
 	
+	/** A Hash which represents all touch pointer on the surface*/
+	public var touches(default, null):IntHash<Touch>;
 	
 	/** The handler used to register events on. Is also used to determine the
 	 * 	relative coordinates of touch events. */
@@ -86,6 +88,7 @@ class Touch extends EventDispatcher {
 		isMultiTouchEnabled = false;
 		#end
 		
+		touches = new IntHash<Touch>();
 		this._handler = handler;
 		
 		#if !flash
@@ -126,6 +129,7 @@ class Touch extends EventDispatcher {
 	 */
 	private function onTouchEnd(e:nme.events.TouchEvent):Void {
 		updateEvent(e);
+		touches.remove(e.touchPointID);
 		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_END, this));
 	}
 	
@@ -208,6 +212,8 @@ class Touch extends EventDispatcher {
 		
 		this.touchPointID = e.touchPointID;
 		this.isPrimaryTouchPoint = e.isPrimaryTouchPoint;
+		
+		touches.set(e.touchPointID, this);
 	}
 	
 }
