@@ -17,6 +17,8 @@
 
 
 package org.rygal.input;
+
+import nme.events.EventDispatcher;
 import org.rygal.Game;
 import org.rygal.util.Storage;
 
@@ -24,7 +26,7 @@ import org.rygal.util.Storage;
  * ...
  * @author Robert Böhm
  */
-class Input {
+class Input extends EventDispatcher {
 	
 	public var name(default, null):String;
 	
