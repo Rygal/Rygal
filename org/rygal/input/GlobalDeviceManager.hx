@@ -29,7 +29,8 @@ class GlobalDeviceManager {
 	private function new() { }
 	
 	
-	public static function registerDevice(name:String, device:InputDevice):Void {
+	public static function registerDevice(name:String,
+			device:InputDevice):Void {
 		
 	}
 	

@@ -25,12 +25,18 @@ import nme.events.EventDispatcher;
  * @author Robert Böhm
  */
 class InputDevice extends EventDispatcher {
-
+	
+	/**
+	 * Creates a new input device.
+	 */
 	public function new() {
 		super();
 	}
 	
-	public function dispose():Void {
-	}
+	
+	/**
+	 * Disposes this input device.
+	 */
+	public function dispose():Void { }
 	
 }

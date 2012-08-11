@@ -75,7 +75,8 @@ class Tileset {
 		
 		for (row in 0...rows) {
 			for (col in 0...columns) {
-				_textures.push(texture.slice(col * tileWidth, row * tileHeight, tileWidth, tileHeight));
+				_textures.push(texture.slice(col * tileWidth, row * tileHeight,
+						tileWidth, tileHeight));
 			}
 		}
 	}
@@ -89,8 +90,11 @@ class Tileset {
 	 * @param	tileHeight	The height of each tile of the tileset.
 	 * @return	The new tileset based on the given properties.
 	 */
-	public static function fromTileSize(texture:Texture, tileWidth:Int, tileHeight:Int):Tileset {
-		return new Tileset(texture, Std.int(texture.width / tileWidth), Std.int(texture.height / tileHeight));
+	public static function fromTileSize(texture:Texture, tileWidth:Int,
+			tileHeight:Int):Tileset {
+		
+		return new Tileset(texture, Std.int(texture.width / tileWidth),
+			Std.int(texture.height / tileHeight));
 	}
 	
 	

@@ -192,7 +192,9 @@ class Color {
 	 * @return	The hexadecimal representation of the color with the given
 	 * 			parameters.
 	 */
-	public static function fromRgba(red:Int, blue:Int, green:Int, alpha:Float = 1):Int {
+	public static function fromRgba(red:Int, blue:Int, green:Int,
+			alpha:Float = 1):Int {
+		
 		return (Std.int(alpha * 255) << 24) |
 			(red << 16) |
 			(green << 8) |

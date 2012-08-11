@@ -184,7 +184,9 @@ class Game {
 	 * @param	deviceManager	The device manager to be queried.
 	 * @return	True if the device manager is registered, else false.
 	 */
-	public static function hasDeviceManager(deviceManager:Class<DeviceManager>):Bool {
+	public static function hasDeviceManager(
+			deviceManager:Class<DeviceManager>):Bool {
+		
 		for (manager in _deviceManagerTypes) {
 			if (manager == deviceManager)
 				return true;
@@ -198,7 +200,9 @@ class Game {
 	 * 
 	 * @param	deviceManager	The device manager to be registered.
 	 */
-	public static function registerDeviceManager(deviceManager:Class<DeviceManager>):Void {
+	public static function registerDeviceManager(
+			deviceManager:Class<DeviceManager>):Void {
+		
 		if (!hasDeviceManager(deviceManager)) {
 			_deviceManagerTypes.push(deviceManager);
 		}
@@ -264,7 +268,9 @@ class Game {
 	 * @param	device	The device to be registered.
 	 * @param	id		The ID of the device to be registered.
 	 */
-	public function registerDevice < T : InputDevice > (device:T, id:Int = 0):Void {
+	public function registerDevice < T : InputDevice > (device:T,
+			id:Int = 0):Void {
+		
 		var className:String = Type.getClassName(Type.getClass(device));
 		if (!_devices.exists(className)) {
 			_devices.set(className, new IntHash<InputDevice>());
@@ -278,7 +284,9 @@ class Game {
 	 * @param	type	The type of the device to be unregistered.
 	 * @param	id		The ID of the device to be unregistered.
 	 */
-	public function unregisterDevice < T : InputDevice > (type:Class<T>, id:Int = 0):Void {
+	public function unregisterDevice < T : InputDevice > (type:Class<T>,
+			id:Int = 0):Void {
+		
 		var className:String = Type.getClassName(type);
 		
 		if (_devices.exists(className)) {
@@ -430,7 +438,8 @@ class Game {
 	 * @param	e	Event parameters.
 	 */
 	private function onRemovedFromStage(e:Event):Void {
-		_sprite.removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+		_sprite.removeEventListener(Event.REMOVED_FROM_STAGE,
+			onRemovedFromStage);
 		_sprite.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		
 		for (deviceManager in _deviceManagers) {

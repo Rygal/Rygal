@@ -107,10 +107,14 @@ class Mouse extends InputDevice {
 			onMiddleMouseUp);
 		#end
 	#else
-		_handler.addEventListener(nme.events.MouseEvent.MOUSE_MOVE, onMouseMove);
-		_handler.addEventListener(nme.events.MouseEvent.MOUSE_DOWN, onMouseDown);
-		_handler.addEventListener(nme.events.MouseEvent.MOUSE_UP, onMouseUp);
-		_handler.addEventListener(nme.events.MouseEvent.MOUSE_WHEEL, onMouseWheel);
+		_handler.addEventListener(nme.events.MouseEvent.MOUSE_MOVE,
+			onMouseMove);
+		_handler.addEventListener(nme.events.MouseEvent.MOUSE_DOWN,
+			onMouseDown);
+		_handler.addEventListener(nme.events.MouseEvent.MOUSE_UP,
+			onMouseUp);
+		_handler.addEventListener(nme.events.MouseEvent.MOUSE_WHEEL,
+			onMouseWheel);
 		
 		#if (!flash || flash11_2)
 		#if (!RYGAL_KEEP_MENU)
@@ -243,11 +247,13 @@ class Mouse extends InputDevice {
 	 * @param	e	Event parameters.
 	 */
 	private function onMouseWheel(e:nme.events.MouseEvent):Void {
-		this.dispatchEvent(new MouseWheelEvent(MouseEvent.MOUSE_WHEEL, this, e.delta));
+		this.dispatchEvent(new MouseWheelEvent(MouseEvent.MOUSE_WHEEL, this,
+			e.delta));
 	}
 	
 	/**
-	 * A callback that will be called whenever the right mouse button is pressed.
+	 * A callback that will be called whenever the right mouse button is
+	 * pressed.
 	 * 
 	 * @param	e	Event parameters.
 	 */
@@ -257,7 +263,8 @@ class Mouse extends InputDevice {
 	}
 	
 	/**
-	 * A callback that will be called whenever the right mouse button is released.
+	 * A callback that will be called whenever the right mouse button is
+	 * released.
 	 * 
 	 * @param	e	Event parameters.
 	 */
@@ -267,7 +274,8 @@ class Mouse extends InputDevice {
 	}
 	
 	/**
-	 * A callback that will be called whenever the middle mouse button is pressed.
+	 * A callback that will be called whenever the middle mouse button is
+	 * pressed.
 	 * 
 	 * @param	e	Event parameters.
 	 */
@@ -277,7 +285,8 @@ class Mouse extends InputDevice {
 	}
 	
 	/**
-	 * A callback that will be called whenever the middle mouse button is released.
+	 * A callback that will be called whenever the middle mouse button is
+	 * released.
 	 * 
 	 * @param	e	Event parameters.
 	 */

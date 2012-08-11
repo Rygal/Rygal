@@ -35,8 +35,8 @@ import nme.events.Event;
  * 	}<br />
  * 	<br />
  * 	public function onTouchMove(e:TouchEvent):Void {<br />
- * 	&nbsp;&nbsp;trace("Touch point moved! (x=" + e.x + ", y=" + e.y + ")");<br />
- * 	}
+ * 	&nbsp;&nbsp;trace("Touch point moved! (x=" + e.x + ", y=" + e.y + ")");
+ * 	<br />}
  * </code>
  * 
  * @author Christopher Kaster

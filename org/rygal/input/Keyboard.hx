@@ -39,7 +39,9 @@ import org.rygal.Game;
  */
 class Keyboard extends InputDevice {
 	
+	/** The amount of keys that can be monitored. */
 	private static inline var KEYS_SIZE:Int = 512;
+	
 	
 	/** An array with all key states. */
 	private var _keys:Array<Bool>;
@@ -87,6 +89,9 @@ class Keyboard extends InputDevice {
 		return false;
 	}
 	
+	/**
+	 * Removes all registered event listeners.
+	 */
 	override public function dispose():Void {
 		super.dispose();
 		
@@ -104,8 +109,11 @@ class Keyboard extends InputDevice {
 	 */
 	private function onKeyDown(e:nme.events.KeyboardEvent):Void {
 		var intKeyCode:Int = cast(e.keyCode, Int);
-		if (e.charCode >= "a".charCodeAt(0) && e.charCode <= 'z'.charCodeAt(0)) {
-			intKeyCode = String.fromCharCode(e.charCode).toUpperCase().charCodeAt(0);
+		if (e.charCode >= "a".charCodeAt(0) &&
+				e.charCode <= 'z'.charCodeAt(0)) {
+			
+			intKeyCode =
+				String.fromCharCode(e.charCode).toUpperCase().charCodeAt(0);
 		}
 		
 		if (intKeyCode >= 0 && intKeyCode < _keys.length) {
@@ -135,8 +143,11 @@ class Keyboard extends InputDevice {
 	 */
 	private function onKeyUp(e:nme.events.KeyboardEvent):Void {
 		var intKeyCode:Int = cast(e.keyCode, Int);
-		if (e.charCode >= "a".charCodeAt(0) && e.charCode <= 'z'.charCodeAt(0)) {
-			intKeyCode = String.fromCharCode(e.charCode).toUpperCase().charCodeAt(0);
+		if (e.charCode >= "a".charCodeAt(0) &&
+				e.charCode <= 'z'.charCodeAt(0)) {
+			
+			intKeyCode =
+				String.fromCharCode(e.charCode).toUpperCase().charCodeAt(0);
 		}
 		
 		if (intKeyCode >= 0 && intKeyCode < _keys.length) {

@@ -73,7 +73,8 @@ class TextureSequenceIterator {
 	public static function fromSingleTexture(texture:Texture,
 			repeatCount:Int = 0) {
 		
-		return new TextureSequenceIterator(new TextureSequence([texture]), repeatCount);
+		return new TextureSequenceIterator(
+			new TextureSequence([texture]), repeatCount);
 	}
 	
 	
