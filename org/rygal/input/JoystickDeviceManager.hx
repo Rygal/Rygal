@@ -1,4 +1,4 @@
-// Copyright (C) 2012 Robert Böhm
+// Copyright (C) 2012 Robert Böhm, Christopher Kaster
 // 
 // This file is part of Rygal.
 // 
@@ -27,7 +27,7 @@ import org.rygal.Game;
  * 	A device manager for joysticks.
  * </p>
  * 
- * @author Robert Böhm
+ * @author Christopher Kaster
  */
 class JoystickDeviceManager extends DeviceManager {
 	
