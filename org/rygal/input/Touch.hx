@@ -39,7 +39,7 @@ import nme.ui.MultitouchInputMode;
  * 
  * @author Christopher Kaster
  */
-class Touch extends EventDispatcher {
+class Touch extends InputDevice {
 	
 	/** The x-coordinate of the touch pointer. */
 	public var x(default, null):Float;
@@ -72,8 +72,10 @@ class Touch extends EventDispatcher {
 	 * @param	handler	The DisplayObject this touch pointer will be created
 	 * 					for.
 	 */
-	public function new(handler:DisplayObject) {
+	public function new(game:Game) {
 		super();
+		
+		var handler:DisplayObject = game.getDisplayObject();
 		
 		#if (!flash || flash10_1)
 		if(Multitouch.supportsTouchEvents) {

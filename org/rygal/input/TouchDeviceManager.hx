@@ -23,42 +23,31 @@ import org.rygal.Game;
 /**
  * <h2>Description</h2>
  * <p>
- * 	A device managers that manages the devices of a specific type for games. If
- * 	you want to implement your own device manager, please take a look at one of
- * 	the default ones. (For instance KeyboardDeviceManager)
+ * 	A device manager for touches.
  * </p>
  * 
  * @author Robert Böhm
  */
-class DeviceManager {
-	
-	/** The game this device manager is registered on. */
-	public var game(default, null):Game;
-	
+class TouchDeviceManager extends DeviceManager {
 	
 	/**
-	 * Creates a new device manager for the given game.
+	 * Creates a new touch device manager for the given game.
 	 * 
-	 * @param	game	The game this device manager is registered on.
+	 * @param	game	The game the touch handler will be registered for.
 	 */
 	public function new(game:Game) {
-		this.game = game;
+		super(game);
+		
+		game.registerDevice(new Touch(game));
 	}
 	
 	
 	/**
-	 * Registers the default device managers. (Mouse, Keyboard & Touch)
+	 * Registers this touch device manager on the Game-class so it'll be used on
+	 * any games that will be created.
 	 */
-	public static function useDefaultDeviceManagers():Void {
-		KeyboardDeviceManager.use();
-		MouseDeviceManager.use();
-		TouchDeviceManager.use();
+	public static function use():Void {
+		Game.registerDeviceManager(TouchDeviceManager);
 	}
-	
-	
-	/**
-	 * Disposes this device manager.
-	 */
-	public function dispose():Void { }
 	
 }

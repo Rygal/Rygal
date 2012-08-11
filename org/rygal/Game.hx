@@ -73,7 +73,7 @@ class Game {
 	public var keyboard(getKeyboard, null):Keyboard;
 	
 	/** The touch surface of this game. */
-	//public var touch(default, null):Touch;
+	public var touch(getTouch, null):Touch;
 	
 	/** The camera's x-position. */
 	public var cameraX:Int;
@@ -367,6 +367,15 @@ class Game {
 	 */
 	private function getKeyboard():Keyboard {
 		return getDevice(Keyboard);
+	}
+	
+	/**
+	 * Returns the touch handler for this game.
+	 * 
+	 * @return	The touch handler for this game.
+	 */
+	private function getTouch():Touch {
+		return getDevice(Touch);
 	}
 	
 	/**
