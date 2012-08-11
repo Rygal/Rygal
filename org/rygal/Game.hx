@@ -422,7 +422,7 @@ class Game {
 	/**
 	 * Returns the joystick of this game.
 	 */
-	private function getJoystick():Touch {
+	private function getJoystick():Joystick {
 		return getDevice(Joystick);
 	}
 	

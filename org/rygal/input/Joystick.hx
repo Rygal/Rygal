@@ -31,7 +31,7 @@ import nme.events.EventDispatcher;
  * </p>
  * @author Christopher Kaster
  */
-class Joystick extends EventDispatcher {
+class Joystick extends InputDevice {
 	
 	public var id(default, null):Int;
 	public var deviceID(default, null):Int;
