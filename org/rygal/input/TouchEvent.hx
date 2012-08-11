@@ -91,9 +91,6 @@ class TouchEvent extends Event {
 	/** Determines if multi-touch is enabled. */
 	public var isMultiTouchEnabled(default, null):Bool;
 	
-	/** A Hash which represents all touch pointer on the surface*/
-	public var touches(default, null):IntHash<Touch>;
-	
 	/**
 	 * Creates a new TouchEvent based on the given touch.
 	 * 
@@ -111,8 +108,6 @@ class TouchEvent extends Event {
 		this.isPrimaryTouchPoint = touch.isPrimaryTouchPoint;
 		this.touchPointID = touch.touchPointID;
 		this.isMultiTouchEnabled = touch.isMultiTouchEnabled;
-		
-		this.touches = touch.touches;
 	}
 	
 }

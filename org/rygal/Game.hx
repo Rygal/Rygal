@@ -77,6 +77,7 @@ class Game {
 	/** The game's speed modifier. (Affects the "elapsed" times of update-calls) */
 	public var speed:Float;
 	
+	
 	/** The last update in milliseconds. */
 	private var _lastUpdate:Int;
 	

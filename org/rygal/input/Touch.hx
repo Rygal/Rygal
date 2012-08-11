@@ -61,7 +61,7 @@ class Touch extends EventDispatcher {
 	public var pressure(default, null):Float;
 	
 	/** A Hash which represents all touch pointer on the surface*/
-	public var touches(default, null):IntHash<Touch>;
+	private var _touches:IntHash<Touch>;
 	
 	/** The game this touchpoint is based on */
 	private var _game:Game;
@@ -91,8 +91,7 @@ class Touch extends EventDispatcher {
 		isMultiTouchEnabled = false;
 		#end
 		
-		touches = new IntHash<Touch>();
-		
+		this._touches = new IntHash<Touch>();
 		this._handler = handler;
 		this._game = game;
 		
@@ -116,6 +115,29 @@ class Touch extends EventDispatcher {
 		#end
 	}
 	
+	/**
+	 * This function returns a touch point
+	 *
+	 * @param	touchPointID
+	 */
+	public function getTouchPoint(touchPointID:Int):Touch {
+		return _touches.get(touchPointID);
+	}
+	
+	/**
+	 * This function returns the count of touch points
+	 */
+	public function getTouchPointCount():Int {
+		return Lambda.count(_touches);
+	}
+	
+	/**
+	 * This function returns an iterator of all touches
+	 */
+	public function getTouches():Iterator<Touch> {
+		return _touches.iterator();
+	}
+	
 	
 	/**
 	 * A callback that will be called whenever a touch starts.
@@ -134,7 +156,7 @@ class Touch extends EventDispatcher {
 	 */
 	private function onTouchEnd(e:nme.events.TouchEvent):Void {
 		updateEvent(e);
-		touches.remove(e.touchPointID);
+		_touches.remove(e.touchPointID);
 		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_END, this));
 	}
 	
@@ -218,7 +240,7 @@ class Touch extends EventDispatcher {
 		this.touchPointID = e.touchPointID;
 		this.isPrimaryTouchPoint = e.isPrimaryTouchPoint;
 		
-		touches.set(e.touchPointID, this);
+		_touches.set(e.touchPointID, this);
 	}
 	
 }
