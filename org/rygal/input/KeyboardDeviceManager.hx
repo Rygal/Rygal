@@ -43,8 +43,8 @@ class KeyboardDeviceManager extends DeviceManager {
 	
 	
 	/**
-	 * Registers this keyboard device manager on the Game so it'll be used on
-	 * any games that will be created.
+	 * Registers this keyboard device manager on the Game-class so it'll be used
+	 * on any games that will be created.
 	 */
 	public static function use():Void {
 		Game.registerDeviceManager(KeyboardDeviceManager);

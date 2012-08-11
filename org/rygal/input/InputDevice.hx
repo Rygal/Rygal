@@ -21,7 +21,13 @@ package org.rygal.input;
 import nme.events.EventDispatcher;
 
 /**
- * ...
+ * <h2>Description</h2>
+ * <p>
+ * 	A device handling specific input events. If you want to implement your own
+ * 	device, please take a look at one of the default ones. (For instance
+ * 	Keyboard)
+ * </p>
+ * 
  * @author Robert Böhm
  */
 class InputDevice extends EventDispatcher {
