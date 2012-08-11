@@ -292,6 +292,20 @@ class Game {
 	}
 	
 	/**
+	 * Returns the amount of devices of the given type.
+	 * 
+	 * @param	type	The type of the requested devices.
+	 * @return	The amount of devices.
+	 */
+	public function getDeviceCount<T:InputDevice>(type:Class<T>):Int {
+		if (_devices.exists(Type.getClassName(type))) {
+			var ih:IntHash<T> = cast _devices.get(Type.getClassName(type));
+			return Lambda.count(ih);
+		}
+		return 0;
+	}
+	
+	/**
 	 * Determines if an input of the given type and with the given ID is
 	 * registered.
 	 * 
@@ -324,6 +338,16 @@ class Game {
 	 */
 	public function getInputs<T:InputDevice>(type:Class<T>):Iterator<T> {
 		return getDevices(type);
+	}
+	
+	/**
+	 * Returns the amount of inputs of the given type.
+	 * 
+	 * @param	type	The type of the requested inputs.
+	 * @return	The amount of inputs.
+	 */
+	public function getInputCount<T:InputDevice>(type:Class<T>):Int {
+		return getDeviceCount(type);
 	}
 	
 	/**
