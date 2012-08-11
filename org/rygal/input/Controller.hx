@@ -32,7 +32,7 @@ class Controller {
 	}
 	
 	
-	public function registerInput(name:String, type:Int):Void {
+	public function registerInput(name:String, type:Class<T>):Void {
 		
 	}
 	
