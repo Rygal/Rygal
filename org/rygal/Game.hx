@@ -260,7 +260,7 @@ class Game {
 		
 		this.mouse = new Mouse(_sprite, this);
 		this.keyboard = new Keyboard(_sprite);
-		this.touch = new Touch(_sprite);
+		this.touch = new Touch(_sprite, this);
 		
 		_sprite.addEventListener(Event.DEACTIVATE, onDeactivate);
 		_sprite.addEventListener(Event.ACTIVATE, onActivate);
