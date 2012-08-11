@@ -19,6 +19,8 @@
 package org.rygal.input;
 
 import nme.display.DisplayObject;
+import nme.ui.Multitouch;
+import nme.ui.MultitouchInputMode;
 import org.rygal.Game;
 
 /**
@@ -62,24 +64,24 @@ class TouchDeviceManager extends DeviceManager {
 		isMultiTouchEnabled = false;
 		#end
 		
-		var handler:DisplayObject = game.getDisplayObject().stage;
+		_handler = game.getDisplayObject().stage;
 		
 		#if !flash
-		handler.addEventListener(nme.events.TouchEvent.TOUCH_BEGIN,
+		_handler.addEventListener(nme.events.TouchEvent.TOUCH_BEGIN,
 			onTouchBegin);
-		handler.addEventListener(nme.events.TouchEvent.TOUCH_MOVE,
+		_handler.addEventListener(nme.events.TouchEvent.TOUCH_MOVE,
 			onTouchMove);
-		handler.addEventListener(nme.events.TouchEvent.TOUCH_END,
+		_handler.addEventListener(nme.events.TouchEvent.TOUCH_END,
 			onTouchEnd);
-		handler.addEventListener(nme.events.TouchEvent.TOUCH_OVER,
+		_handler.addEventListener(nme.events.TouchEvent.TOUCH_OVER,
 			onTouchOver);
-		handler.addEventListener(nme.events.TouchEvent.TOUCH_OUT,
+		_handler.addEventListener(nme.events.TouchEvent.TOUCH_OUT,
 			onTouchOut);
-		handler.addEventListener(nme.events.TouchEvent.TOUCH_ROLL_OVER,
+		_handler.addEventListener(nme.events.TouchEvent.TOUCH_ROLL_OVER,
 			onTouchRollOver);
-		handler.addEventListener(nme.events.TouchEvent.TOUCH_ROLL_OUT,
+		_handler.addEventListener(nme.events.TouchEvent.TOUCH_ROLL_OUT,
 			onTouchRollOut);
-		handler.addEventListener(nme.events.TouchEvent.TOUCH_TAP,
+		_handler.addEventListener(nme.events.TouchEvent.TOUCH_TAP,
 			onTouchTap);
 		#end
 	}
@@ -97,21 +99,21 @@ class TouchDeviceManager extends DeviceManager {
 		super.dispose();
 		
 		#if !flash
-		handler.removeEventListener(nme.events.TouchEvent.TOUCH_BEGIN,
+		_handler.removeEventListener(nme.events.TouchEvent.TOUCH_BEGIN,
 			onTouchBegin);
-		handler.removeEventListener(nme.events.TouchEvent.TOUCH_MOVE,
+		_handler.removeEventListener(nme.events.TouchEvent.TOUCH_MOVE,
 			onTouchMove);
-		handler.removeEventListener(nme.events.TouchEvent.TOUCH_END,
+		_handler.removeEventListener(nme.events.TouchEvent.TOUCH_END,
 			onTouchEnd);
-		handler.removeEventListener(nme.events.TouchEvent.TOUCH_OVER,
+		_handler.removeEventListener(nme.events.TouchEvent.TOUCH_OVER,
 			onTouchOver);
-		handler.removeEventListener(nme.events.TouchEvent.TOUCH_OUT,
+		_handler.removeEventListener(nme.events.TouchEvent.TOUCH_OUT,
 			onTouchOut);
-		handler.removeEventListener(nme.events.TouchEvent.TOUCH_ROLL_OVER,
+		_handler.removeEventListener(nme.events.TouchEvent.TOUCH_ROLL_OVER,
 			onTouchRollOver);
-		handler.removeEventListener(nme.events.TouchEvent.TOUCH_ROLL_OUT,
+		_handler.removeEventListener(nme.events.TouchEvent.TOUCH_ROLL_OUT,
 			onTouchRollOut);
-		handler.removeEventListener(nme.events.TouchEvent.TOUCH_TAP,
+		_handler.removeEventListener(nme.events.TouchEvent.TOUCH_TAP,
 			onTouchTap);
 		#end
 	}
