@@ -125,6 +125,13 @@ class JoystickDeviceManager extends DeviceManager {
 	private function updateEvent(e:nme.events.JoystickEvent):Void {
 		var joystick:Joystick = game.getDevice(Joystick, e.device);
 		
+		if(joystick == null) {
+			var j:Joystick = new Joystick(game, e.device);
+			game.registerDevice(j, e.device);
+			
+			joystick = j;
+		}
+		
 		joystick.updateFromEvent(e);
 	}
 	
