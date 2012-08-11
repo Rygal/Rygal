@@ -77,7 +77,7 @@ class Game {
 	/** The primay touch handler of this game. */
 	public var touch(getTouch, null):Touch;
 	
-	/** The connected joystick or gamepad */
+	/** The primary joystick of this game */
 	public var joystick(getJoystick, null):Joystick;
 	
 	/** The camera's x-position. */
@@ -96,7 +96,7 @@ class Game {
 	
 	/** Contains all the registered devices of this game. */
 	private var _devices:Hash<IntHash<InputDevice>>;
-
+	
 	/** The last update in milliseconds. */
 	private var _lastUpdate:Int;
 	
@@ -420,9 +420,11 @@ class Game {
 	}
 	
 	/**
-	 * coming soon...
+	 * Returns the primary touch handler for this game.
+	 * 
+	 * @return	The primary touch handler for this game.
 	 */
-	private function getJoystick():Joystick {
+	private function getJoystick():Touch {
 		return getDevice(Joystick);
 	}
 	
