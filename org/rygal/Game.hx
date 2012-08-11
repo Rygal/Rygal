@@ -232,7 +232,7 @@ class Game {
 	 * @return	Either the device manager or null if the given type is not
 	 * 			registered.
 	 */
-	public function getDeviceManager < T : DeviceManager > (type:Class<T>):T {
+	public function getDeviceManager<T:DeviceManager>(type:Class<T>):T {
 		for (deviceManager in _deviceManagers) {
 			if (Std.is(deviceManager, type)) {
 				return cast deviceManager;
@@ -248,9 +248,9 @@ class Game {
 	 * @param	id		The ID of the device. (Only used on some device types)
 	 * @return	The requested device or null if it doesn't exist.
 	 */
-	public function getDevice < T : InputDevice > (type:Class<T>,
+	public function getDevice<T:InputDevice>(type:Class<T>,
 			id:Int = 0):T {
-		
+
 		var ih:IntHash<T> = cast _devices.get(Type.getClassName(type));
 		return ih.get(id);
 	}
@@ -261,7 +261,7 @@ class Game {
 	 * @param	type	The type of the requested devices.
 	 * @return	An iterator over all devices of the given type.
 	 */
-	public function getDevices < T : InputDevice > (type:Class<T>):Iterator<T> {
+	public function getDevices<T:InputDevice>(type:Class<T>):Iterator<T> {
 		var ih:IntHash<T> = cast _devices.get(Type.getClassName(type));
 		if (ih == null) {
 			// Return a dummy iterator rather than null.
@@ -279,7 +279,7 @@ class Game {
 	 * @param	id		The ID of the input. (Only used on some device types)
 	 * @return	The requested input or null if it doesn't exist.
 	 */
-	public function getInput < T : InputDevice > (type:Class<T>, id:Int = 0):T {
+	public function getInput<T:InputDevice>(type:Class<T>, id:Int = 0):T {
 		return getDevice(type, id);
 	}
 	
@@ -290,7 +290,7 @@ class Game {
 	 * @param	type	The type of the requested inputs.
 	 * @return	An iterator over all inputs of the given type.
 	 */
-	public function getInputs < T : InputDevice > (type:Class<T>):Iterator<T> {
+	public function getInputs<T:InputDevice>(type:Class<T>):Iterator<T> {
 		return getInputs(type);
 	}
 	
@@ -300,7 +300,7 @@ class Game {
 	 * @param	device	The device to be registered.
 	 * @param	id		The ID of the device to be registered.
 	 */
-	public function registerDevice < T : InputDevice > (device:T,
+	public function registerDevice<T:InputDevice>(device:T,
 			id:Int = 0):Void {
 		
 		var className:String = Type.getClassName(Type.getClass(device));
@@ -316,7 +316,7 @@ class Game {
 	 * @param	type	The type of the device to be unregistered.
 	 * @param	id		The ID of the device to be unregistered.
 	 */
-	public function unregisterDevice < T : InputDevice > (type:Class<T>,
+	public function unregisterDevice<T:InputDevice>(type:Class<T>,
 			id:Int = 0):Void {
 		
 		var className:String = Type.getClassName(type);

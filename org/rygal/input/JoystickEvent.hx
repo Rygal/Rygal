@@ -34,6 +34,7 @@ class JoystickEvent extends Event {
 	public static var BUTTON_DOWN:String = "buttonDown";
 	public static var BUTTON_UP:String = "buttonUp";
 	public static var HAT_MOVE:String = "hatMove";
+	public static var JOYSTICK_REGISTER:String = "joystickRegister";
 
 	public var id:Int;
 	public var deviceID:Int;

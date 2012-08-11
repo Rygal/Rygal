@@ -34,6 +34,7 @@ class JoystickDeviceManager extends DeviceManager {
 	/** The handler used to register events on. */
 	private var _handler:DisplayObject;
 	
+	private var _isRegistered:Bool = false;
 	
 	/**
 	 * 
@@ -75,9 +76,8 @@ class JoystickDeviceManager extends DeviceManager {
 		#end
 	}
 	
-	
-	// TODO: add event callbacks (look at TouchDeviceManager.hx)
 	private function onAxisMove(e:nme.events.JoystickEvent) {
+		isRegistered(e);
 		updateEvent(e);
 		
 		var joystick:Joystick = game.getDevice(Joystick, e.device);
@@ -87,6 +87,7 @@ class JoystickDeviceManager extends DeviceManager {
 	}
 	
 	private function onBallMove(e:nme.events.JoystickEvent) {
+		isRegistered(e);
 		updateEvent(e);
 		
 		var joystick:Joystick = game.getDevice(Joystick, e.device);
@@ -96,6 +97,7 @@ class JoystickDeviceManager extends DeviceManager {
 	}
 	
 	private function onButtonDown(e:nme.events.JoystickEvent) {
+		isRegistered(e);
 		updateEvent(e);
 		
 		var joystick:Joystick = game.getDevice(Joystick, e.device);
@@ -105,6 +107,7 @@ class JoystickDeviceManager extends DeviceManager {
 	}
 	
 	private function onButtonUp(e:nme.events.JoystickEvent) {
+		isRegistered(e);
 		updateEvent(e);
 		
 		var joystick:Joystick = game.getDevice(Joystick, e.device);
@@ -114,6 +117,7 @@ class JoystickDeviceManager extends DeviceManager {
 	}
 	
 	private function onHatMove(e:nme.events.JoystickEvent) {
+		isRegistered(e);
 		updateEvent(e);
 		
 		var joystick:Joystick = game.getDevice(Joystick, e.device);
@@ -125,15 +129,23 @@ class JoystickDeviceManager extends DeviceManager {
 	private function updateEvent(e:nme.events.JoystickEvent):Void {
 		var joystick:Joystick = game.getDevice(Joystick, e.device);
 		
-		if(joystick == null) {
-			var j:Joystick = new Joystick(game, e.device);
-			game.registerDevice(j, e.device);
-			
-			joystick = j;
-		}
-		
 		joystick.updateFromEvent(e);
 	}
 	
+	private function isRegistered(e:nme.events.JoystickEvent):Void {
+		try {
+			var j:Joystick = game.getDevice(Joystick, e.device);
+			j.x;
+		} catch(unknwon:Dynamic) {
+			var j:Joystick = new Joystick(game, e.device);
+			
+			var je:JoystickEvent = new JoystickEvent(JoystickEvent.JOYSTICK_REGISTER, j);
+			
+			game.registerDevice(j, e.device);
+			
+			j.dispatchEvent(je);
+			this.dispatchEvent(je);
+		}
+	}
 	
 }
