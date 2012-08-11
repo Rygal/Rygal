@@ -35,11 +35,35 @@ class Input extends EventDispatcher {
 	public var storage(default, null):Storage;
 	
 	
+	private var _keyBindings:List<Int>;
+	
+	private var _mouseButtonMask:Int;
+	
+	
 	public function new(game:Game, name:String) {
+		super();
+		
+		this._keyBindings = new List<Int>();
+		this._mouseButtonMask = 0;
 		this.game = game;
 		this.name = name;
 	}
 	
+	
+	public function bindMousebutton(key:Int):Void {
+		this._mouseButtonMask |= key;
+	}
+	
+	public function bindKey(key:Int):Void {
+		this._keyBindings.push(key);
+	}
+	
+	public function reset():Void {
+		this._keyBindings.clear();
+		this._mouseButtonMask = 0;
+	}
+	
+	public function update():Void { }
 	
 	public function connect(storage:Storage):Void {
 		this.storage = storage;

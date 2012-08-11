@@ -27,28 +27,43 @@ import org.rygal.util.Storage;
  */
 class BinaryInput extends Input {
 	
-	private var keyBindings:List<Int>;
-	private var mouseBindings:List<Int>;
+	public var state(default, null):Bool;
+	
+	private var _previousState:Bool;
+	
 	
 	public function new(game:Game, name:String) {
 		super(game, name);
 		
-		this.keyBindings = new List<Int>();
-		this.mouseBindings = new List<Int>();
+		this.state = false;
+		this._previousState = false;
 	}
 	
 	
-	public function bindMousebutton(key:Int):Void {
-		this.mouseBindings.push(key);
-	}
-	
-	public function bindKey(key:Int):Void {
-		this.keyBindings.push(key);
-	}
-	
-	public function reset():Void {
-		this.keyBindings.clear();
-		this.mouseBindings.clear();
+	override public function update():Void {
+		_previousState = state;
+		state = false;
+		
+		for (key in _keyBindings) {
+			if (game.keyboard.isKeyPressed(key)) {
+				state = true;
+				break;
+			}
+		}
+		
+		if ((_mouseButtonMask & game.mouse.buttonMask) > 0) {
+			state = true;
+		}
+		
+		if (state != _previousState) {
+			if (state) {
+				this.dispatchEvent(
+					new ControllerEvent(ControllerEvent.PRESSED, this.name));
+			} else {
+				this.dispatchEvent(
+					new ControllerEvent(ControllerEvent.RELEASED, this.name));
+			}
+		}
 	}
 	
 	override public function connect(storage:Storage):Void {

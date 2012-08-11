@@ -39,6 +39,16 @@ import nme.events.EventDispatcher;
  */
 class Mouse extends InputDevice {
 	
+	/** The mask for the left mouse button. */
+	public static inline var LEFT:Int = 1;
+	
+	/** The mask for the right mouse button. */
+	public static inline var RIGHT:Int = 2;
+	
+	/** The mask for the middle mouse button. */
+	public static inline var MIDDLE:Int = 4;
+	
+	
 	/** The x-coordinate of the mouse. */
 	public var x(default, null):Int;
 	
@@ -53,6 +63,12 @@ class Mouse extends InputDevice {
 	
 	/** Determines whether the middle mouse button is pressed or not. */
 	public var isMiddleButtonPressed(default, null):Bool;
+	
+	/** Returns a button mask for the current mouse state. For instance, it's
+	 * 	001 if only the left button is pressed or 111 when every button is
+	 * 	pressed. Use the Mouse.LEFT, ... constants to check for specific
+	 * 	buttons.*/
+	public var buttonMask(getButtonMask, never):Int;
 	
 	
 	/** The absolute x-coordinate of the mouse. */
@@ -293,6 +309,18 @@ class Mouse extends InputDevice {
 	private function onMiddleMouseUp(e:nme.events.MouseEvent):Void {
 		isMiddleButtonPressed = false;
 		this.dispatchEvent(new MouseEvent(MouseEvent.MIDDLE_MOUSE_UP, this));
+	}
+	
+	/**
+	 * Returns a button mask that can be used to check which buttons are
+	 * pressed.
+	 * 
+	 * @return	A mask for the current mouse button states.
+	 */
+	private function getButtonMask():Int {
+		return (this.isPressed ? Mouse.LEFT : 0) |
+			(this.isRightButtonPressed ? Mouse.RIGHT : 0) |
+			(this.isMiddleButtonPressed ? Mouse.MIDDLE : 0);
 	}
 	
 }
