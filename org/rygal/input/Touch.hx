@@ -27,7 +27,7 @@ import nme.ui.MultitouchInputMode;
 /**
  * <h2>Description</h2>
  * <p>
- * 	The touch surface. It will automatically be created by the Game-class.
+ * 	A touch handler. It will automatically be created by the Game-class.
  * </p>
  * 
  * <h2>Example <i>(Inside a scene)</i></h2>
@@ -38,14 +38,15 @@ import nme.ui.MultitouchInputMode;
  * </code>
  * 
  * @author Christopher Kaster
+ * @author Robert Böhm
  */
-class Touch extends EventDispatcher {
+class Touch extends InputDevice {
 	
 	/** The x-coordinate of the touch pointer. */
-	public var x(default, null):Float;
+	public var x(default, null):Int;
 	
 	/** The y-coordinate of the touch pointer. */
-	public var y(default, null):Float;
+	public var y(default, null):Int;
 	
 	/** Determines the ID of the touch pointer. */
 	public var touchPointID(default, null):Int;
@@ -54,193 +55,43 @@ class Touch extends EventDispatcher {
 	 * 	multiple touches occur, only the first one is the primary one. */
 	public var isPrimaryTouchPoint(default, null):Bool;
 	
-	/** Determines if multi-touch is enabled. */
-	public var isMultiTouchEnabled(default, null):Bool;
-	
 	/** The pressure on the touch pointer. */
 	public var pressure(default, null):Float;
 	
-	/** A Hash which represents all touch pointer on the surface*/
-	private var _touches:IntHash<Touch>;
 	
 	/** The game this touchpoint is based on */
 	private var _game:Game;
 	
-	/** The handler used to register events on. Is also used to determine the
-	 * 	relative coordinates of touch events. */
-	private var _handler:DisplayObject;
-	
 	
 	/**
-	 * Creates a new touch surface for the given DisplayObject.
+	 * Creates a new touch for the given DisplayObject.
 	 * 
-	 * @param	handler	The DisplayObject this touch pointer will be created
-	 * 					for.
+	 * @param	game			The Game this touch pointer will be created for.
+	 * @param	touchPointID	The touch point ID of this touch.
 	 */
-	public function new(handler:DisplayObject, game:Game) {
+	public function new(game:Game, touchPointID:Int) {
 		super();
 		
-		#if (!flash || flash10_1)
-		if(Multitouch.supportsTouchEvents) {
-			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
-			isMultiTouchEnabled = true;
-		} else {
-			isMultiTouchEnabled = false;
-		}
-		#else
-		isMultiTouchEnabled = false;
-		#end
-		
-		this._touches = new IntHash<Touch>();
-		this._handler = handler;
+		this.touchPointID = touchPointID;
 		this._game = game;
-		
-		#if !flash
-		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_BEGIN,
-			onTouchBegin);
-		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_MOVE,
-			onTouchMove);
-		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_END,
-			onTouchEnd);
-		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_OVER,
-			onTouchOver);
-		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_OUT,
-			onTouchOut);
-		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_ROLL_OVER,
-			onTouchRollOver);
-		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_ROLL_OUT,
-			onTouchRollOut);
-		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_TAP,
-			onTouchTap);
-		#end
 	}
 	
-	/**
-	 * This function returns a touch point
-	 *
-	 * @param	touchPointID
-	 */
-	public function getTouchPoint(touchPointID:Int):Touch {
-		return _touches.get(touchPointID);
-	}
-	
-	/**
-	 * This function returns the count of touch points
-	 */
-	public function getTouchPointCount():Int {
-		return Lambda.count(_touches);
-	}
-	
-	/**
-	 * This function returns an iterator of all touches
-	 */
-	public function getTouches():Iterator<Touch> {
-		return _touches.iterator();
-	}
-	
-	
-	/**
-	 * A callback that will be called whenever a touch starts.
-	 * 
-	 * @param	e	Event parameters.
-	 */
-	private function onTouchBegin(e:nme.events.TouchEvent):Void {
-		updateEvent(e);
-		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_BEGIN, this));
-	}
-	
-	/**
-	 * A callback that will be called whenever a touch ends.
-	 * 
-	 * @param	e	Event parameters.
-	 */
-	private function onTouchEnd(e:nme.events.TouchEvent):Void {
-		updateEvent(e);
-		_touches.remove(e.touchPointID);
-		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_END, this));
-	}
-	
-	/**
-	 * A callback that will be called whenever the touch pointer is moved.
-	 * 
-	 * @param	e	Event parameters.
-	 */
-	private function onTouchMove(e:nme.events.TouchEvent):Void {
-		updateEvent(e);
-		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_MOVE, this));
-	}
-	
-	/**
-	 * A callback that will be called whenever the touch pointer is moved
-	 * inside the game.
-	 * 
-	 * @param	e	Event parameters.
-	 */
-	private function onTouchOver(e:nme.events.TouchEvent):Void {
-		updateEvent(e);
-		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_OVER, this));
-	}
-
-	/**
-	 * A callback that will be called whenever the touch pointer is moved
-	 * out of the game.
-	 * 
-	 * @param	e	Event parameters.
-	 */
-	private function onTouchOut(e:nme.events.TouchEvent):Void {
-		updateEvent(e);
-		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_OUT, this));
-	}
-	
-	/**
-	 * A callback that will be called whenever, well, just have a look at:
-	 * TouchEvent.TOUCH_ROLL_OVER
-	 * 
-	 * @param	e	Event parameters.
-	 */
-	private function onTouchRollOver(e:nme.events.TouchEvent):Void {
-		updateEvent(e);
-		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_ROLL_OVER, this));
-	}
-	
-	/**
-	 * A callback that will be called whenever the opposite of the event that
-	 * raises onTouchRollOver occurs.
-	 * 
-	 * @param	e	Event parameters.
-	 */
-	private function onTouchRollOut(e:nme.events.TouchEvent):Void {
-		updateEvent(e);
-		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_ROLL_OUT, this));
-	}
-	
-	/**
-	 * A callback that will be called whenever the user touched the screen
-	 * without moving the pointer.
-	 * 
-	 * @param	e	Event parameters.
-	 */
-	private function onTouchTap(e:nme.events.TouchEvent):Void {
-		updateEvent(e);
-		this.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_TAP, this));
-	}
 	
 	/**
 	 * Updates the touch pointer's coordinates and other attributes.
 	 * 
 	 * @param	e	Event parameters used to obtain the new values.
 	 */
-	private function updateEvent(e:nme.events.TouchEvent):Void {
-		this.x = Std.int(e.localX / _game.zoom);
-		this.y = Std.int(e.localY / _game.zoom);
+	public function updateFromEvent(e:nme.events.TouchEvent):Void {
+		var localX:Float = e.localX - _game.getDisplayObject().x;
+		var localY:Float = e.localY - _game.getDisplayObject().y;
+		this.x = Std.int(localX / _game.zoom) + _game.cameraX;
+		this.y = Std.int(localY / _game.zoom) + _game.cameraY;
+		
+		this.isPrimaryTouchPoint = e.isPrimaryTouchPoint;
 		
 		// pressure seems not to work in NME 3.4
 		this.pressure = 1.0;
-		
-		this.touchPointID = e.touchPointID;
-		this.isPrimaryTouchPoint = e.isPrimaryTouchPoint;
-		
-		_touches.set(e.touchPointID, this);
 	}
 	
 }

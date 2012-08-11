@@ -87,7 +87,9 @@ class TextureSequence {
 	 * @param	names		The names of the sprites this sequence will use.
 	 * @return	The new texture sequence.
 	 */
-	public static function fromSpritesheet(spritesheet:Spritesheet, names:Array<String>):TextureSequence {
+	public static function fromSpritesheet(spritesheet:Spritesheet,
+			names:Array<String>):TextureSequence {
+		
 		var textures:Array<Texture> = new Array<Texture>();
 		for (name in names) {
 			textures.push(spritesheet.getTexture(name));

@@ -19,6 +19,8 @@
 package org.rygal;
 
 import org.rygal.graphic.Canvas;
+import org.rygal.input.DeviceManager;
+import org.rygal.input.InputDevice;
 import org.rygal.input.Keyboard;
 import org.rygal.input.Mouse;
 import org.rygal.input.Touch;
@@ -29,6 +31,7 @@ import nme.display.DisplayObject;
 import nme.display.Sprite;
 import nme.events.Event;
 import nme.Lib;
+import org.rygal.input.TouchDeviceManager;
 
 /**
  * <h2>Description</h2>
@@ -48,6 +51,11 @@ import nme.Lib;
  */
 class Game {
 	
+	/** The registered device managers. */
+	private static var _deviceManagerTypes:Array<Class<DeviceManager>> =
+		new Array<Class<DeviceManager>>();
+	
+	
 	/** The screen canvas that will be displayed. */
 	public var screen(default, null):Canvas;
 	
@@ -61,13 +69,13 @@ class Game {
 	public var height(default, null):Int;
 	
 	/** The mouse of this game. */
-	public var mouse(default, null):Mouse;
+	public var mouse(getMouse, null):Mouse;
 	
 	/** The keyboard of this game. */
-	public var keyboard(default, null):Keyboard;
+	public var keyboard(getKeyboard, null):Keyboard;
 	
-	/** The touch surface of this game. */
-	public var touch(default, null):Touch;
+	/** The primay touch handler of this game. */
+	public var touch(getTouch, null):Touch;
 	
 	/** The connected joystick or gamepad */
 	public var joystick(default, null):Joystick;
@@ -78,9 +86,17 @@ class Game {
 	/** The camera's y-position. */
 	public var cameraY:Int;
 	
-	/** The game's speed modifier. (Affects the "elapsed" times of update-calls) */
+	/** The game's speed modifier.
+	 * 	(Affects the "elapsed" times of update-calls) */
 	public var speed:Float;
 	
+	
+	/** An array with the device managers of this game. */
+	private var _deviceManagers:Array<DeviceManager>;
+	
+	/** Contains all the registered devices of this game. */
+	private var _devices:Hash<IntHash<InputDevice>>;
+
 	/** The last update in milliseconds. */
 	private var _lastUpdate:Int;
 	
@@ -132,6 +148,13 @@ class Game {
 	public function new(width:Int, height:Int, zoom:Int, initialScene:Scene,
 			initialSceneName:String = "", pauseScene:Scene = null) {
 		
+		// Automatically load the default device manager so the "user" doesn't
+		// have to worry about it:
+		DeviceManager.useDefaultDeviceManagers();
+		
+		_devices = new Hash<IntHash<InputDevice>>();
+		_deviceManagers = new Array<DeviceManager>();
+		
 		_bitmap = new Bitmap(new BitmapData(width, height));
 		_bitmap.scaleX = _bitmap.scaleY = zoom;
 		_sprite = new Sprite();
@@ -159,6 +182,153 @@ class Game {
 		_sprite.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 	}
 	
+	
+	/**
+	 * Determines whether a device manager is already registered or not.
+	 * 
+	 * @param	deviceManager	The device manager to be queried.
+	 * @return	True if the device manager is registered, else false.
+	 */
+	public static function hasDeviceManager(
+			deviceManager:Class<DeviceManager>):Bool {
+		
+		for (manager in _deviceManagerTypes) {
+			if (manager == deviceManager)
+				return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Registers the given device manager.
+	 * 
+	 * @param	deviceManager	The device manager to be registered.
+	 */
+	public static function registerDeviceManager(
+			deviceManager:Class<DeviceManager>):Void {
+		
+		if (!hasDeviceManager(deviceManager)) {
+			_deviceManagerTypes.push(deviceManager);
+		}
+	}
+	
+	/**
+	 * Unregisters the given device manager
+	 * 
+	 * @param	deviceManager	The device manager to be unregistered.
+	 */
+	public static function unregisterDeviceManager(
+			deviceManager:Class<DeviceManager>):Void {
+		
+		_deviceManagerTypes.remove(deviceManager);
+	}
+	
+	
+	/**
+	 * Returns the device manager of the given type.
+	 * 
+	 * @param	type	The type of the requested device manager.
+	 * @return	Either the device manager or null if the given type is not
+	 * 			registered.
+	 */
+	public function getDeviceManager < T : DeviceManager > (type:Class<T>):T {
+		for (deviceManager in _deviceManagers) {
+			if (Std.is(deviceManager, type)) {
+				return cast deviceManager;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the device of the given type and with the given ID.
+	 * 
+	 * @param	type	The type of the requested device.
+	 * @param	id		The ID of the device. (Only used on some device types)
+	 * @return	The requested device or null if it doesn't exist.
+	 */
+	public function getDevice < T : InputDevice > (type:Class<T>,
+			id:Int = 0):T {
+		
+		var ih:IntHash<T> = cast _devices.get(Type.getClassName(type));
+		return ih.get(id);
+	}
+	
+	/**
+	 * Returns all devices of the given type.
+	 * 
+	 * @param	type	The type of the requested devices.
+	 * @return	An iterator over all devices of the given type.
+	 */
+	public function getDevices < T : InputDevice > (type:Class<T>):Iterator<T> {
+		var ih:IntHash<T> = cast _devices.get(Type.getClassName(type));
+		if (ih == null) {
+			// Return a dummy iterator rather than null.
+			return new IntHash<T>().iterator();
+		} else {
+			return ih.iterator();
+		}
+	}
+	
+	/**
+	 * Returns the input of the given type and with the given ID. This method is
+	 * an alias for getDevice.
+	 * 
+	 * @param	type	The type of the requested input.
+	 * @param	id		The ID of the input. (Only used on some device types)
+	 * @return	The requested input or null if it doesn't exist.
+	 */
+	public function getInput < T : InputDevice > (type:Class<T>, id:Int = 0):T {
+		return getDevice(type, id);
+	}
+	
+	/**
+	 * Returns all inputs of the given type. This method is an alias for
+	 * getInputs.
+	 * 
+	 * @param	type	The type of the requested inputs.
+	 * @return	An iterator over all inputs of the given type.
+	 */
+	public function getInputs < T : InputDevice > (type:Class<T>):Iterator<T> {
+		return getInputs(type);
+	}
+	
+	/**
+	 * Registers the given device.
+	 * 
+	 * @param	device	The device to be registered.
+	 * @param	id		The ID of the device to be registered.
+	 */
+	public function registerDevice < T : InputDevice > (device:T,
+			id:Int = 0):Void {
+		
+		var className:String = Type.getClassName(Type.getClass(device));
+		if (!_devices.exists(className)) {
+			_devices.set(className, new IntHash<InputDevice>());
+		}
+		_devices.get(className).set(id, device);
+	}
+	
+	/**
+	 * Unregisters the device of the given type.
+	 * 
+	 * @param	type	The type of the device to be unregistered.
+	 * @param	id		The ID of the device to be unregistered.
+	 */
+	public function unregisterDevice < T : InputDevice > (type:Class<T>,
+			id:Int = 0):Void {
+		
+		var className:String = Type.getClassName(type);
+		
+		if (_devices.exists(className)) {
+			var ih:IntHash<InputDevice> = _devices.get(className);
+			if (ih.exists(id)) {
+				ih.get(id).dispose();
+				ih.remove(id);
+			}
+		}
+	}
 	
 	/**
 	 * Registers the given scene in this game.
@@ -214,6 +384,42 @@ class Game {
 	
 	
 	/**
+	 * Returns the mouse for this game.
+	 * 
+	 * @return	The mouse for this game.
+	 */
+	private function getMouse():Mouse {
+		return getDevice(Mouse);
+	}
+	
+	/**
+	 * Returns the keyboard for this game.
+	 * 
+	 * @return	The keyboard for this game.
+	 */
+	private function getKeyboard():Keyboard {
+		return getDevice(Keyboard);
+	}
+	
+	/**
+	 * Returns the primary touch handler for this game.
+	 * 
+	 * @return	The primary touch handler for this game.
+	 */
+	private function getTouch():Touch {
+		return getDeviceManager(TouchDeviceManager).primaryTouch;
+	}
+	
+	/**
+	 * Returnss all touch handlers for this game.
+	 * 
+	 * @return	All touch handlers for this game.
+	 */
+	private function getTouches():Iterator<Touch> {
+		return getInputs(Touch);
+	}
+	
+	/**
 	 * Updates this game and it's currently active scene.
 	 * 
 	 * @param	time	The time elapsed since the last update.
@@ -260,11 +466,20 @@ class Game {
 	 */
 	private function onAddedToStage(e:Event):Void {
 		_sprite.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+		_sprite.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		
+<<<<<<< HEAD
 		this.mouse = new Mouse(_sprite, this);
 		this.keyboard = new Keyboard(_sprite);
 		this.touch = new Touch(_sprite, touch);
 		this.joystick = new Joystick(_sprite);
+=======
+		for (deviceManagerType in _deviceManagerTypes) {
+			_deviceManagers.push(
+					Type.createInstance(deviceManagerType, [this])
+				);
+		}
+>>>>>>> 96249fc476a728b5b87a0c426997bd290c71d88c
 		
 		_sprite.addEventListener(Event.DEACTIVATE, onDeactivate);
 		_sprite.addEventListener(Event.ACTIVATE, onActivate);
@@ -272,6 +487,34 @@ class Game {
 		useScene(_initialSceneName);
 		_lastUpdate = Lib.getTimer();
 		_sprite.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+	}
+	
+	/**
+	 * A callback that will be called when this game is removed from the stage.
+	 * 
+	 * @param	e	Event parameters.
+	 */
+	private function onRemovedFromStage(e:Event):Void {
+		_sprite.removeEventListener(Event.REMOVED_FROM_STAGE,
+			onRemovedFromStage);
+		_sprite.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+		
+		for (deviceManager in _deviceManagers) {
+			deviceManager.dispose();
+			_deviceManagers.remove(deviceManager);
+		}
+		
+		// Remove registered devices:
+		for (deviceHash in _devices) {
+			for (device in deviceHash) {
+				device.dispose();
+			}
+		}
+		_devices = new Hash<IntHash<InputDevice>>();
+		
+		_sprite.removeEventListener(Event.DEACTIVATE, onDeactivate);
+		_sprite.removeEventListener(Event.ACTIVATE, onActivate);
+		_sprite.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 	}
 	
 	/**

@@ -37,7 +37,7 @@ import nme.events.EventDispatcher;
  * 
  * @author Robert Böhm
  */
-class Mouse extends EventDispatcher {
+class Mouse extends InputDevice {
 	
 	/** The x-coordinate of the mouse. */
 	public var x(default, null):Int;
@@ -64,67 +64,68 @@ class Mouse extends EventDispatcher {
 	/** The game this mouse is based on. */
 	private var _game:Game;
 	
-	#if (js || cpp)
-	// Mouse events in HTML5/C++ don't work on sprites, but they do on the stage
-	
 	/** The handler used to register events on. Is also used to determine the
 	 * 	relative coordinates of the mouse. */
 	private var _handler:DisplayObject;
-	#end
 	
 	
 	/**
 	 * Creates a new mouse for the given DisplayObject and Game.
 	 * 
-	 * @param	handler	The DisplayObject this mouse will be created for.
 	 * @param	game	The Game this mouse will be created for.
 	 */
-	public function new(handler:DisplayObject, game:Game) {
+	public function new(game:Game) {
 		super();
 		
 		_game = game;
+		_handler = game.getDisplayObject();
+		
 		isPressed = false;
 		isRightButtonPressed = false;
 		isMiddleButtonPressed = false;
+		
 	#if (js || cpp)
-		_handler = handler;
-		handler.stage.addEventListener(nme.events.MouseEvent.MOUSE_MOVE,
+		_handler.stage.addEventListener(nme.events.MouseEvent.MOUSE_MOVE,
 			onMouseMove);
-		handler.stage.addEventListener(nme.events.MouseEvent.MOUSE_DOWN,
+		_handler.stage.addEventListener(nme.events.MouseEvent.MOUSE_DOWN,
 			onMouseDown);
-		handler.stage.addEventListener(nme.events.MouseEvent.MOUSE_UP,
+		_handler.stage.addEventListener(nme.events.MouseEvent.MOUSE_UP,
 			onMouseUp);
-		handler.stage.addEventListener(nme.events.MouseEvent.MOUSE_WHEEL,
+		_handler.stage.addEventListener(nme.events.MouseEvent.MOUSE_WHEEL,
 			onMouseWheel);
 		
 		#if cpp
 		#if (!RYGAL_KEEP_MENU)
-		handler.stage.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_DOWN,
+		_handler.stage.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_DOWN,
 			onRightMouseDown);
-		handler.stage.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_UP,
+		_handler.stage.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_UP,
 			onRightMouseUp);
 		#end
-		handler.stage.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_DOWN,
+		_handler.stage.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_DOWN,
 			onMiddleMouseDown);
-		handler.stage.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_UP,
+		_handler.stage.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_UP,
 			onMiddleMouseUp);
 		#end
 	#else
-		handler.addEventListener(nme.events.MouseEvent.MOUSE_MOVE, onMouseMove);
-		handler.addEventListener(nme.events.MouseEvent.MOUSE_DOWN, onMouseDown);
-		handler.addEventListener(nme.events.MouseEvent.MOUSE_UP, onMouseUp);
-		handler.addEventListener(nme.events.MouseEvent.MOUSE_WHEEL, onMouseWheel);
+		_handler.addEventListener(nme.events.MouseEvent.MOUSE_MOVE,
+			onMouseMove);
+		_handler.addEventListener(nme.events.MouseEvent.MOUSE_DOWN,
+			onMouseDown);
+		_handler.addEventListener(nme.events.MouseEvent.MOUSE_UP,
+			onMouseUp);
+		_handler.addEventListener(nme.events.MouseEvent.MOUSE_WHEEL,
+			onMouseWheel);
 		
 		#if (!flash || flash11_2)
 		#if (!RYGAL_KEEP_MENU)
-		handler.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_DOWN,
+		_handler.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_DOWN,
 			onRightMouseDown);
-		handler.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_UP,
+		_handler.addEventListener(nme.events.MouseEvent.RIGHT_MOUSE_UP,
 			onRightMouseUp);
 		#end
-		handler.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_DOWN,
+		_handler.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_DOWN,
 			onMiddleMouseDown);
-		handler.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_UP,
+		_handler.addEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_UP,
 			onMiddleMouseUp);
 		#end
 	#end
@@ -143,6 +144,56 @@ class Mouse extends EventDispatcher {
 	 */
 	public function hide() {
 		nme.ui.Mouse.hide();
+	}
+	
+	override public function dispose():Void {
+		super.dispose();
+		
+	#if (js || cpp)
+		_handler.stage.removeEventListener(nme.events.MouseEvent.MOUSE_MOVE,
+			onMouseMove);
+		_handler.stage.removeEventListener(nme.events.MouseEvent.MOUSE_DOWN,
+			onMouseDown);
+		_handler.stage.removeEventListener(nme.events.MouseEvent.MOUSE_UP,
+			onMouseUp);
+		_handler.stage.removeEventListener(nme.events.MouseEvent.MOUSE_WHEEL,
+			onMouseWheel);
+		
+		#if cpp
+		#if (!RYGAL_KEEP_MENU)
+		_handler.stage.removeEventListener(
+			nme.events.MouseEvent.RIGHT_MOUSE_DOWN, onRightMouseDown);
+		_handler.stage.removeEventListener(
+			nme.events.MouseEvent.RIGHT_MOUSE_UP, onRightMouseUp);
+		#end
+		_handler.stage.removeEventListener(
+			nme.events.MouseEvent.MIDDLE_MOUSE_DOWN, onMiddleMouseDown);
+		_handler.stage.removeEventListener(
+			nme.events.MouseEvent.MIDDLE_MOUSE_UP, onMiddleMouseUp);
+		#end
+	#else
+		_handler.removeEventListener(nme.events.MouseEvent.MOUSE_MOVE,
+			onMouseMove);
+		_handler.removeEventListener(nme.events.MouseEvent.MOUSE_DOWN,
+			onMouseDown);
+		_handler.removeEventListener(nme.events.MouseEvent.MOUSE_UP,
+			onMouseUp);
+		_handler.removeEventListener(nme.events.MouseEvent.MOUSE_WHEEL,
+			onMouseWheel);
+		
+		#if (!flash || flash11_2)
+		#if (!RYGAL_KEEP_MENU)
+		_handler.removeEventListener(nme.events.MouseEvent.RIGHT_MOUSE_DOWN,
+			onRightMouseDown);
+		_handler.removeEventListener(nme.events.MouseEvent.RIGHT_MOUSE_UP,
+			onRightMouseUp);
+		#end
+		_handler.removeEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_DOWN,
+			onMiddleMouseDown);
+		_handler.removeEventListener(nme.events.MouseEvent.MIDDLE_MOUSE_UP,
+			onMiddleMouseUp);
+		#end
+	#end
 	}
 	
 	
@@ -196,11 +247,13 @@ class Mouse extends EventDispatcher {
 	 * @param	e	Event parameters.
 	 */
 	private function onMouseWheel(e:nme.events.MouseEvent):Void {
-		this.dispatchEvent(new MouseWheelEvent(MouseEvent.MOUSE_WHEEL, this, e.delta));
+		this.dispatchEvent(new MouseWheelEvent(MouseEvent.MOUSE_WHEEL, this,
+			e.delta));
 	}
 	
 	/**
-	 * A callback that will be called whenever the right mouse button is pressed.
+	 * A callback that will be called whenever the right mouse button is
+	 * pressed.
 	 * 
 	 * @param	e	Event parameters.
 	 */
@@ -210,7 +263,8 @@ class Mouse extends EventDispatcher {
 	}
 	
 	/**
-	 * A callback that will be called whenever the right mouse button is released.
+	 * A callback that will be called whenever the right mouse button is
+	 * released.
 	 * 
 	 * @param	e	Event parameters.
 	 */
@@ -220,7 +274,8 @@ class Mouse extends EventDispatcher {
 	}
 	
 	/**
-	 * A callback that will be called whenever the middle mouse button is pressed.
+	 * A callback that will be called whenever the middle mouse button is
+	 * pressed.
 	 * 
 	 * @param	e	Event parameters.
 	 */
@@ -230,7 +285,8 @@ class Mouse extends EventDispatcher {
 	}
 	
 	/**
-	 * A callback that will be called whenever the middle mouse button is released.
+	 * A callback that will be called whenever the middle mouse button is
+	 * released.
 	 * 
 	 * @param	e	Event parameters.
 	 */

@@ -101,7 +101,9 @@ class Label extends BasicGameObject {
 	 * @param	x			The x-coordinate of this label.
 	 * @param	y			The y-coordinate of this label.
 	 */
-	public function new(font:Font, text:String = "", alignment:Int = Font.LEFT, color:Int = 0x000000, alpha:Float = 1, x:Float = 0, y:Float = 0) {
+	public function new(font:Font, text:String = "", alignment:Int = Font.LEFT,
+			color:Int = 0x000000, alpha:Float = 1, x:Float = 0, y:Float = 0) {
+		
 		super();
 		
 		this._font = font;
@@ -220,9 +222,12 @@ class Label extends BasicGameObject {
 					x = this.x - Std.int(_textField.width / 2);
 					
 					#if cpp
-					screen.drawNmeDrawable(_textField, new Matrix(1, 0, 0, 1, x, y));
+					screen.drawNmeDrawable(_textField,
+						new Matrix(1, 0, 0, 1, x, y));
 					#else
-					screen.drawNmeDrawable(_textField, new Matrix(1, 0, 0, 1, x, y), new ColorTransform(1, 1, 1, this.alpha));
+					screen.drawNmeDrawable(_textField,
+						new Matrix(1, 0, 0, 1, x, y),
+						new ColorTransform(1, 1, 1, this.alpha));
 					#end
 					
 					y += _textField.textHeight;
@@ -235,9 +240,12 @@ class Label extends BasicGameObject {
 					x -= _textField.width;
 				}
 				#if cpp
-				screen.drawNmeDrawable(_textField, new Matrix(1, 0, 0, 1, x, y));
+				screen.drawNmeDrawable(_textField,
+					new Matrix(1, 0, 0, 1, x, y));
 				#else
-				screen.drawNmeDrawable(_textField, new Matrix(1, 0, 0, 1, x, y), new ColorTransform(1, 1, 1, this.alpha));
+				screen.drawNmeDrawable(_textField,
+					new Matrix(1, 0, 0, 1, x, y),
+					new ColorTransform(1, 1, 1, this.alpha));
 				#end
 			}
 			

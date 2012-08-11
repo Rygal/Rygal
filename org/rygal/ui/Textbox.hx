@@ -149,12 +149,15 @@ class Textbox extends BasicGameObject {
 		
 		this._metrics = new Rectangle(0, 0, width, height);
 		
-		this._label = new Label(font, defaultText, Font.LEFT, foregroundColor, 1, 0, 0);
+		this._label = new Label(font, defaultText, Font.LEFT,
+			foregroundColor, 1, 0, 0);
 		
 		this._game.mouse.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		this._game.mouse.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-		this._game.keyboard.addEventListener(KeyboardEvent.KEY_TYPED, onKeyTyped);
-		this._game.keyboard.addEventListener(KeyboardEvent.CHAR_TYPED, onCharTyped);
+		this._game.keyboard.addEventListener(KeyboardEvent.KEY_TYPED,
+			onKeyTyped);
+		this._game.keyboard.addEventListener(KeyboardEvent.CHAR_TYPED,
+			onCharTyped);
 	}
 	
 	
@@ -218,9 +221,15 @@ class Textbox extends BasicGameObject {
 		
 		this._label.color = foregroundColor;
 		
-		var previousX:Float = font.getTextMetrics(this.text.substr(0, Std.int(Math.max(0, caretPosition - 1)))).width + 1;
-		var caretX:Float = font.getTextMetrics(this.text.substr(0, caretPosition)).width + 1;
-		var nextX:Float = font.getTextMetrics(this.text.substr(0, Std.int(Math.min(text.length, caretPosition + 1)))).width + 1;
+		var previousX:Float = font.getTextMetrics(this.text.substr(0,
+			Std.int(Math.max(0, caretPosition - 1)))).width + 1;
+		
+		var caretX:Float =
+			font.getTextMetrics(this.text.substr(0, caretPosition)).width + 1;
+		
+		var nextX:Float = font.getTextMetrics(this.text.substr(0,
+			Std.int(Math.min(text.length, caretPosition + 1)))).width + 1;
+		
 		if (previousX - 1 <= _offset) {
 			_offset = previousX;
 		} else if (nextX > _offset + width - 3) {
@@ -233,7 +242,8 @@ class Textbox extends BasicGameObject {
 		screen.fillRect(backgroundColor, 0, 0, width, height);
 		
 		screen.translate(1 - _offset, 0);
-		this._label.drawClipped(screen, new Rectangle(0 + _offset, 0, width - 2, height));
+		this._label.drawClipped(screen,
+			new Rectangle(0 + _offset, 0, width - 2, height));
 		
 		if (this.focused && this._caretVisible) {
 			screen.fillRect(foregroundColor, caretX, 1, 1, height - 2);
@@ -306,16 +316,20 @@ class Textbox extends BasicGameObject {
 				if (this.caretPosition == this.text.length) {
 					this.text = this.text.substr(0, caretPosition - 1);
 				} else if (this.caretPosition > 0) {
-					this.text = this.text.substr(0, caretPosition - 1) + this.text.substr(caretPosition);
+					this.text = this.text.substr(0, caretPosition - 1) +
+						this.text.substr(caretPosition);
 					caretPosition--;
 				}
 			} else if (e.keyCode == Keys.DELETE) {
 				resetCaretBlinking();
 				
 				if (this.caretPosition < this.text.length) {
-					this.text = this.text.substr(0, caretPosition) + this.text.substr(caretPosition + 1);
+					this.text = this.text.substr(0, caretPosition) +
+						this.text.substr(caretPosition + 1);
 				}
-			} else if (e.keyCode != Keys.RETURN && e.keyCode != Keys.NUMPAD_ENTER) {
+			} else if (e.keyCode != Keys.RETURN &&
+					e.keyCode != Keys.NUMPAD_ENTER) {
+				
 				resetCaretBlinking();
 				
 				if (e.charString != " " && Std.is(font, BitmapFont)) {
@@ -324,7 +338,8 @@ class Textbox extends BasicGameObject {
 						return;
 					}
 				}
-				this.text = this.text.substr(0, caretPosition) + e.charString + this.text.substr(caretPosition);
+				this.text = this.text.substr(0, caretPosition) + e.charString +
+					this.text.substr(caretPosition);
 				caretPosition++;
 			}
 		}
@@ -446,7 +461,8 @@ class Textbox extends BasicGameObject {
 	 * @return	The new caret position.
 	 */
 	private function setCaretPosition(caretPosition:Int):Int {
-		return this._caretPosition = Std.int(Math.max(0, Math.min(caretPosition, text.length)));
+		return this._caretPosition =
+			Std.int(Math.max(0, Math.min(caretPosition, text.length)));
 	}
 	
 }

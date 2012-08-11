@@ -20,6 +20,7 @@ package org.rygal.input;
 
 import nme.display.DisplayObject;
 import nme.events.EventDispatcher;
+import org.rygal.Game;
 
 /**
  * <h2>Description</h2>
@@ -36,12 +37,18 @@ import nme.events.EventDispatcher;
  * 
  * @author Robert Böhm
  */
-class Keyboard extends EventDispatcher {
+class Keyboard extends InputDevice {
 	
+	/** The amount of keys that can be monitored. */
 	private static inline var KEYS_SIZE:Int = 512;
+	
 	
 	/** An array with all key states. */
 	private var _keys:Array<Bool>;
+	
+	/** The handler used to register events on. Is also used to determine the
+	 * 	relative coordinates of the mouse. */
+	private var _handler:DisplayObject;
 
 	
 	/**
@@ -49,17 +56,19 @@ class Keyboard extends EventDispatcher {
 	 * 
 	 * @param	handler	The DisplayObject this keyboard will be created for.
 	 */
-	public function new(handler:DisplayObject) {
+	public function new(game:Game) {
 		super();
+		
+		_handler = game.getDisplayObject();
 		
 		_keys = new Array<Bool>();
 		for (i in 0...512) {
 			_keys.push(false);
 		}
 		
-		handler.stage.addEventListener(nme.events.KeyboardEvent.KEY_DOWN,
+		_handler.stage.addEventListener(nme.events.KeyboardEvent.KEY_DOWN,
 			onKeyDown);
-		handler.stage.addEventListener(nme.events.KeyboardEvent.KEY_UP,
+		_handler.stage.addEventListener(nme.events.KeyboardEvent.KEY_UP,
 			onKeyUp);
 	}
 	
@@ -80,6 +89,18 @@ class Keyboard extends EventDispatcher {
 		return false;
 	}
 	
+	/**
+	 * Removes all registered event listeners.
+	 */
+	override public function dispose():Void {
+		super.dispose();
+		
+		_handler.stage.removeEventListener(nme.events.KeyboardEvent.KEY_DOWN,
+			onKeyDown);
+		_handler.stage.removeEventListener(nme.events.KeyboardEvent.KEY_UP,
+			onKeyUp);
+	}
+	
 	
 	/**
 	 * A callback that will be called whenever a key is pressed.
@@ -88,8 +109,11 @@ class Keyboard extends EventDispatcher {
 	 */
 	private function onKeyDown(e:nme.events.KeyboardEvent):Void {
 		var intKeyCode:Int = cast(e.keyCode, Int);
-		if (e.charCode >= "a".charCodeAt(0) && e.charCode <= 'z'.charCodeAt(0)) {
-			intKeyCode = String.fromCharCode(e.charCode).toUpperCase().charCodeAt(0);
+		if (e.charCode >= "a".charCodeAt(0) &&
+				e.charCode <= 'z'.charCodeAt(0)) {
+			
+			intKeyCode =
+				String.fromCharCode(e.charCode).toUpperCase().charCodeAt(0);
 		}
 		
 		if (intKeyCode >= 0 && intKeyCode < _keys.length) {
@@ -119,8 +143,11 @@ class Keyboard extends EventDispatcher {
 	 */
 	private function onKeyUp(e:nme.events.KeyboardEvent):Void {
 		var intKeyCode:Int = cast(e.keyCode, Int);
-		if (e.charCode >= "a".charCodeAt(0) && e.charCode <= 'z'.charCodeAt(0)) {
-			intKeyCode = String.fromCharCode(e.charCode).toUpperCase().charCodeAt(0);
+		if (e.charCode >= "a".charCodeAt(0) &&
+				e.charCode <= 'z'.charCodeAt(0)) {
+			
+			intKeyCode =
+				String.fromCharCode(e.charCode).toUpperCase().charCodeAt(0);
 		}
 		
 		if (intKeyCode >= 0 && intKeyCode < _keys.length) {

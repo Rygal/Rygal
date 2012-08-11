@@ -35,8 +35,8 @@ import nme.events.Event;
  * 	}<br />
  * 	<br />
  * 	public function onTouchMove(e:TouchEvent):Void {<br />
- * 	&nbsp;&nbsp;trace("Touch point moved! (x=" + e.x + ", y=" + e.y + ")");<br />
- * 	}
+ * 	&nbsp;&nbsp;trace("Touch point moved! (x=" + e.x + ", y=" + e.y + ")");
+ * 	<br />}
  * </code>
  * 
  * @author Christopher Kaster
@@ -88,9 +88,6 @@ class TouchEvent extends Event {
 	/** Determines the ID of the touch pointer. */
 	public var touchPointID(default, null):Int;
 	
-	/** Determines if multi-touch is enabled. */
-	public var isMultiTouchEnabled(default, null):Bool;
-	
 	/**
 	 * Creates a new TouchEvent based on the given touch.
 	 * 
@@ -107,7 +104,6 @@ class TouchEvent extends Event {
 		
 		this.isPrimaryTouchPoint = touch.isPrimaryTouchPoint;
 		this.touchPointID = touch.touchPointID;
-		this.isMultiTouchEnabled = touch.isMultiTouchEnabled;
 	}
 	
 }
