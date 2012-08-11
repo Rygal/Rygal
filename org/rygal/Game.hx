@@ -32,6 +32,7 @@ import nme.display.Sprite;
 import nme.events.Event;
 import nme.Lib;
 import org.rygal.input.TouchDeviceManager;
+import org.rygal.input.JoystickDeviceManager;
 
 /**
  * <h2>Description</h2>
@@ -78,7 +79,7 @@ class Game {
 	public var touch(getTouch, null):TouchDeviceManager;
 	
 	/** The primary joystick of this game */
-	public var joystick(getJoystick, null):Joystick;
+	public var joystick(getJoystick, null):JoystickDeviceManager;
 	
 	/** The camera's x-position. */
 	public var cameraX:Int;
@@ -484,8 +485,8 @@ class Game {
 	/**
 	 * Returns the joystick of this game.
 	 */
-	private function getJoystick():Joystick {
-		return getDevice(Joystick);
+	private function getJoystick():JoystickDeviceManager {
+		return getDeviceManager(JoystickDeviceManager);
 	}
 	
 	/**
