@@ -130,13 +130,8 @@ class JoystickDeviceManager extends DeviceManager {
 	}
 	
 	private function isRegistered(e:nme.events.JoystickEvent):Void {
-		if(!game.hasDevice(Joystick)) {
+		if(!game.hasDevice(Joystick, e.device)) {
 			var j:Joystick = new Joystick(game, e.device);
-			
-			var je:JoystickEvent = new JoystickEvent(JoystickEvent.JOYSTICK_REGISTER, j);
-			
-			j.dispatchEvent(je);
-			this.dispatchEvent(je);
 			
 			game.registerDevice(j, e.device);
 		}
