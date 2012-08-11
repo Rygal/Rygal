@@ -38,9 +38,17 @@ class Input extends EventDispatcher {
 	public var storage(default, null):Storage;
 	
 	
+	private var _mouse:Bool;
+	
+	private var _touch:Bool;
+	
 	private var _keyBindings:List<Int>;
 	
 	private var _mouseButtonMask:Int;
+	
+	private var _originX:Float;
+	
+	private var _originY:Float;
 	
 	
 	public function new(game:Game, name:String) {
@@ -48,16 +56,33 @@ class Input extends EventDispatcher {
 		
 		this._keyBindings = new List<Int>();
 		this._mouseButtonMask = 0;
+		this._mouse = false;
+		this._touch = false;
+		this._originX = 0;
+		this._originY = 0;
 		this.game = game;
 		this.name = name;
 	}
 	
 	
+	public function setOrigin(x:Float, y:Float):Void {
+		this._originX = x;
+		this._originY = y;
+	}
+	
+	public function bindMouse():Void {
+		this._mouse = true;
+		this.store();
+	}
+	
+	public function bindTouch():Void {
+		this._touch = true;
+		this.store();
+	}
+	
 	public function bindMousebutton(key:Int):Void {
 		this._mouseButtonMask |= key;
-		if (storage != null) {
-			storage.put(getStorageName("mouse"), this._mouseButtonMask);
-		}
+		this.store();
 	}
 	
 	public function bindKey(key:Int):Void {
@@ -65,18 +90,7 @@ class Input extends EventDispatcher {
 			return;
 		
 		this._keyBindings.push(key);
-		if (storage != null) {
-			var keyString:String = "";
-			for (key in _keyBindings) {
-				keyString += key + ",";
-			}
-			storage.put(getStorageName("keys"), keyString);
-		}
-	}
-	
-	public function reset():Void {
-		this._keyBindings.clear();
-		this._mouseButtonMask = 0;
+		this.store();
 	}
 	
 	public function update():Void { }
@@ -84,8 +98,8 @@ class Input extends EventDispatcher {
 	public function connect(storage:Storage):Void {
 		this.storage = storage;
 		
-		if (this.storage.isset(getStorageName("mouse"))) {
-			var obj = this.storage.get(getStorageName("mouse"));
+		if (this.storage.isset(getStorageName("mouseButtons"))) {
+			var obj = this.storage.get(getStorageName("mouseButtons"));
 			if (Std.is(obj, Int)) {
 				this._mouseButtonMask = cast(obj, Int);
 			}
@@ -100,6 +114,48 @@ class Input extends EventDispatcher {
 					this._keyBindings.push(Std.parseInt(s));
 				}
 			}
+		}
+		
+		if (this.storage.isset(getStorageName("mouse"))) {
+			var obj = this.storage.get(getStorageName("mouse"));
+			if (Std.is(obj, Bool)) {
+				this._mouse = cast(obj, Bool);
+			}
+		}
+		
+		if (this.storage.isset(getStorageName("touch"))) {
+			var obj = this.storage.get(getStorageName("touch"));
+			if (Std.is(obj, Bool)) {
+				this._touch = cast(obj, Bool);
+			}
+		}
+		
+		this.store();
+	}
+	
+	public function reset():Void {
+		this._keyBindings.clear();
+		this._mouseButtonMask = 0;
+		this._mouse = false;
+		this._touch = false;
+		storage.unset(getStorageName("mouseButtons"));
+		storage.unset(getStorageName("keys"));
+		storage.unset(getStorageName("mouse"));
+		storage.unset(getStorageName("touch"));
+	}
+	
+	private function store():Void {
+		if (storage != null) {
+			storage.put(getStorageName("mouseButtons"), this._mouseButtonMask);
+			
+			var keyString:String = "";
+			for (key in _keyBindings) {
+				keyString += key + ",";
+			}
+			storage.put(getStorageName("keys"), keyString);
+			
+			storage.put(getStorageName("mouse"), this._mouse);
+			storage.put(getStorageName("touch"), this._touch);
 		}
 	}
 	

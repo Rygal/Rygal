@@ -25,45 +25,29 @@ import org.rygal.util.Storage;
  * ...
  * @author Robert Böhm
  */
-class BinaryInput extends Input {
+class DirectionalInput extends Input {
 	
-	public var state(default, null):Bool;
-	
-	private var _previousState:Bool;
+	public var direction(default, null):Float;
 	
 	
 	public function new(game:Game, name:String) {
 		super(game, name);
-		
-		this.state = false;
-		this._previousState = false;
 	}
 	
 	
 	override public function update():Void {
-		_previousState = state;
-		state = false;
+		var targetX:Int;
+		var targetY:Int;
 		
-		for (key in _keyBindings) {
-			if (game.keyboard.isKeyPressed(key)) {
-				state = true;
-				break;
-			}
+		if (this._touch && game.touch.primaryTouch != null) {
+			targetX = game.touch.primaryTouch.x;
+			targetY = game.touch.primaryTouch.y;
+		} else {
+			targetX = game.mouse.x;
+			targetY = game.mouse.y;
 		}
 		
-		if ((_mouseButtonMask & game.mouse.buttonMask) > 0) {
-			state = true;
-		}
-		
-		if (state != _previousState) {
-			if (state) {
-				this.dispatchEvent(
-					new ControllerEvent(ControllerEvent.PRESSED, this.name));
-			} else {
-				this.dispatchEvent(
-					new ControllerEvent(ControllerEvent.RELEASED, this.name));
-			}
-		}
+		this.direction = Math.atan2(targetY - _originY, targetX - _originX);
 	}
 	
 }

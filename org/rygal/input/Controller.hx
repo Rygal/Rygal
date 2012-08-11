@@ -54,6 +54,9 @@ class Controller extends BasicGameObject {
 			input.addEventListener(ControllerEvent.PRESSED, redirectEvent);
 			input.addEventListener(ControllerEvent.RELEASED, redirectEvent);
 			_inputs.set(name, input);
+		} else if (type == DirectionalInput) {
+			input = new DirectionalInput(_game, name);
+			_inputs.set(name, input);
 		} else {
 			return;
 		}
@@ -61,6 +64,18 @@ class Controller extends BasicGameObject {
 		if (_storage != null) {
 			input.connect(_storage);
 		}
+	}
+	
+	public function setOrigin(input:String, x:Float, y:Float):Void {
+		_inputs.get(input).setOrigin(x, y);
+	}
+	
+	public function bindMouse(input:String):Void {
+		_inputs.get(input).bindMouse();
+	}
+	
+	public function bindTouch(input:String):Void {
+		_inputs.get(input).bindTouch();
 	}
 	
 	public function bindMousebutton(input:String, key:Int):Void {
@@ -77,6 +92,22 @@ class Controller extends BasicGameObject {
 			return cast(_inputs.get(input), BinaryInput).state;
 		}
 		return false;
+	}
+	
+	public function getDirection(input:String):Float {
+		var i:Input = _inputs.get(input);
+		if (i != null && Std.is(i, DirectionalInput)) {
+			return cast(_inputs.get(input), DirectionalInput).direction;
+		}
+		return 0;
+	}
+	
+	public function getDirectionalVectorX(input:String):Float {
+		return Math.cos(getDirection(input));
+	}
+	
+	public function getDirectionalVectorY(input:String):Float {
+		return Math.sin(getDirection(input));
 	}
 	
 	public function connect(storage:Storage):Void {
