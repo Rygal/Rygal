@@ -15,13 +15,13 @@ class ControllerEvent extends Event {
 	public static inline var RELEASED:String = "released";
 	
 	
-	public var source(default, null):String;
+	public var input(default, null):String;
 	
 	
-	public function new(type:String, source:String) {
+	public function new(type:String, input:String) {
 		super(type);
 		
-		this.source = source;
+		this.input = input;
 	}
 	
 }

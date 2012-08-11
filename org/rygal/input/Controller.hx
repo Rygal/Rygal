@@ -22,12 +22,15 @@ import nme.events.EventDispatcher;
 import org.rygal.BasicGameObject;
 import org.rygal.Game;
 import org.rygal.GameTime;
+import org.rygal.util.Storage;
 
 /**
  * ...
  * @author Robert Böhm
  */
 class Controller extends BasicGameObject {
+	
+	private var _storage:Storage;
 	
 	private var _game:Game;
 	
@@ -37,17 +40,26 @@ class Controller extends BasicGameObject {
 	public function new(game:Game) {
 		super();
 		
+		this._storage = null;
 		this._game = game;
 		this._inputs = new Hash<Input>();
 	}
 	
 	
 	public function registerInput<T:Input>(name:String, type:Class<T>):Void {
+		var input:Input;
+		
 		if (type == BinaryInput) {
-			var input:BinaryInput = new BinaryInput(_game, name);
+			input = new BinaryInput(_game, name);
 			input.addEventListener(ControllerEvent.PRESSED, redirectEvent);
 			input.addEventListener(ControllerEvent.RELEASED, redirectEvent);
 			_inputs.set(name, input);
+		} else {
+			return;
+		}
+		
+		if (_storage != null) {
+			input.connect(_storage);
 		}
 	}
 	
@@ -59,8 +71,20 @@ class Controller extends BasicGameObject {
 		_inputs.get(input).bindKey(key);
 	}
 	
-	public function queryInput(input:String):Bool {
-		return cast(_inputs.get(input), BinaryInput).state;
+	public function queryBinaryInput(input:String):Bool {
+		var i:Input = _inputs.get(input);
+		if (i != null && Std.is(i, BinaryInput)) {
+			return cast(_inputs.get(input), BinaryInput).state;
+		}
+		return false;
+	}
+	
+	public function connect(storage:Storage):Void {
+		_storage = storage;
+		
+		for (input in _inputs) {
+			input.connect(storage);
+		}
 	}
 	
 	override public function update(time:GameTime):Void {
@@ -73,7 +97,7 @@ class Controller extends BasicGameObject {
 	
 	
 	private function redirectEvent(e:ControllerEvent):Void {
-		this.dispatchEvent(new ControllerEvent(e.type, e.source));
+		this.dispatchEvent(new ControllerEvent(e.type, e.input));
 	}
 	
 }
