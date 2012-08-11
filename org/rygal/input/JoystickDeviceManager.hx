@@ -34,10 +34,7 @@ class JoystickDeviceManager extends DeviceManager {
 	/** The handler used to register events on. */
 	private var _handler:DisplayObject;
 	
-	private var _isRegistered:Bool = false;
-	
 	/**
-	 * 
 	 * 
 	 * @param	game	The game the joystick handler will be registered for.
 	 */
@@ -135,16 +132,16 @@ class JoystickDeviceManager extends DeviceManager {
 	private function isRegistered(e:nme.events.JoystickEvent):Void {
 		try {
 			var j:Joystick = game.getDevice(Joystick, e.device);
-			j.x;
-		} catch(unknwon:Dynamic) {
+			j.x; // do something to throw an error
+		} catch(unknown:Dynamic) {
 			var j:Joystick = new Joystick(game, e.device);
 			
 			var je:JoystickEvent = new JoystickEvent(JoystickEvent.JOYSTICK_REGISTER, j);
 			
-			game.registerDevice(j, e.device);
-			
 			j.dispatchEvent(je);
 			this.dispatchEvent(je);
+			
+			game.registerDevice(j, e.device);
 		}
 	}
 	
