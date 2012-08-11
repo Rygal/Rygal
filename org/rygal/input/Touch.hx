@@ -63,6 +63,9 @@ class Touch extends EventDispatcher {
 	/** A Hash which represents all touch pointer on the surface*/
 	public var touches(default, null):IntHash<Touch>;
 	
+	/** The game this touchpoint is based on */
+	private var _game:Game;
+	
 	/** The handler used to register events on. Is also used to determine the
 	 * 	relative coordinates of touch events. */
 	private var _handler:DisplayObject;
@@ -74,7 +77,7 @@ class Touch extends EventDispatcher {
 	 * @param	handler	The DisplayObject this touch pointer will be created
 	 * 					for.
 	 */
-	public function new(handler:DisplayObject) {
+	public function new(handler:DisplayObject, game:Game) {
 		super();
 		
 		#if (!flash || flash10_1)
@@ -89,7 +92,9 @@ class Touch extends EventDispatcher {
 		#end
 		
 		touches = new IntHash<Touch>();
+		
 		this._handler = handler;
+		this._game = game;
 		
 		#if !flash
 		handler.stage.addEventListener(nme.events.TouchEvent.TOUCH_BEGIN,
@@ -204,8 +209,8 @@ class Touch extends EventDispatcher {
 	 * @param	e	Event parameters used to obtain the new values.
 	 */
 	private function updateEvent(e:nme.events.TouchEvent):Void {
-		this.x = e.localX;
-		this.y = e.localY;
+		this.x = Std.int(e.localX / _game.zoom);
+		this.y = Std.int(e.localY / _game.zoom);
 		
 		// pressure seems not to work in NME 3.4
 		this.pressure = 1.0;
