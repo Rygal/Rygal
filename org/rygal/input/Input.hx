@@ -26,13 +26,16 @@ import org.rygal.util.Storage;
  */
 class Input {
 	
+	public var name(default, null):String;
+	
 	public var game(default, null):Game;
 	
 	public var storage(default, null):Storage;
 	
 	
-	public function new(game:Game) {
+	public function new(game:Game, name:String) {
 		this.game = game;
+		this.name = name;
 	}
 	
 	

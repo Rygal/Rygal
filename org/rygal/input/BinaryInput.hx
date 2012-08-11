@@ -27,14 +27,29 @@ import org.rygal.util.Storage;
  */
 class BinaryInput extends Input {
 	
-	public function new(game:Game) {
-		super(game);
+	private var keyBindings:List<Int>;
+	private var mouseBindings:List<Int>;
+	
+	public function new(game:Game, name:String) {
+		super(game, name);
 		
-		
+		this.keyBindings = new List<Int>();
+		this.mouseBindings = new List<Int>();
 	}
 	
 	
-	//public function bindKey(key
+	public function bindMousebutton(key:Int):Void {
+		this.mouseBindings.push(key);
+	}
+	
+	public function bindKey(key:Int):Void {
+		this.keyBindings.push(key);
+	}
+	
+	public function reset():Void {
+		this.keyBindings.clear();
+		this.mouseBindings.clear();
+	}
 	
 	override public function connect(storage:Storage):Void {
 		super.connect(storage);
