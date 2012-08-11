@@ -100,10 +100,10 @@ fully supported:
 				jeash](http://haxe.org/com/libs/jeash/embedfont)
 
 
-Sometimes, features of the *latest* branch aren't tested on every
+Sometimes, features of the *dev* branch aren't tested on every
 platform, while on the other hand, sometimes there are features
 that are already in the *stable* branch without support for some
-platforms that have just been implemented in the *latest* branch.
+platforms that have just been implemented in the *dev* branch.
 
 To sum up, you could try another branch if something doesn't
 work on a platform you'd like to use ;)
