@@ -49,10 +49,10 @@ class TextureSequence {
 	
 	
 	/**
-	 * Creates a new texture sequence based on a tileset with the given tile ID
+	 * Creates a new texture sequence based on a spritesheet with the given tile ID
 	 * range.
 	 * 
-	 * @param	tileset	The tileset this sequence is based on.
+	 * @param	spritesheet	The spritesheet this sequence is based on.
 	 * @param	start	The first ID to use (Inclusive).
 	 * @param	end		The last ID to use (Exclusive). Use -1 to make it last
 	 * 					until the (inclusive) last tile.
@@ -60,20 +60,20 @@ class TextureSequence {
 	 * 					reverse direction)
 	 * @return	The new texture sequence.
 	 */
-	public static function fromTileset(tileset:Tileset, start:Int = 0,
+	public static function fromSpritesheet(spritesheet:Spritesheet, start:Int = 0,
 			end:Int = -1, loop:Bool = false):TextureSequence {
 		
 		if (end < 0)
-			end = tileset.length;
+			end = spritesheet.length;
 		
 		var textures:Array<Texture> = new Array<Texture>();
 		for (i in start...end) {
-			textures.push(tileset.getTextureById(i));
+			textures.push(spritesheet.getTextureById(i));
 		}
 		if (loop) {
 			var i:Int = end - 1;
 			while (--i > start) {
-				textures.push(tileset.getTextureById(i));
+				textures.push(spritesheet.getTextureById(i));
 			}
 		}
 		return new TextureSequence(textures);
@@ -81,18 +81,18 @@ class TextureSequence {
 	
 	
 	/**
-	 * Creates a new texture sequence based on a spritesheet.
+	 * Creates a new texture sequence based on a TextureAtlas.
 	 * 
-	 * @param	spritesheet	The spritesheet this sequence is based on.
+	 * @param	textureAtlas	The TextureAtlas this sequence is based on.
 	 * @param	names		The names of the sprites this sequence will use.
 	 * @return	The new texture sequence.
 	 */
-	public static function fromSpritesheet(spritesheet:Spritesheet,
+	public static function fromTextureAtlas(textureAtlas:TextureAtlas,
 			names:Array<String>):TextureSequence {
 		
 		var textures:Array<Texture> = new Array<Texture>();
 		for (name in names) {
-			textures.push(spritesheet.getTexture(name));
+			textures.push(textureAtlas.getTexture(name));
 		}
 		return new TextureSequence(textures);
 	}
