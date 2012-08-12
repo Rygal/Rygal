@@ -27,9 +27,9 @@ package org.rygal.graphic;
  * 
  * <h2>Example</h2>
  * <code>
- * 	var tileset:Tileset = new Tileset(<br />
+ * 	var spritesheet:Spritesheet = new Spritesheet(<br />
  * 	&nbsp;&nbsp;Texture.fromAssets("assets/walkAnimation.png"), 4, 1);<br />
- * 	var animation:Animation = Animation.fromTileset(250, tileset)<br />
+ * 	var animation:Animation = Animation.fromSpritesheet(250, spritesheet)<br />
  * 	<br />
  * 	var sprite:AnimatedSprite = new AnimatedSprite();<br />
  * 	sprite.registerAnimation("walk", animation);<br />
@@ -61,10 +61,10 @@ class Animation {
 	
 	
 	/**
-	 * Creates a new animation based on a tileset.
+	 * Creates a new animation based on a spritesheet.
 	 * 
 	 * @param	frameDelay	The delay between frames in milliseconds.
-	 * @param	tileset		The tileset this animation is based on.
+	 * @param	spritesheet		The spritesheet this animation is based on.
 	 * @param	start		The first ID to use (Inclusive).
 	 * @param	end			The last ID to use (Exclusive). Use -1 to make it
 	 * 						last until the (inclusive) last tile.
@@ -72,11 +72,11 @@ class Animation {
 	 * 						end reverse direction)
 	 * @return	The new animation based on the given parameters.
 	 */
-	public static function fromTileset(frameDelay:Int, tileset:Tileset,
+	public static function fromSpritesheet(frameDelay:Int, spritesheet:Spritesheet,
 			start:Int = 0, end:Int = -1, loop:Bool = false):Animation {
 		
 		return new Animation(frameDelay,
-			TextureSequence.fromTileset(tileset, start, end, loop));
+			TextureSequence.fromSpritesheet(spritesheet, start, end, loop));
 	}
 	
 	/**
