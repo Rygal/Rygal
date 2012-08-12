@@ -21,22 +21,22 @@ package org.rygal.graphic;
 /**
  * <h2>Description</h2>
  * <p>
- * 	A tileset that contains multiple textures.
+ * 	A spritesheet that contains multiple textures.
  * </p>
  * 
  * <h2>Example</h2>
  * <code>
- * 	var tileset:Tileset = new Tileset(<br />
+ * 	var spritesheet:Spritesheet = new Spritesheet(<br />
  * 	&nbsp;&nbsp;Texture.fromAssets("assets/walkAnimation.png"), 4, 1);<br />
  * 	<br />
  * 	var sprite:AnimatedSprite = new AnimatedSprite();<br />
- * 	sprite.registerAnimation("walk", Animation.fromTileset(250, tileset));<br />
+ * 	sprite.registerAnimation("walk", Animation.fromSpritesheet(250, spritesheet));<br />
  * 	sprite.loop("walk");
  * </code>
  * 
  * @author Robert Böhm
  */
-class Tileset {
+class Spritesheet {
 	
 	/** The width of each tile. */
 	public var tileWidth(default, null):Int;
@@ -54,17 +54,17 @@ class Tileset {
 	public var length(getLength, never):Int;
 	
 	
-	/** The textures this tileset contains. */
+	/** The textures this spritesheet contains. */
 	private var _textures:Array<Texture>;
 
 	
 	/**
-	 * Creates a new tileset based on the given texture, the amount of columns
+	 * Creates a new spritesheet based on the given texture, the amount of columns
 	 * and the amount of rows.
 	 * 
-	 * @param	texture	The texture the tileset is based on.
-	 * @param	columns	The amount of columns the tileset has.
-	 * @param	rows	The amount of rows the tileset has.
+	 * @param	texture	The texture the spritesheet is based on.
+	 * @param	columns	The amount of columns the spritesheet has.
+	 * @param	rows	The amount of rows the spritesheet has.
 	 */
 	public function new(texture:Texture, columns:Int, rows:Int) {
 		this.columns = columns;
@@ -83,17 +83,17 @@ class Tileset {
 	
 	
 	/**
-	 * Creates a new tileset based on the given texture and tile metrics.
+	 * Creates a new spritesheet based on the given texture and tile metrics.
 	 * 
-	 * @param	texture		The texture the tileset is based on.
-	 * @param	tileWidth	The width of each tile of the tileset.
-	 * @param	tileHeight	The height of each tile of the tileset.
-	 * @return	The new tileset based on the given properties.
+	 * @param	texture		The texture the spritesheet is based on.
+	 * @param	tileWidth	The width of each tile of the spritesheet.
+	 * @param	tileHeight	The height of each tile of the spritesheet.
+	 * @return	The new spritesheet based on the given properties.
 	 */
 	public static function fromTileSize(texture:Texture, tileWidth:Int,
-			tileHeight:Int):Tileset {
+			tileHeight:Int):Spritesheet {
 		
-		return new Tileset(texture, Std.int(texture.width / tileWidth),
+		return new Spritesheet(texture, Std.int(texture.width / tileWidth),
 			Std.int(texture.height / tileHeight));
 	}
 	
