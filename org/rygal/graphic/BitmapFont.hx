@@ -24,7 +24,7 @@ import org.rygal.physics.Rectangle;
 /**
  * <h2>Description</h2>
  * <p>
- * 	A font that is based on a tileset and character associations. It is also
+ * 	A font that is based on a spritesheet and character associations. It is also
  * 	capable of loading the Rygal-specific bitmap font definition file, more
  * 	details on that in the corresponding chapter.
  * </p>
@@ -32,7 +32,7 @@ import org.rygal.physics.Rectangle;
  * <h2>Rygal's Bitmap Font Definition File Format</h2>
  * <p>
  * 	Rygal supports it's own, very simple, bitmap font format for monospaced
- * 	fonts. To create your own font, just create a tileset where each tile is one
+ * 	fonts. To create your own font, just create a spritesheet where each tile is one
  * 	character and create a corresponding character definition file. The
  * 	definition file looks like this:
  * </p>
@@ -42,8 +42,8 @@ import org.rygal.physics.Rectangle;
  * 	%CHARACTERS%
  * </code>
  * <p>
- * 	An example for a definition file of a font where the tileset is located at
- * 	"assets/charset.png" and each tile has a size of 6x13, whereas the tileset
+ * 	An example for a definition file of a font where the spritesheet is located at
+ * 	"assets/charset.png" and each tile has a size of 6x13, whereas the spritesheet
  * 	contains the characters a-z, A-Z and 0-9, each in it's own row:
  * </p>
  * <code>
@@ -78,20 +78,20 @@ class BitmapFont extends Font {
 	public var charHeight(getCharHeight, never):Int;
 	
 	
-	/** The tileset this font is based on. */
-	private var _charset:Tileset;
+	/** The spritesheet this font is based on. */
+	private var _charset:Spritesheet;
 	
 	/** The characters with their corresponding tile IDs. */
 	private var _characters:Hash<Int>;
 	
 	
 	/**
-	 * Creates a new bitmap font based on a tileset and character definitions.
-	 * @param	charset		The tileset.
+	 * Creates a new bitmap font based on a spritesheet and character definitions.
+	 * @param	charset		The spritesheet.
 	 * @param	characters	The characters, whereas the coordinates have to
 	 * 						match with their tile.
 	 */
-	public function new(charset:Tileset, characters:String) {
+	public function new(charset:Spritesheet, characters:String) {
 		super();
 		
 		this._charset = charset;
@@ -139,7 +139,7 @@ class BitmapFont extends Font {
 			characters += StringTools.rtrim(lines[i]);
 		}
 		
-		return new BitmapFont(Tileset.fromTileSize(
+		return new BitmapFont(Spritesheet.fromTileSize(
 			Texture.fromAssets(imageFile), width, height), characters);
 	}
 	
