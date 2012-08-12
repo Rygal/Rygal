@@ -83,15 +83,15 @@ class Animation {
 	 * Creates a new animation based on a TextureAtlas.
 	 * 
 	 * @param	frameDelay	The delay between frames in milliseconds.
-	 * @param	TextureAtlas	The TextureAtlas this animation is based on.
+	 * @param	textureAtlas	The TextureAtlas this animation is based on.
 	 * @param	names		The names of the sprites this animation will use.
 	 * @return	The new animation based on the given parameters.
 	 */
 	public static function fromTextureAtlas(frameDelay:Int,
-			TextureAtlas:TextureAtlas, names:Array<String>):Animation {
+			textureAtlas:TextureAtlas, names:Array<String>):Animation {
 		
 		return new Animation(frameDelay,
-			TextureSequence.fromTextureAtlas(TextureAtlas, names));
+			TextureSequence.fromTextureAtlas(textureAtlas, names));
 	}
 	
 }

@@ -30,9 +30,9 @@ import nme.Assets;
  * 
  * <h2>Example <i>(Inside a scene)</i></h2>
  * <code>
- * 	var TextureAtlas:TextureAtlas = TextureAtlas.fromGenericXmlAsset(<br />
+ * 	var textureAtlas:TextureAtlas = TextureAtlas.fromGenericXmlAsset(<br />
  * 	&nbsp;&nbsp;"assets/TextureAtlas.xml");<br />
- * 	var sprite:Sprite = new Sprite(TextureAtlas.getTexture("fire"));<br />
+ * 	var sprite:Sprite = new Sprite(textureAtlas.getTexture("fire"));<br />
  * 	this.addChild(sprite);
  * </code>
  * 
