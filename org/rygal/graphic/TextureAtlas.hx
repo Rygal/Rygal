@@ -23,30 +23,30 @@ import nme.Assets;
 /**
  * <h2>Description</h2>
  * <p>
- * 	A spritesheet that can contain multiple named textures. It currently
+ * 	A TextureAtlas that can contain multiple named textures. It currently
  * 	supports a loader for the generic XML format used by
  * 	<a href="http://www.texturepacker.com/" target="_blank">TexturePacker</a>.
  * </p>
  * 
  * <h2>Example <i>(Inside a scene)</i></h2>
  * <code>
- * 	var spritesheet:Spritesheet = Spritesheet.fromGenericXmlAsset(<br />
- * 	&nbsp;&nbsp;"assets/spritesheet.xml");<br />
- * 	var sprite:Sprite = new Sprite(spritesheet.getTexture("fire"));<br />
+ * 	var TextureAtlas:TextureAtlas = TextureAtlas.fromGenericXmlAsset(<br />
+ * 	&nbsp;&nbsp;"assets/TextureAtlas.xml");<br />
+ * 	var sprite:Sprite = new Sprite(TextureAtlas.getTexture("fire"));<br />
  * 	this.addChild(sprite);
  * </code>
  * 
  * @author Robert Böhm
  */
-class Spritesheet {
+class TextureAtlas {
 	
-	/** The textures that are in this spritesheet. */
+	/** The textures that are in this TextureAtlas. */
 	private var _textures:Hash<Texture>;
 	
 	
 	/**
-	 * Creates a new spritesheet based on the given textures. You shouldn't
-	 * create a spritesheet directly, use one of the static fromXYZ-methods.
+	 * Creates a new TextureAtlas based on the given textures. You shouldn't
+	 * create a TextureAtlas directly, use one of the static fromXYZ-methods.
 	 * 
 	 * @param	textures	The textures.
 	 */
@@ -56,12 +56,12 @@ class Spritesheet {
 	
 	
 	/**
-	 * Loads a generic XML spritesheet from an asset.
+	 * Loads a generic XML TextureAtlas from an asset.
 	 * 
-	 * @param	id	The asset ID of the spritesheet's XML file.
-	 * @return	The spritesheet.
+	 * @param	id	The asset ID of the TextureAtlas's XML file.
+	 * @return	The TextureAtlas.
 	 */
-	public static function fromGenericXmlAsset(id:String):Spritesheet {
+	public static function fromGenericXmlAsset(id:String):TextureAtlas {
 		return fromGenericXml(
 				Assets.getText(id),
 				id.substr(0, id.lastIndexOf("/"))
@@ -69,15 +69,15 @@ class Spritesheet {
 	}
 	
 	/**
-	 * Interprets a generic XML spritesheet.
+	 * Interprets a generic XML TextureAtlas.
 	 * 
 	 * @param	xml				The XML code.
-	 * @param	?imageFolder	The folder where the spritesheet's image is
+	 * @param	?imageFolder	The folder where the TextureAtlas's image is
 	 * 							located in.
-	 * @return	The spritesheet.
+	 * @return	The TextureAtlas.
 	 */
 	public static function fromGenericXml(xml:String,
-			?imageFolder:String):Spritesheet {
+			?imageFolder:String):TextureAtlas {
 		
 		if (imageFolder == null) {
 			imageFolder = ".";
@@ -107,7 +107,7 @@ class Spritesheet {
 				textures.set(sprite.get("n"), texture.slice(x, y, w, h));
 			}
 		}
-		return new Spritesheet(textures);
+		return new TextureAtlas(textures);
 	}
 	
 	

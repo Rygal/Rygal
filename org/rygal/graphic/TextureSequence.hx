@@ -81,18 +81,18 @@ class TextureSequence {
 	
 	
 	/**
-	 * Creates a new texture sequence based on a spritesheet.
+	 * Creates a new texture sequence based on a TextureAtlas.
 	 * 
-	 * @param	spritesheet	The spritesheet this sequence is based on.
+	 * @param	TextureAtlas	The TextureAtlas this sequence is based on.
 	 * @param	names		The names of the sprites this sequence will use.
 	 * @return	The new texture sequence.
 	 */
-	public static function fromSpritesheet(spritesheet:Spritesheet,
+	public static function fromTextureAtlas(TextureAtlas:TextureAtlas,
 			names:Array<String>):TextureSequence {
 		
 		var textures:Array<Texture> = new Array<Texture>();
 		for (name in names) {
-			textures.push(spritesheet.getTexture(name));
+			textures.push(TextureAtlas.getTexture(name));
 		}
 		return new TextureSequence(textures);
 	}

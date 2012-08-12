@@ -80,18 +80,18 @@ class Animation {
 	}
 	
 	/**
-	 * Creates a new animation based on a spritesheet.
+	 * Creates a new animation based on a TextureAtlas.
 	 * 
 	 * @param	frameDelay	The delay between frames in milliseconds.
-	 * @param	spritesheet	The spritesheet this animation is based on.
+	 * @param	TextureAtlas	The TextureAtlas this animation is based on.
 	 * @param	names		The names of the sprites this animation will use.
 	 * @return	The new animation based on the given parameters.
 	 */
-	public static function fromSpritesheet(frameDelay:Int,
-			spritesheet:Spritesheet, names:Array<String>):Animation {
+	public static function fromTextureAtlas(frameDelay:Int,
+			TextureAtlas:TextureAtlas, names:Array<String>):Animation {
 		
 		return new Animation(frameDelay,
-			TextureSequence.fromSpritesheet(spritesheet, names));
+			TextureSequence.fromTextureAtlas(TextureAtlas, names));
 	}
 	
 }
