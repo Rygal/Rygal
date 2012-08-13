@@ -86,6 +86,10 @@ class Controller extends BasicGameObject {
 		_inputs.get(input).bindKey(key);
 	}
 	
+	public function bindKeyset(input:String, keyset:Keyset):Void {
+		
+	}
+	
 	public function queryBinaryInput(input:String):Bool {
 		var i:Input = _inputs.get(input);
 		if (i != null && Std.is(i, BinaryInput)) {
