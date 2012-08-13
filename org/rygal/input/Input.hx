@@ -23,36 +23,61 @@ import org.rygal.Game;
 import org.rygal.util.Storage;
 
 /**
- * ...
+ * <h2>Description</h2>
+ * <p>
+ * 	An input for the controller. Various devices can be bound to an input,
+ * 	resulting in different behaviour depending on the input. (e.g. BinaryInput)
+ * </p>
+ * 
  * @author Robert Böhm
  */
 class Input extends EventDispatcher {
 	
+	/** The delimiter used for storage. */
 	private static inline var DELIMITER:String = "<:$:>";
 	
 	
+	/** The name of this input. */
 	public var name(default, null):String;
 	
+	/** The game this input is bound to. */
 	public var game(default, null):Game;
 	
+	/** The storage this input is connected to. */
 	public var storage(default, null):Storage;
 	
 	
+	/** Determines if this input is attached to the mouse. */
 	private var _mouse:Bool;
 	
+	/** Determines if this input is attached to touch devices. */
 	private var _touch:Bool;
 	
+	/** The keys that are bound to this input. */
 	private var _keyBindings:List<Int>;
 	
+	/** The keysets that are bound to this input. */
 	private var _keySets:List<Keyset>;
 	
+	/** The mouse button mask used to determine which buttons this input is
+	 * 	bound to. */
 	private var _mouseButtonMask:Int;
 	
+	/** The x-coordinate of this input's origin, used to determine relative
+	 * 	pointing inputs. */
 	private var _originX:Float;
 	
+	/** The y-coordinate of this input's origin, used to determine relative
+	 * 	pointing inputs. */
 	private var _originY:Float;
 	
 	
+	/**
+	 * Creates a new input for the given game and with the given name.
+	 * 
+	 * @param	game	The game this input will be bound to.
+	 * @param	name	The name of this input.
+	 */
 	public function new(game:Game, name:String) {
 		super();
 		
@@ -68,26 +93,48 @@ class Input extends EventDispatcher {
 	}
 	
 	
+	/**
+	 * Defines the origin of this input used for relative pointing inputs.
+	 * 
+	 * @param	x	The x-coordinate of the origin.
+	 * @param	y	The x-coordinate of the origin.
+	 */
 	public function setOrigin(x:Float, y:Float):Void {
 		this._originX = x;
 		this._originY = y;
 	}
 	
+	/**
+	 * Binds the mouse to this input.
+	 */
 	public function bindMouse():Void {
 		this._mouse = true;
 		this.store();
 	}
 	
+	/**
+	 * Binds touch devices to this input.
+	 */
 	public function bindTouch():Void {
 		this._touch = true;
 		this.store();
 	}
 	
-	public function bindMousebutton(key:Int):Void {
-		this._mouseButtonMask |= key;
+	/**
+	 * Binds the given mouse button to this input.
+	 * 
+	 * @param	button	The mouse button to be bound.
+	 */
+	public function bindMousebutton(button:Int):Void {
+		this._mouseButtonMask |= button;
 		this.store();
 	}
 	
+	/**
+	 * Binds the given key to this input.
+	 * 
+	 * @param	key	The key to be bound.
+	 */
 	public function bindKey(key:Int):Void {
 		if (Lambda.has(_keyBindings, key))
 			return;
@@ -96,6 +143,11 @@ class Input extends EventDispatcher {
 		this.store();
 	}
 	
+	/**
+	 * Binds the given keyset to this input.
+	 * 
+	 * @param	keyset	The keyset to be bound.
+	 */
 	public function bindKeyset(keyset:Keyset):Void {
 		if (Lambda.has(_keySets, keyset))
 			return;
@@ -104,8 +156,16 @@ class Input extends EventDispatcher {
 		this.store();
 	}
 	
+	/**
+	 * Updates this input.
+	 */
 	public function update():Void { }
 	
+	/**
+	 * Connects this input to the given storage.
+	 * 
+	 * @param	storage	The storage this input will be connected to.
+	 */
 	public function connect(storage:Storage):Void {
 		this.storage = storage;
 		
@@ -167,6 +227,9 @@ class Input extends EventDispatcher {
 		this.store();
 	}
 	
+	/**
+	 * Resets this input.
+	 */
 	public function reset():Void {
 		this._keySets.clear();
 		this._keyBindings.clear();
@@ -180,6 +243,11 @@ class Input extends EventDispatcher {
 		storage.unset(getStorageName("touch"));
 	}
 	
+	
+	/**
+	 * Stores the configuration of this input into a connected storage. (If
+	 * there is one)
+	 */
 	private function store():Void {
 		if (storage != null) {
 			storage.put(getStorageName("mouseButtons"), this._mouseButtonMask);
@@ -208,7 +276,13 @@ class Input extends EventDispatcher {
 		}
 	}
 	
-	
+	/**
+	 * Returns the name of the given configuration variable, based on it's name
+	 * as well as the name of the input.
+	 * 
+	 * @param	variable	The name of the variable to be stored.
+	 * @return	The name that may be used for variable access of the storage.
+	 */
 	private function getStorageName(variable:String):String {
 		return this.name + DELIMITER + variable;
 	}
