@@ -22,24 +22,65 @@ import org.rygal.Game;
 import org.rygal.util.Storage;
 
 /**
- * ...
+ * <h2>Description</h2>
+ * <p>
+ * 	A binary input for the controller. It can be used for inputs like buttons
+ * 	and can only be either pressed or not.
+ * </p>
+ * 
  * @author Robert Böhm
  */
 class BinaryInput extends Input {
 	
-	public function new(game:Game) {
-		super(game);
+	/** The state of this input. True if it's pressed, else false. */
+	public var state(default, null):Bool;
+	
+	
+	/** Determines the previous state of this input. */
+	private var _previousState:Bool;
+	
+	
+	/**
+	 * Creates a new binary input for the given game and with the given name.
+	 * 
+	 * @param	game	The game this input will be bound to.
+	 * @param	name	The name of this input.
+	 */
+	public function new(game:Game, name:String) {
+		super(game, name);
 		
-		
+		this.state = false;
+		this._previousState = false;
 	}
 	
 	
-	//public function bindKey(key
-	
-	override public function connect(storage:Storage):Void {
-		super.connect(storage);
+	/**
+	 * Updates this binary input.
+	 */
+	override public function update():Void {
+		_previousState = state;
+		state = false;
 		
+		for (key in _keyBindings) {
+			if (game.keyboard.isKeyPressed(key)) {
+				state = true;
+				break;
+			}
+		}
 		
+		if ((_mouseButtonMask & game.mouse.buttonMask) > 0) {
+			state = true;
+		}
+		
+		if (state != _previousState) {
+			if (state) {
+				this.dispatchEvent(
+					new ControllerEvent(ControllerEvent.PRESSED, this.name));
+			} else {
+				this.dispatchEvent(
+					new ControllerEvent(ControllerEvent.RELEASED, this.name));
+			}
+		}
 	}
 	
 }
