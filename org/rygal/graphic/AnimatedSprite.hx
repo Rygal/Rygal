@@ -28,11 +28,11 @@ import org.rygal.GameTime;
  * 
  * <h2>Example</h2>
  * <code>
- * 	var tileset:Tileset = new Tileset(<br />
+ * 	var spritesheet:Spritesheet = new Spritesheet(<br />
  * 	&nbsp;&nbsp;Texture.fromAssets("assets/walkAnimation.png"), 4, 1);<br />
  * 	<br />
  * 	var sprite:AnimatedSprite = new AnimatedSprite();<br />
- * 	sprite.registerAnimation("walk", Animation.fromTileset(250, tileset));<br />
+ * 	sprite.registerAnimation("walk", Animation.fromSpritesheet(250, spritesheet));<br />
  * 	sprite.loop("walk");
  * </code>
  * 
