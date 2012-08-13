@@ -36,54 +36,47 @@ class Keyset {
 	public static inline var NORTHWEST:Int = 7;
 	
 	
-	private var keyN:Int = NONE;
-	private var keyE:Int = NONE;
-	private var keyS:Int = NONE;
-	private var keyW:Int = NONE;
-	private var keyNE:Int = NONE;
-	private var keySE:Int = NONE;
-	private var keySW:Int = NONE;
-	private var keyNW:Int = NONE;
+	private var keyN:Int;
+	private var keyE:Int;
+	private var keyS:Int;
+	private var keyW:Int;
+	private var keyNE:Int;
+	private var keySE:Int;
+	private var keySW:Int;
+	private var keyNW:Int;
 	
 	
-	public function new() {
+	public function new(keyN:Int, keyE:Int, keyS:Int, keyW:Int,
+			keyNE:Int = NONE, keySE:Int = NONE,
+			keySW:Int = NONE, keyNW:Int = NONE) {
+		
+		this.keyN = keyN;
+		this.keyE = keyE;
+		this.keyS = keyS;
+		this.keyW = keyW;
+		this.keyNE = keyNE;
+		this.keySE = keySE;
+		this.keySW = keySW;
+		this.keyNW = keyNW;
 	}
 	
 	
 	public static function getNumpad():Keyset {
-		return new Keyset()
-			.setKey(Keyset.NORTH, Keys.NUMPAD_8)
-			.setKey(Keyset.NORTHEAST, Keys.NUMPAD_9)
-			.setKey(Keyset.EAST, Keys.NUMPAD_6)
-			.setKey(Keyset.SOUTHEAST, Keys.NUMPAD_3)
-			.setKey(Keyset.SOUTH, Keys.NUMPAD_2)
-			.setKey(Keyset.SOUTHWEST, Keys.NUMPAD_1)
-			.setKey(Keyset.WEST, Keys.NUMPAD_4)
-			.setKey(Keyset.NORTHWEST, Keys.NUMPAD_7);
+		return new Keyset(
+			Keys.NUMPAD_8, Keys.NUMPAD_6, Keys.NUMPAD_2, Keys.NUMPAD_4,
+			Keys.NUMPAD_9, Keys.NUMPAD_3, Keys.NUMPAD_1, Keys.NUMPAD_7);
 	}
 	
 	public static function getWASD():Keyset {
-		return new Keyset()
-			.setKey(Keyset.NORTH, Keys.W)
-			.setKey(Keyset.EAST, Keys.D)
-			.setKey(Keyset.SOUTH, Keys.S)
-			.setKey(Keyset.WEST, Keys.A);
+		return new Keyset(Keys.W, Keys.D, Keys.S, Keys.A);
 	}
 	
 	public static function getIJKL():Keyset {
-		return new Keyset()
-			.setKey(Keyset.NORTH, Keys.I)
-			.setKey(Keyset.EAST, Keys.J)
-			.setKey(Keyset.SOUTH, Keys.K)
-			.setKey(Keyset.WEST, Keys.L);
+		return new Keyset(Keys.I, Keys.J, Keys.K, Keys.L);
 	}
 	
 	public static function getArrowKeys():Keyset {
-		return new Keyset()
-			.setKey(Keyset.NORTH, Keys.UP)
-			.setKey(Keyset.EAST, Keys.RIGHT)
-			.setKey(Keyset.SOUTH, Keys.DOWN)
-			.setKey(Keyset.WEST, Keys.LEFT);
+		return new Keyset(Keys.UP, Keys.RIGHT, Keys.DOWN, Keys.LEFT);
 	}
 	
 	
@@ -99,20 +92,6 @@ class Keyset {
 			case NORTHWEST:	this.keyNW;
 			default:		Keyset.NONE;
 		}
-	}
-	
-	public function setKey(direction:Int, key:Int):Keyset {
-		switch(direction) {
-			case NORTH:		this.keyN = key;
-			case EAST:		this.keyE = key;
-			case SOUTH:		this.keyS = key;
-			case WEST:		this.keyW = key;
-			case NORTHEAST:	this.keyNE = key;
-			case SOUTHEAST:	this.keySE = key;
-			case SOUTHWEST:	this.keySW = key;
-			case NORTHWEST:	this.keyNW = key;
-		}
-		return this;
 	}
 	
 }

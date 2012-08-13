@@ -127,6 +127,29 @@ class Input extends EventDispatcher {
 			}
 		}
 		
+		if (this.storage.isset(getStorageName("keySets"))) {
+			var obj = this.storage.get(getStorageName("keySets"));
+			if (Std.is(obj, String)) {
+				var keySetsString:Array<String> = cast(obj, String).split(",");
+				this._keySets.clear();
+				for (s in keySetsString) {
+					var keys:Array<String> = s.split("|");
+					if (keys.length == 8) {
+						this._keySets.push(new Keyset(
+								Std.parseInt(keys[0]),
+								Std.parseInt(keys[1]),
+								Std.parseInt(keys[2]),
+								Std.parseInt(keys[3]),
+								Std.parseInt(keys[4]),
+								Std.parseInt(keys[5]),
+								Std.parseInt(keys[6]),
+								Std.parseInt(keys[7])
+							));
+					}
+				}
+			}
+		}
+		
 		if (this.storage.isset(getStorageName("mouse"))) {
 			var obj = this.storage.get(getStorageName("mouse"));
 			if (Std.is(obj, Bool)) {
@@ -151,6 +174,7 @@ class Input extends EventDispatcher {
 		this._mouse = false;
 		this._touch = false;
 		storage.unset(getStorageName("mouseButtons"));
+		storage.unset(getStorageName("keySets"));
 		storage.unset(getStorageName("keys"));
 		storage.unset(getStorageName("mouse"));
 		storage.unset(getStorageName("touch"));
@@ -165,6 +189,19 @@ class Input extends EventDispatcher {
 				keyString += key + ",";
 			}
 			storage.put(getStorageName("keys"), keyString);
+			
+			var keySetString:String = "";
+			for (keySet in _keySets) {
+				keySetString += keySet.getKey(Keyset.NORTH) + "|" +
+								keySet.getKey(Keyset.EAST) + "|" +
+								keySet.getKey(Keyset.SOUTH) + "|" +
+								keySet.getKey(Keyset.WEST) + "|" +
+								keySet.getKey(Keyset.NORTHEAST) + "|" +
+								keySet.getKey(Keyset.SOUTHEAST) + "|" +
+								keySet.getKey(Keyset.SOUTHWEST) + "|" +
+								keySet.getKey(Keyset.NORTHWEST) + ",";
+			}
+			storage.put(getStorageName("keySets"), keySetString);
 			
 			storage.put(getStorageName("mouse"), this._mouse);
 			storage.put(getStorageName("touch"), this._touch);

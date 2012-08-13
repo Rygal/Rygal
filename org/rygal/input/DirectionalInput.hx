@@ -29,6 +29,7 @@ class DirectionalInput extends Input {
 	
 	// = Math.sin(Math.PI / 4)
 	private var DIRECTIONAL_MOVEMENT:Float = 0.707106781;
+	
 	private var STAIGHT_MOVEMENT:Float = 1;
 	
 	public var direction(default, null):Float;
