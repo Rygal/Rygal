@@ -44,6 +44,8 @@ class Input extends EventDispatcher {
 	
 	private var _keyBindings:List<Int>;
 	
+	private var _keySets:List<Keyset>;
+	
 	private var _mouseButtonMask:Int;
 	
 	private var _originX:Float;
@@ -55,6 +57,7 @@ class Input extends EventDispatcher {
 		super();
 		
 		this._keyBindings = new List<Int>();
+		this._keySets = new List<Keyset>();
 		this._mouseButtonMask = 0;
 		this._mouse = false;
 		this._touch = false;
@@ -90,6 +93,14 @@ class Input extends EventDispatcher {
 			return;
 		
 		this._keyBindings.push(key);
+		this.store();
+	}
+	
+	public function bindKeyset(keyset:Keyset):Void {
+		if (Lambda.has(_keySets, keyset))
+			return;
+		
+		this._keySets.push(keyset);
 		this.store();
 	}
 	
@@ -134,6 +145,7 @@ class Input extends EventDispatcher {
 	}
 	
 	public function reset():Void {
+		this._keySets.clear();
 		this._keyBindings.clear();
 		this._mouseButtonMask = 0;
 		this._mouse = false;

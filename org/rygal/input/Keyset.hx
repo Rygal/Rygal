@@ -87,6 +87,20 @@ class Keyset {
 	}
 	
 	
+	public function getKey(direction:Int):Int {
+		return switch(direction) {
+			case NORTH:		this.keyN;
+			case EAST:		this.keyE;
+			case SOUTH:		this.keyS;
+			case WEST:		this.keyW;
+			case NORTHEAST:	this.keyNE;
+			case SOUTHEAST:	this.keySE;
+			case SOUTHWEST:	this.keySW;
+			case NORTHWEST:	this.keyNW;
+			default:		Keyset.NONE;
+		}
+	}
+	
 	public function setKey(direction:Int, key:Int):Keyset {
 		switch(direction) {
 			case NORTH:		this.keyN = key;
@@ -99,21 +113,6 @@ class Keyset {
 			case NORTHWEST:	this.keyNW = key;
 		}
 		return this;
-	}
-	
-	public function isFourWay():Bool {
-		return this.keyN != NONE &&
-			this.keyE != NONE &&
-			this.keyS != NONE &&
-			this.keyW != NONE;
-	}
-	
-	public function isEightWay():Bool {
-		return isFourWay() &&
-			this.keyNE != NONE &&
-			this.keySE != NONE &&
-			this.keySW != NONE &&
-			this.keyNW != NONE;
 	}
 	
 }

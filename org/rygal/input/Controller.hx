@@ -87,13 +87,21 @@ class Controller extends BasicGameObject {
 	}
 	
 	public function bindKeyset(input:String, keyset:Keyset):Void {
-		
+		_inputs.get(input).bindKeyset(keyset);
 	}
 	
 	public function queryBinaryInput(input:String):Bool {
 		var i:Input = _inputs.get(input);
 		if (i != null && Std.is(i, BinaryInput)) {
 			return cast(_inputs.get(input), BinaryInput).state;
+		}
+		return false;
+	}
+	
+	public function hasDirection(input:String):Bool {
+		var i:Input = _inputs.get(input);
+		if (i != null && Std.is(i, DirectionalInput)) {
+			return cast(_inputs.get(input), DirectionalInput).hasDirection;
 		}
 		return false;
 	}
@@ -107,10 +115,16 @@ class Controller extends BasicGameObject {
 	}
 	
 	public function getDirectionalVectorX(input:String):Float {
+		if (!hasDirection(input))
+			return 0;
+		
 		return Math.cos(getDirection(input));
 	}
 	
 	public function getDirectionalVectorY(input:String):Float {
+		if (!hasDirection(input))
+			return 0;
+		
 		return Math.sin(getDirection(input));
 	}
 	
