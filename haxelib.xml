@@ -24,8 +24,7 @@
     <description>
 		A free open source engine for games using haXe and NME.
 	</description>
-    <version name="1.2.0">
-		UI elements, touch support, input abstraction, code cleanup and
-		bugfixes.
+    <version name="1.2.1">
+		Added getSoundCount-method to Jukebox
 	</version>
 </project>
