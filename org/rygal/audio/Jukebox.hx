@@ -166,6 +166,15 @@ class Jukebox {
 		return _running;
 	}
 	
+	/**
+	 * Returns the count of Sounds in this Jukebox
+	 *
+	 * @return count of Sounds
+	 */
+	public function getSoundCount():Int {
+		return this._sounds.length;
+	}
+	
 	
 	/**
 	 * A callback that will be called as soon as the current sound has ended.
