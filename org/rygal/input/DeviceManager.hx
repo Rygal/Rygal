@@ -56,6 +56,7 @@ class DeviceManager extends EventDispatcher {
 		KeyboardDeviceManager.use();
 		MouseDeviceManager.use();
 		TouchDeviceManager.use();
+		JoystickDeviceManager.use();
 	}
 	
 	

@@ -24,6 +24,7 @@ import org.rygal.input.InputDevice;
 import org.rygal.input.Keyboard;
 import org.rygal.input.Mouse;
 import org.rygal.input.Touch;
+import org.rygal.input.Joystick;
 import nme.display.Bitmap;
 import nme.display.BitmapData;
 import nme.display.DisplayObject;
@@ -31,6 +32,7 @@ import nme.display.Sprite;
 import nme.events.Event;
 import nme.Lib;
 import org.rygal.input.TouchDeviceManager;
+import org.rygal.input.JoystickDeviceManager;
 
 /**
  * <h2>Description</h2>
@@ -75,6 +77,9 @@ class Game {
 	
 	/** The touch surface of this game. */
 	public var touch(getTouch, null):TouchDeviceManager;
+	
+	/** The primary joystick of this game */
+	public var joystick(getJoystick, null):JoystickDeviceManager;
 	
 	/** The camera's x-position. */
 	public var cameraX:Int;
@@ -375,8 +380,7 @@ class Game {
 	 * @param	type	The type of the device to be unregistered.
 	 * @param	id		The ID of the device to be unregistered.
 	 */
-	public function unregisterDevice<T:InputDevice>(type:Class<T>,
-			id:Int = 0):Void {
+	public function unregisterDevice<T:InputDevice>(type:Class<T>, id:Int = 0):Void {
 		
 		var className:String = Type.getClassName(type);
 		
@@ -476,6 +480,13 @@ class Game {
 	 */
 	private function getTouches():Iterator<Touch> {
 		return getInputs(Touch);
+	}
+	
+	/**
+	 * Returns the joystick of this game.
+	 */
+	private function getJoystick():JoystickDeviceManager {
+		return getDeviceManager(JoystickDeviceManager);
 	}
 	
 	/**
