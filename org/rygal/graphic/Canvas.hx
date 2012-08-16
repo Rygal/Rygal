@@ -75,6 +75,9 @@ class Canvas {
 	/** The translation stack for y-coordinates. */
 	private var _yTranslations:Array<Float>;
 	
+	/** A pre-allocated point. */
+	private var _drawPoint:Point;
+	
 	
 	/**
 	 * Creates a new canvas based on the given bitmap data.
@@ -87,6 +90,7 @@ class Canvas {
 		this.yTranslation = 0;
 		this._xTranslations = new Array<Float>();
 		this._yTranslations = new Array<Float>();
+		this._drawPoint = new Point();
 	}
 	
 	
@@ -188,8 +192,12 @@ class Canvas {
 		
 		x += xTranslation;
 		y += yTranslation;
+		
+		_drawPoint.x = x;
+		_drawPoint.y = y;
+		
 		_bitmapData.copyPixels(texture.bitmapData, texture.bitmapDataRect,
-			new Point(x, y), null, null, true);
+			_drawPoint, null, null, true);
 	}
 	
 	/**
