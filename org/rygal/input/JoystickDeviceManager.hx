@@ -73,7 +73,7 @@ class JoystickDeviceManager extends DeviceManager {
 		#end
 	}
 	
-	#if !flash
+	#if (cpp || neko)
 	private function onAxisMove(e:nme.events.JoystickEvent) {
 		isRegistered(e);
 		updateEvent(e);

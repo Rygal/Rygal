@@ -52,7 +52,7 @@ class Joystick extends InputDevice {
 		this._buttonStates = new IntHash<Bool>();
 	}
 	
-	#if !flash
+	#if (cpp || neko)
 	public function updateFromEvent(e:nme.events.JoystickEvent) {
 		this.id = e.id;
 		this.x = e.x;
