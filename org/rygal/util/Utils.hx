@@ -17,6 +17,8 @@
 
 
 package org.rygal.util;
+import haxe.Log;
+import haxe.PosInfos;
 
 /**
  * <h2>Description</h2>
@@ -67,5 +69,34 @@ class Utils {
 	public static function zeroPadNumber(number:Int, targetSize:Int):String {
 		return StringTools.lpad(Std.string(number), "0", targetSize);
 	}
+	
+	#if cpp
+	
+	public static function setupTrace():Void {
+		Log.trace = Utils.trace;
+	}
+	
+	private static function trace(object:Dynamic, ?inf:PosInfos):Void {
+		Sys.stdout().writeString(inf.fileName + ":" + inf.lineNumber + ": " + Std.string(object) + "\n");
+		Sys.stdout().flush();
+	}
+	
+	#else
+	
+	private static var realTrace:Dynamic -> PosInfos -> Void;
+	
+	public static function setupTrace():Void {
+		if (realTrace == null) {
+			realTrace = Log.trace;
+		}
+		Log.trace = Utils.trace;
+	}
+	
+	private static function trace(object:Dynamic, ?inf:PosInfos):Void {
+		realTrace(object, inf);
+	}
+	
+	#end
+	
 	
 }
