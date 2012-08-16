@@ -73,6 +73,7 @@ class JoystickDeviceManager extends DeviceManager {
 		#end
 	}
 	
+	#if !flash
 	private function onAxisMove(e:nme.events.JoystickEvent) {
 		isRegistered(e);
 		updateEvent(e);
@@ -142,5 +143,6 @@ class JoystickDeviceManager extends DeviceManager {
 			game.registerDevice(j, e.device);
 		}
 	}
+	#end
 	
 }

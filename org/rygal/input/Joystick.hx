@@ -52,12 +52,14 @@ class Joystick extends InputDevice {
 		this._buttonStates = new IntHash<Bool>();
 	}
 	
+	#if !flash
 	public function updateFromEvent(e:nme.events.JoystickEvent) {
 		this.id = e.id;
 		this.x = e.x;
 		this.y = e.y;
 		this.z = e.z;
 	}
+	#end
 	
 	public function setButtonState(e:JoystickEvent, pressed:Bool) {
 		_buttonStates.set(e.id, pressed);
