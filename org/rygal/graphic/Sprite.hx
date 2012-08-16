@@ -107,8 +107,7 @@ class Sprite extends BasicGameObject, implements PhysicalObject {
 	 * @param	screen	The screen this sprite shall be drawn to.
 	 */
 	override public function draw(screen:Canvas):Void {
-		if(texture != null)
-			screen.draw(texture, x, y);
+		screen.draw(texture, x, y);
 	}
 	
 	
