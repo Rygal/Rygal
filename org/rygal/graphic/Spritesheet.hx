@@ -38,11 +38,11 @@ package org.rygal.graphic;
  */
 class Spritesheet {
 	
-	/** The width of each tile. */
-	public var tileWidth(default, null):Int;
+	/** The width of a sprite. */
+	public var spriteWidth(default, null):Int;
 	
-	/** The height of each tile. */
-	public var tileHeight(default, null):Int;
+	/** The height of a sprite. */
+	public var spriteHeight(default, null):Int;
 	
 	/** The amount of columns. */
 	public var columns(default, null):Int;
@@ -50,7 +50,7 @@ class Spritesheet {
 	/** The amount of rows. */
 	public var rows(default, null):Int;
 	
-	/** The amount of tiles. */
+	/** The amount of sprites. */
 	public var length(getLength, never):Int;
 	
 	
@@ -69,51 +69,51 @@ class Spritesheet {
 	public function new(texture:Texture, columns:Int, rows:Int) {
 		this.columns = columns;
 		this.rows = rows;
-		this.tileWidth = Std.int(texture.width / columns);
-		this.tileHeight = Std.int(texture.height / rows);
+		this.spriteWidth = Std.int(texture.width / columns);
+		this.spriteHeight = Std.int(texture.height / rows);
 		this._textures = new Array<Texture>();
 		
 		for (row in 0...rows) {
 			for (col in 0...columns) {
-				_textures.push(texture.slice(col * tileWidth, row * tileHeight,
-						tileWidth, tileHeight));
+				_textures.push(texture.slice(col * spriteWidth, row * spriteHeight,
+						spriteWidth, spriteHeight));
 			}
 		}
 	}
 	
 	
 	/**
-	 * Creates a new spritesheet based on the given texture and tile metrics.
+	 * Creates a new spritesheet based on the given texture and sprite metrics.
 	 * 
-	 * @param	texture		The texture the spritesheet is based on.
-	 * @param	tileWidth	The width of each tile of the spritesheet.
-	 * @param	tileHeight	The height of each tile of the spritesheet.
+	 * @param	texture			The texture the spritesheet is based on.
+	 * @param	spriteWidth		The width of each sprite of the spritesheet.
+	 * @param	spriteHeight	The height of each sprite of the spritesheet.
 	 * @return	The new spritesheet based on the given properties.
 	 */
-	public static function fromTileSize(texture:Texture, tileWidth:Int,
-			tileHeight:Int):Spritesheet {
+	public static function fromSpriteSize(texture:Texture, spriteWidth:Int,
+			spriteHeight:Int):Spritesheet {
 		
-		return new Spritesheet(texture, Std.int(texture.width / tileWidth),
-			Std.int(texture.height / tileHeight));
+		return new Spritesheet(texture, Std.int(texture.width / spriteWidth),
+			Std.int(texture.height / spriteHeight));
 	}
 	
 	
 	/**
-	 * Returns the tile ID of the given tile position.
+	 * Returns the sprite ID of the given sprite position.
 	 * 
-	 * @param	x	The x-position in tiles.
-	 * @param	y	The y-position in tiles.
-	 * @return	The tile ID.
+	 * @param	x	The x-position in sprites.
+	 * @param	y	The y-position in sprites.
+	 * @return	The sprite ID.
 	 */
 	public function getId(x:Int, y:Int):Int {
 		return x + y * columns;
 	}
 	
 	/**
-	 * Returns the texture with the given tile ID.
+	 * Returns the texture with the given sprite ID.
 	 * 
-	 * @param	id	The tile ID.
-	 * @return	The texture with the given tile ID.
+	 * @param	id	The sprite ID.
+	 * @return	The texture with the given sprite ID.
 	 */
 	public function getTextureById(id:Int):Texture {
 		if (id < 0 || id >= length)
@@ -123,11 +123,11 @@ class Spritesheet {
 	}
 	
 	/**
-	 * Returns the texture on the given tile position.
+	 * Returns the texture on the given sprite position.
 	 * 
-	 * @param	x	The x-position in tiles.
-	 * @param	y	The y-position in tiles.
-	 * @return	The texture on the given tile position.
+	 * @param	x	The x-position in sprites.
+	 * @param	y	The y-position in sprites.
+	 * @return	The texture on the given sprite position.
 	 */
 	public function getTexture(x:Int, y:Int):Texture {
 		if (x < 0 || y < 0 || x >= columns || y >= rows)
@@ -138,9 +138,9 @@ class Spritesheet {
 	
 	
 	/**
-	 * Returns the amount of tiles.
+	 * Returns the amount of sprites.
 	 * 
-	 * @return	The amount of tiles.
+	 * @return	The amount of sprites.
 	 */
 	private function getLength():Int {
 		return _textures.length;
