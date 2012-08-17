@@ -98,13 +98,13 @@ class TextureAtlas {
 		var y:Int;
 		var w:Int;
 		var h:Int;
-		for (sprite in textureAtlas) {
-			if (sprite.nodeType == Xml.Element && sprite.nodeName == "sprite") {
-				x = Std.parseInt(sprite.get("x"));
-				y = Std.parseInt(sprite.get("y"));
-				w = Std.parseInt(sprite.get("w"));
-				h = Std.parseInt(sprite.get("h"));
-				textures.set(sprite.get("n"), texture.slice(x, y, w, h));
+		for (texture in textureAtlas) {
+			if (texture.nodeType == Xml.Element && texture.nodeName == "sprite") {
+				x = Std.parseInt(texture.get("x"));
+				y = Std.parseInt(texture.get("y"));
+				w = Std.parseInt(texture.get("w"));
+				h = Std.parseInt(texture.get("h"));
+				textures.set(texture.get("n"), texture.slice(x, y, w, h));
 			}
 		}
 		return new TextureAtlas(textures);
