@@ -23,31 +23,31 @@ import org.rygal.Game;
 /**
  * <h2>Description</h2>
  * <p>
- * 	A device manager for mouses.
+ *  A device manager for mouses.
  * </p>
  * 
  * @author Robert Böhm
  */
 class MouseDeviceManager extends DeviceManager {
-	
-	/**
-	 * Creates a new mouse device manager for the given game.
-	 * 
-	 * @param	game	The game the mouse will be registered for.
-	 */
-	public function new(game:Game) {
-		super(game);
-		
-		game.registerDevice(new Mouse(game));
-	}
-	
-	
-	/**
-	 * Registers this mouse device manager on the Game-class so it'll be used on
-	 * any games that will be created.
-	 */
-	public static function use():Void {
-		Game.registerDeviceManager(MouseDeviceManager);
-	}
-	
+    
+    /**
+     * Creates a new mouse device manager for the given game.
+     * 
+     * @param   game    The game the mouse will be registered for.
+     */
+    public function new(game:Game) {
+        super(game);
+        
+        game.registerDevice(new Mouse(game));
+    }
+    
+    
+    /**
+     * Registers this mouse device manager on the Game-class so it'll be used on
+     * any games that will be created.
+     */
+    public static function use():Void {
+        Game.registerDeviceManager(MouseDeviceManager);
+    }
+    
 }

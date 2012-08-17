@@ -21,77 +21,77 @@ package org.rygal.graphic;
 /**
  * <h2>Description</h2>
  * <p>
- * 	An animation that is based on a texture sequence and a specified delay
- * 	between frames.
+ *  An animation that is based on a texture sequence and a specified delay
+ *  between frames.
  * </p>
  * 
  * <h2>Example</h2>
  * <code>
- * 	var spritesheet:Spritesheet = new Spritesheet(<br />
- * 	&nbsp;&nbsp;Texture.fromAssets("assets/walkAnimation.png"), 4, 1);<br />
- * 	var animation:Animation = Animation.fromSpritesheet(250, spritesheet)<br />
- * 	<br />
- * 	var sprite:AnimatedSprite = new AnimatedSprite();<br />
- * 	sprite.registerAnimation("walk", animation);<br />
- * 	sprite.loop("walk");
+ *  var spritesheet:Spritesheet = new Spritesheet(<br />
+ *  &nbsp;&nbsp;Texture.fromAssets("assets/walkAnimation.png"), 4, 1);<br />
+ *  var animation:Animation = Animation.fromSpritesheet(250, spritesheet)<br />
+ *  <br />
+ *  var sprite:AnimatedSprite = new AnimatedSprite();<br />
+ *  sprite.registerAnimation("walk", animation);<br />
+ *  sprite.loop("walk");
  * </code>
  * 
  * @author Robert Böhm
  */
 class Animation {
-	
-	/** The delay between multiple frames. */
-	public var frameDelay:Int;
-	
-	/** The texture sequence this animation is based on. */
-	public var sequence:TextureSequence;
-	
-	
-	/**
-	 * Creates a new animation based on a frame delay and a given texture
-	 * sequence.
-	 * 
-	 * @param	frameDelay	The delay between frames in milliseconds.
-	 * @param	sequence	The texture sequence this animation is based on.
-	 */
-	public function new(frameDelay:Int, sequence:TextureSequence) {
-		this.frameDelay = frameDelay;
-		this.sequence = sequence;
-	}
-	
-	
-	/**
-	 * Creates a new animation based on a spritesheet.
-	 * 
-	 * @param	frameDelay	The delay between frames in milliseconds.
-	 * @param	spritesheet		The spritesheet this animation is based on.
-	 * @param	start		The first ID to use (Inclusive).
-	 * @param	end			The last ID to use (Exclusive). Use -1 to make it
-	 * 						last until the (inclusive) last tile.
-	 * @param	loop		Shall the animation be looping? (Forward and at the
-	 * 						end reverse direction)
-	 * @return	The new animation based on the given parameters.
-	 */
-	public static function fromSpritesheet(frameDelay:Int, spritesheet:Spritesheet,
-			start:Int = 0, end:Int = -1, loop:Bool = false):Animation {
-		
-		return new Animation(frameDelay,
-			TextureSequence.fromSpritesheet(spritesheet, start, end, loop));
-	}
-	
-	/**
-	 * Creates a new animation based on a TextureAtlas.
-	 * 
-	 * @param	frameDelay	The delay between frames in milliseconds.
-	 * @param	textureAtlas	The TextureAtlas this animation is based on.
-	 * @param	names		The names of the sprites this animation will use.
-	 * @return	The new animation based on the given parameters.
-	 */
-	public static function fromTextureAtlas(frameDelay:Int,
-			textureAtlas:TextureAtlas, names:Array<String>):Animation {
-		
-		return new Animation(frameDelay,
-			TextureSequence.fromTextureAtlas(textureAtlas, names));
-	}
-	
+    
+    /** The delay between multiple frames. */
+    public var frameDelay:Int;
+    
+    /** The texture sequence this animation is based on. */
+    public var sequence:TextureSequence;
+    
+    
+    /**
+     * Creates a new animation based on a frame delay and a given texture
+     * sequence.
+     * 
+     * @param   frameDelay  The delay between frames in milliseconds.
+     * @param   sequence    The texture sequence this animation is based on.
+     */
+    public function new(frameDelay:Int, sequence:TextureSequence) {
+        this.frameDelay = frameDelay;
+        this.sequence = sequence;
+    }
+    
+    
+    /**
+     * Creates a new animation based on a spritesheet.
+     * 
+     * @param   frameDelay  The delay between frames in milliseconds.
+     * @param   spritesheet     The spritesheet this animation is based on.
+     * @param   start       The first ID to use (Inclusive).
+     * @param   end         The last ID to use (Exclusive). Use -1 to make it
+     *                      last until the (inclusive) last tile.
+     * @param   loop        Shall the animation be looping? (Forward and at the
+     *                      end reverse direction)
+     * @return  The new animation based on the given parameters.
+     */
+    public static function fromSpritesheet(frameDelay:Int, spritesheet:Spritesheet,
+            start:Int = 0, end:Int = -1, loop:Bool = false):Animation {
+        
+        return new Animation(frameDelay,
+            TextureSequence.fromSpritesheet(spritesheet, start, end, loop));
+    }
+    
+    /**
+     * Creates a new animation based on a TextureAtlas.
+     * 
+     * @param   frameDelay  The delay between frames in milliseconds.
+     * @param   textureAtlas    The TextureAtlas this animation is based on.
+     * @param   names       The names of the sprites this animation will use.
+     * @return  The new animation based on the given parameters.
+     */
+    public static function fromTextureAtlas(frameDelay:Int,
+            textureAtlas:TextureAtlas, names:Array<String>):Animation {
+        
+        return new Animation(frameDelay,
+            TextureSequence.fromTextureAtlas(textureAtlas, names));
+    }
+    
 }

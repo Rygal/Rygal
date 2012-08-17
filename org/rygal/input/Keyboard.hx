@@ -25,140 +25,140 @@ import org.rygal.Game;
 /**
  * <h2>Description</h2>
  * <p>
- * 	A simple keyboard. It will automatically be created by the Game-class.
+ *  A simple keyboard. It will automatically be created by the Game-class.
  * </p>
  * 
  * <h2>Example <i>(Inside a scene)</i></h2>
  * <code>
- * 	if (this.game.keyboard.isKeyPressed(Keys.SPACE)) {<br />
- * 	&nbsp;&nbsp;// Let the player jump<br />
- * 	}
+ *  if (this.game.keyboard.isKeyPressed(Keys.SPACE)) {<br />
+ *  &nbsp;&nbsp;// Let the player jump<br />
+ *  }
  * </code>
  * 
  * @author Robert Böhm
  */
 class Keyboard extends InputDevice {
-	
-	/** The amount of keys that can be monitored. */
-	private static inline var KEYS_SIZE:Int = 512;
-	
-	
-	/** An array with all key states. */
-	private var _keys:Array<Bool>;
-	
-	/** The handler used to register events on. Is also used to determine the
-	 * 	relative coordinates of the mouse. */
-	private var _handler:DisplayObject;
+    
+    /** The amount of keys that can be monitored. */
+    private static inline var KEYS_SIZE:Int = 512;
+    
+    
+    /** An array with all key states. */
+    private var _keys:Array<Bool>;
+    
+    /** The handler used to register events on. Is also used to determine the
+     *  relative coordinates of the mouse. */
+    private var _handler:DisplayObject;
 
-	
-	/**
-	 * Creates a new Keyboard-object for the given DisplayObject.
-	 * 
-	 * @param	handler	The DisplayObject this keyboard will be created for.
-	 */
-	public function new(game:Game) {
-		super();
-		
-		_handler = game.getDisplayObject();
-		
-		_keys = new Array<Bool>();
-		for (i in 0...512) {
-			_keys.push(false);
-		}
-		
-		_handler.stage.addEventListener(nme.events.KeyboardEvent.KEY_DOWN,
-			onKeyDown);
-		_handler.stage.addEventListener(nme.events.KeyboardEvent.KEY_UP,
-			onKeyUp);
-	}
-	
-	
-	/**
-	 * Determines if the given key is currently pressed.
-	 * 
-	 * @param	keyCode	The key that should be checked for. You can use the
-	 * 					constants defined in the class Keys.
-	 * 					For instance: Keys.SPACE for the space key.
-	 * @return	True if the given key is pressed.
-	 */
-	public function isKeyPressed(keyCode:Int):Bool {
-		if (keyCode >= 0 && keyCode < _keys.length) {
-			return _keys[keyCode];
-		}
-		
-		return false;
-	}
-	
-	/**
-	 * Removes all registered event listeners.
-	 */
-	override public function dispose():Void {
-		super.dispose();
-		
-		_handler.stage.removeEventListener(nme.events.KeyboardEvent.KEY_DOWN,
-			onKeyDown);
-		_handler.stage.removeEventListener(nme.events.KeyboardEvent.KEY_UP,
-			onKeyUp);
-	}
-	
-	
-	/**
-	 * A callback that will be called whenever a key is pressed.
-	 * 
-	 * @param	e	Event parameters.
-	 */
-	private function onKeyDown(e:nme.events.KeyboardEvent):Void {
-		var intKeyCode:Int = cast(e.keyCode, Int);
-		if (e.charCode >= "a".charCodeAt(0) &&
-				e.charCode <= 'z'.charCodeAt(0)) {
-			
-			intKeyCode =
-				String.fromCharCode(e.charCode).toUpperCase().charCodeAt(0);
-		}
-		
-		if (intKeyCode >= 0 && intKeyCode < _keys.length) {
-			var previous:Bool = _keys[intKeyCode];
-			_keys[intKeyCode] = true;
-			
-			dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_TYPED, this,
-				intKeyCode, e.charCode));
-			
-			if (e.charCode != 0 || intKeyCode == Keys.DELETE) {
-				// Delete didn't have a charCode on C++ target.
-				dispatchEvent(new KeyboardEvent(KeyboardEvent.CHAR_TYPED, this,
-					intKeyCode, e.charCode));
-			}
-			
-			if (!previous) {
-				dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_DOWN, this,
-					intKeyCode, e.charCode));
-			}
-		}
-	}
-	
-	/**
-	 * A callback that will be called whenever a key is released.
-	 * 
-	 * @param	e	Event parameters.
-	 */
-	private function onKeyUp(e:nme.events.KeyboardEvent):Void {
-		var intKeyCode:Int = cast(e.keyCode, Int);
-		if (e.charCode >= "a".charCodeAt(0) &&
-				e.charCode <= 'z'.charCodeAt(0)) {
-			
-			intKeyCode =
-				String.fromCharCode(e.charCode).toUpperCase().charCodeAt(0);
-		}
-		
-		if (intKeyCode >= 0 && intKeyCode < _keys.length) {
-			var previous:Bool = _keys[intKeyCode];
-			_keys[intKeyCode] = false;
-			
-			if (previous) {
-				dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_UP, this,
-					intKeyCode, e.charCode));
-			}
-		}
-	}
-	
+    
+    /**
+     * Creates a new Keyboard-object for the given DisplayObject.
+     * 
+     * @param   handler The DisplayObject this keyboard will be created for.
+     */
+    public function new(game:Game) {
+        super();
+        
+        _handler = game.getDisplayObject();
+        
+        _keys = new Array<Bool>();
+        for (i in 0...512) {
+            _keys.push(false);
+        }
+        
+        _handler.stage.addEventListener(nme.events.KeyboardEvent.KEY_DOWN,
+            onKeyDown);
+        _handler.stage.addEventListener(nme.events.KeyboardEvent.KEY_UP,
+            onKeyUp);
+    }
+    
+    
+    /**
+     * Determines if the given key is currently pressed.
+     * 
+     * @param   keyCode The key that should be checked for. You can use the
+     *                  constants defined in the class Keys.
+     *                  For instance: Keys.SPACE for the space key.
+     * @return  True if the given key is pressed.
+     */
+    public function isKeyPressed(keyCode:Int):Bool {
+        if (keyCode >= 0 && keyCode < _keys.length) {
+            return _keys[keyCode];
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Removes all registered event listeners.
+     */
+    override public function dispose():Void {
+        super.dispose();
+        
+        _handler.stage.removeEventListener(nme.events.KeyboardEvent.KEY_DOWN,
+            onKeyDown);
+        _handler.stage.removeEventListener(nme.events.KeyboardEvent.KEY_UP,
+            onKeyUp);
+    }
+    
+    
+    /**
+     * A callback that will be called whenever a key is pressed.
+     * 
+     * @param   e   Event parameters.
+     */
+    private function onKeyDown(e:nme.events.KeyboardEvent):Void {
+        var intKeyCode:Int = cast(e.keyCode, Int);
+        if (e.charCode >= "a".charCodeAt(0) &&
+                e.charCode <= 'z'.charCodeAt(0)) {
+            
+            intKeyCode =
+                String.fromCharCode(e.charCode).toUpperCase().charCodeAt(0);
+        }
+        
+        if (intKeyCode >= 0 && intKeyCode < _keys.length) {
+            var previous:Bool = _keys[intKeyCode];
+            _keys[intKeyCode] = true;
+            
+            dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_TYPED, this,
+                intKeyCode, e.charCode));
+            
+            if (e.charCode != 0 || intKeyCode == Keys.DELETE) {
+                // Delete didn't have a charCode on C++ target.
+                dispatchEvent(new KeyboardEvent(KeyboardEvent.CHAR_TYPED, this,
+                    intKeyCode, e.charCode));
+            }
+            
+            if (!previous) {
+                dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_DOWN, this,
+                    intKeyCode, e.charCode));
+            }
+        }
+    }
+    
+    /**
+     * A callback that will be called whenever a key is released.
+     * 
+     * @param   e   Event parameters.
+     */
+    private function onKeyUp(e:nme.events.KeyboardEvent):Void {
+        var intKeyCode:Int = cast(e.keyCode, Int);
+        if (e.charCode >= "a".charCodeAt(0) &&
+                e.charCode <= 'z'.charCodeAt(0)) {
+            
+            intKeyCode =
+                String.fromCharCode(e.charCode).toUpperCase().charCodeAt(0);
+        }
+        
+        if (intKeyCode >= 0 && intKeyCode < _keys.length) {
+            var previous:Bool = _keys[intKeyCode];
+            _keys[intKeyCode] = false;
+            
+            if (previous) {
+                dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_UP, this,
+                    intKeyCode, e.charCode));
+            }
+        }
+    }
+    
 }

@@ -21,14 +21,14 @@ package org.rygal.physics;
 /**
  * <h2>Description</h2>
  * <p>
- * 	A primitive object. When you want to create your own primitive, you have to
- * 	make sure, you're able to provide collision checks for EVERY other
- * 	primitive! Also, you must not let the other object make the collision check
- * 	for you! (Would result in infinite recursion)
+ *  A primitive object. When you want to create your own primitive, you have to
+ *  make sure, you're able to provide collision checks for EVERY other
+ *  primitive! Also, you must not let the other object make the collision check
+ *  for you! (Would result in infinite recursion)
  * </p>
  * 
  * @author Robert Böhm
  */
 interface Primitive implements PhysicalObject {
-	
+    
 }

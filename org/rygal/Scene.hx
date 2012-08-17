@@ -21,44 +21,44 @@ package org.rygal;
 /**
  * <h2>Description</h2>
  * <p>
- * 	A scene that besides basic game object container functionality also provides
- * 	methods for loading/unloading the scene. A scene can be added to a game that
- * 	then manages the method calling stuff.
+ *  A scene that besides basic game object container functionality also provides
+ *  methods for loading/unloading the scene. A scene can be added to a game that
+ *  then manages the method calling stuff.
  * </p>
  * 
  * @author Robert Böhm
  */
 class Scene extends GameObjectContainer {
-	
-	/** The game this scene belongs to. */
-	public var game(default, null):Game;
-	
-	
-	/**
-	 * Creates a new scene.
-	 */
-	public function new() {
-		super();
-	}
-	
-	
-	/**
-	 * Loads the scene. (Ressources, event listeners, etc.)
-	 * Will be called everytime this scene gets active.
-	 * 
-	 * @param	game	The game this scene belongs to.
-	 */
-	public function load(game:Game) {
-		this.game = game;
-	}
-	
-	/**
-	 * Unloads the scene. (Ressources, event listeners, etc.)
-	 * Will be called everytime this scene gets inactive (= Game changes to
-	 * another scene).
-	 */
-	public function unload() {
-		this.removeChildren();
-	}
-	
+    
+    /** The game this scene belongs to. */
+    public var game(default, null):Game;
+    
+    
+    /**
+     * Creates a new scene.
+     */
+    public function new() {
+        super();
+    }
+    
+    
+    /**
+     * Loads the scene. (Ressources, event listeners, etc.)
+     * Will be called everytime this scene gets active.
+     * 
+     * @param   game    The game this scene belongs to.
+     */
+    public function load(game:Game) {
+        this.game = game;
+    }
+    
+    /**
+     * Unloads the scene. (Ressources, event listeners, etc.)
+     * Will be called everytime this scene gets inactive (= Game changes to
+     * another scene).
+     */
+    public function unload() {
+        this.removeChildren();
+    }
+    
 }

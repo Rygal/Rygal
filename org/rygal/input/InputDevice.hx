@@ -23,26 +23,26 @@ import nme.events.EventDispatcher;
 /**
  * <h2>Description</h2>
  * <p>
- * 	A device handling specific input events. If you want to implement your own
- * 	device, please take a look at one of the default ones. (For instance
- * 	Keyboard)
+ *  A device handling specific input events. If you want to implement your own
+ *  device, please take a look at one of the default ones. (For instance
+ *  Keyboard)
  * </p>
  * 
  * @author Robert Böhm
  */
 class InputDevice extends EventDispatcher {
-	
-	/**
-	 * Creates a new input device.
-	 */
-	public function new() {
-		super();
-	}
-	
-	
-	/**
-	 * Disposes this input device.
-	 */
-	public function dispose():Void { }
-	
+    
+    /**
+     * Creates a new input device.
+     */
+    public function new() {
+        super();
+    }
+    
+    
+    /**
+     * Disposes this input device.
+     */
+    public function dispose():Void { }
+    
 }

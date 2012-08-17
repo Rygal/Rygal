@@ -24,125 +24,125 @@ import org.rygal.Game;
 /**
  * <h2>Description</h2>
  * <p>
- * 	A device manager for joysticks.
+ *  A device manager for joysticks.
  * </p>
  * 
  * @author Christopher Kaster
  */
 class JoystickDeviceManager extends DeviceManager {
-	
-	/** The handler used to register events on. */
-	private var _handler:DisplayObject;
-	
-	/**
-	 * 
-	 * @param	game	The game the joystick handler will be registered for.
-	 */
-	public function new(game:Game) {
-		super(game);
-		
-		_handler = game.getDisplayObject().stage;
-		
-		#if (cpp && !mobile)
-		_handler.addEventListener(nme.events.JoystickEvent.AXIS_MOVE, onAxisMove);
-		_handler.addEventListener(nme.events.JoystickEvent.BALL_MOVE, onBallMove);
-		_handler.addEventListener(nme.events.JoystickEvent.BUTTON_DOWN, onButtonDown);
-		_handler.addEventListener(nme.events.JoystickEvent.BUTTON_UP, onButtonUp);
-		_handler.addEventListener(nme.events.JoystickEvent.HAT_MOVE, onHatMove);
-		#end
-	}
-	
-	
-	/**
-	 * Registers this touch device manager on the Game-class so it'll be used on
-	 * any games that will be created.
-	 */
-	public static function use():Void {
-		Game.registerDeviceManager(JoystickDeviceManager);
-	}
-	
-	override public function dispose():Void {
-		super.dispose();
-		
-		#if (cpp && !mobile)
-		_handler.removeEventListener(nme.events.JoystickEvent.AXIS_MOVE, onAxisMove);
-		_handler.removeEventListener(nme.events.JoystickEvent.BALL_MOVE, onBallMove);
-		_handler.removeEventListener(nme.events.JoystickEvent.BUTTON_DOWN, onButtonDown);
-		_handler.removeEventListener(nme.events.JoystickEvent.BUTTON_UP, onButtonUp);
-		_handler.removeEventListener(nme.events.JoystickEvent.HAT_MOVE, onHatMove);
-		#end
-	}
-	
-	#if (cpp || neko)
-	private function onAxisMove(e:nme.events.JoystickEvent) {
-		isRegistered(e);
-		updateEvent(e);
-		
-		var joystick:Joystick = game.getDevice(Joystick, e.device);
-		var je:JoystickEvent = new JoystickEvent(JoystickEvent.AXIS_MOVE, joystick);
-		joystick.dispatchEvent(je);
-		this.dispatchEvent(je);
-	}
-	
-	private function onBallMove(e:nme.events.JoystickEvent) {
-		isRegistered(e);
-		updateEvent(e);
-		
-		var joystick:Joystick = game.getDevice(Joystick, e.device);
-		var je:JoystickEvent = new JoystickEvent(JoystickEvent.BALL_MOVE, joystick);
-		joystick.dispatchEvent(je);
-		this.dispatchEvent(je);
-	}
-	
-	private function onButtonDown(e:nme.events.JoystickEvent) {
-		isRegistered(e);
-		updateEvent(e);
-		
-		var joystick:Joystick = game.getDevice(Joystick, e.device);
-		var je:JoystickEvent = new JoystickEvent(JoystickEvent.BUTTON_DOWN, joystick);
-		
-		joystick.setButtonState(je, true);
-		
-		joystick.dispatchEvent(je);
-		this.dispatchEvent(je);
-	}
-	
-	private function onButtonUp(e:nme.events.JoystickEvent) {
-		isRegistered(e);
-		updateEvent(e);
-		
-		var joystick:Joystick = game.getDevice(Joystick, e.device);
-		var je:JoystickEvent = new JoystickEvent(JoystickEvent.BUTTON_UP, joystick);
-		
-		joystick.setButtonState(je, false);
-		
-		joystick.dispatchEvent(je);
-		this.dispatchEvent(je);
-	}
-	
-	private function onHatMove(e:nme.events.JoystickEvent) {
-		isRegistered(e);
-		updateEvent(e);
-		
-		var joystick:Joystick = game.getDevice(Joystick, e.device);
-		var je:JoystickEvent = new JoystickEvent(JoystickEvent.HAT_MOVE, joystick);
-		joystick.dispatchEvent(je);
-		this.dispatchEvent(je);
-	}
-	
-	private function updateEvent(e:nme.events.JoystickEvent):Void {
-		var joystick:Joystick = game.getDevice(Joystick, e.device);
-		
-		joystick.updateFromEvent(e);
-	}
-	
-	private function isRegistered(e:nme.events.JoystickEvent):Void {
-		if(!game.hasDevice(Joystick, e.device)) {
-			var j:Joystick = new Joystick(game, e.device);
-			
-			game.registerDevice(j, e.device);
-		}
-	}
-	#end
-	
+    
+    /** The handler used to register events on. */
+    private var _handler:DisplayObject;
+    
+    /**
+     * 
+     * @param   game    The game the joystick handler will be registered for.
+     */
+    public function new(game:Game) {
+        super(game);
+        
+        _handler = game.getDisplayObject().stage;
+        
+        #if (cpp && !mobile)
+        _handler.addEventListener(nme.events.JoystickEvent.AXIS_MOVE, onAxisMove);
+        _handler.addEventListener(nme.events.JoystickEvent.BALL_MOVE, onBallMove);
+        _handler.addEventListener(nme.events.JoystickEvent.BUTTON_DOWN, onButtonDown);
+        _handler.addEventListener(nme.events.JoystickEvent.BUTTON_UP, onButtonUp);
+        _handler.addEventListener(nme.events.JoystickEvent.HAT_MOVE, onHatMove);
+        #end
+    }
+    
+    
+    /**
+     * Registers this touch device manager on the Game-class so it'll be used on
+     * any games that will be created.
+     */
+    public static function use():Void {
+        Game.registerDeviceManager(JoystickDeviceManager);
+    }
+    
+    override public function dispose():Void {
+        super.dispose();
+        
+        #if (cpp && !mobile)
+        _handler.removeEventListener(nme.events.JoystickEvent.AXIS_MOVE, onAxisMove);
+        _handler.removeEventListener(nme.events.JoystickEvent.BALL_MOVE, onBallMove);
+        _handler.removeEventListener(nme.events.JoystickEvent.BUTTON_DOWN, onButtonDown);
+        _handler.removeEventListener(nme.events.JoystickEvent.BUTTON_UP, onButtonUp);
+        _handler.removeEventListener(nme.events.JoystickEvent.HAT_MOVE, onHatMove);
+        #end
+    }
+    
+    #if (cpp || neko)
+    private function onAxisMove(e:nme.events.JoystickEvent) {
+        isRegistered(e);
+        updateEvent(e);
+        
+        var joystick:Joystick = game.getDevice(Joystick, e.device);
+        var je:JoystickEvent = new JoystickEvent(JoystickEvent.AXIS_MOVE, joystick);
+        joystick.dispatchEvent(je);
+        this.dispatchEvent(je);
+    }
+    
+    private function onBallMove(e:nme.events.JoystickEvent) {
+        isRegistered(e);
+        updateEvent(e);
+        
+        var joystick:Joystick = game.getDevice(Joystick, e.device);
+        var je:JoystickEvent = new JoystickEvent(JoystickEvent.BALL_MOVE, joystick);
+        joystick.dispatchEvent(je);
+        this.dispatchEvent(je);
+    }
+    
+    private function onButtonDown(e:nme.events.JoystickEvent) {
+        isRegistered(e);
+        updateEvent(e);
+        
+        var joystick:Joystick = game.getDevice(Joystick, e.device);
+        var je:JoystickEvent = new JoystickEvent(JoystickEvent.BUTTON_DOWN, joystick);
+        
+        joystick.setButtonState(je, true);
+        
+        joystick.dispatchEvent(je);
+        this.dispatchEvent(je);
+    }
+    
+    private function onButtonUp(e:nme.events.JoystickEvent) {
+        isRegistered(e);
+        updateEvent(e);
+        
+        var joystick:Joystick = game.getDevice(Joystick, e.device);
+        var je:JoystickEvent = new JoystickEvent(JoystickEvent.BUTTON_UP, joystick);
+        
+        joystick.setButtonState(je, false);
+        
+        joystick.dispatchEvent(je);
+        this.dispatchEvent(je);
+    }
+    
+    private function onHatMove(e:nme.events.JoystickEvent) {
+        isRegistered(e);
+        updateEvent(e);
+        
+        var joystick:Joystick = game.getDevice(Joystick, e.device);
+        var je:JoystickEvent = new JoystickEvent(JoystickEvent.HAT_MOVE, joystick);
+        joystick.dispatchEvent(je);
+        this.dispatchEvent(je);
+    }
+    
+    private function updateEvent(e:nme.events.JoystickEvent):Void {
+        var joystick:Joystick = game.getDevice(Joystick, e.device);
+        
+        joystick.updateFromEvent(e);
+    }
+    
+    private function isRegistered(e:nme.events.JoystickEvent):Void {
+        if(!game.hasDevice(Joystick, e.device)) {
+            var j:Joystick = new Joystick(game, e.device);
+            
+            game.registerDevice(j, e.device);
+        }
+    }
+    #end
+    
 }

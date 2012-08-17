@@ -23,33 +23,33 @@ import nme.events.Event;
 /**
  * <h2>Description</h2>
  * <p>
- * 	Coming soon...
+ *  Coming soon...
  * </p>
  * @author Christopher Kaster
  */
 class JoystickEvent extends Event {
 
-	public static var AXIS_MOVE:String = "axisMove";
-	public static var BALL_MOVE:String = "ballMove";
-	public static var BUTTON_DOWN:String = "buttonDown";
-	public static var BUTTON_UP:String = "buttonUp";
-	public static var HAT_MOVE:String = "hatMove";
+    public static var AXIS_MOVE:String = "axisMove";
+    public static var BALL_MOVE:String = "ballMove";
+    public static var BUTTON_DOWN:String = "buttonDown";
+    public static var BUTTON_UP:String = "buttonUp";
+    public static var HAT_MOVE:String = "hatMove";
 
-	public var id:Int;
-	public var deviceID:Int;
-	
-	public var x:Float;
-	public var y:Float;
-	public var z:Float;
+    public var id:Int;
+    public var deviceID:Int;
+    
+    public var x:Float;
+    public var y:Float;
+    public var z:Float;
 
-	public function new(type:String, joystick:Joystick) {
-		super(type);
-		
-		this.id = joystick.id;
-		this.deviceID = joystick.deviceID;
-		this.x = joystick.x;
-		this.y = joystick.y;
-		this.z = joystick.z;
-	}
-	
+    public function new(type:String, joystick:Joystick) {
+        super(type);
+        
+        this.id = joystick.id;
+        this.deviceID = joystick.deviceID;
+        this.x = joystick.x;
+        this.y = joystick.y;
+        this.z = joystick.z;
+    }
+    
 }

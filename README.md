@@ -24,69 +24,69 @@ Even though Rygal uses haXe with NME, not every platform is (yet)
 fully supported:
 
 <table>
-	<tr>
-		<th>Platform</th>
-		<th>Supported</th>
-		<th>Zooming</th>
-		<th>Embedded fonts</th>
-		<th>Storage</th>
-	</tr>
-	<tr>
-		<td>Flash</td>
-		<td>Yes</td>
-		<td>Yes</td>
-		<td>Yes</td>
-		<td>Yes</td>
-	</tr>
-	<tr>
-		<td>Windows<sup>[1]</sup></td>
-		<td>Yes</td>
-		<td>Yes</td>
-		<td>Yes</td>
-		<td>Yes</td>
-	</tr>
-	<tr>
-		<td>OS X<sup>[2]</sup></td>
-		<td>Yes</td>
-		<td>Yes</td>
-		<td>Yes</td>
-		<td>Yes</td>
-	</tr>
-	<tr>
-		<td>Linux<sup>[3]</sup></td>
-		<td>Yes</td>
-		<td>Yes</td>
-		<td>Yes</td>
-		<td>Partially<sup>[4]</sup></td>
-	</tr>
-	<tr>
-		<td>iOS</td>
-		<td>Yes</td>
-		<td>Yes</td>
-		<td>Yes</td>
-		<td>Yes</td>
-	</tr>
-	<tr>
-		<td>Android</td>
-		<td>Yes</td>
-		<td>Yes</td>
-		<td>Yes</td>
-		<td>Yes</td>
-	</tr>
-	<tr>
-		<td>BlackBerry</td>
-		<td>Yes</td>
-		<td>Yes</td>
-		<td>Yes</td>
-		<td>Yes</td>
-	</tr>
-	<tr>
-		<td>HTML 5</td>
-		<td>No<sup>[5]</sup></td>
-		<td>Partially<sup>[6]</sup></td>
-		<td>No<sup>[7]</sup></td>
-		<td>No</td>
-	</tr>
+    <tr>
+        <th>Platform</th>
+        <th>Supported</th>
+        <th>Zooming</th>
+        <th>Embedded fonts</th>
+        <th>Storage</th>
+    </tr>
+    <tr>
+        <td>Flash</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>Windows<sup>[1]</sup></td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>OS X<sup>[2]</sup></td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>Linux<sup>[3]</sup></td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Partially<sup>[4]</sup></td>
+    </tr>
+    <tr>
+        <td>iOS</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>Android</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>BlackBerry</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>HTML 5</td>
+        <td>No<sup>[5]</sup></td>
+        <td>Partially<sup>[6]</sup></td>
+        <td>No<sup>[7]</sup></td>
+        <td>No</td>
+    </tr>
 </table>
 
 <sup>[1]</sup>: Tested with *Windows x86* target<br />
@@ -94,10 +94,10 @@ fully supported:
 <sup>[3]</sup>: Tested on *Ubuntu 12.04 32bit*.<br/>
 <sup>[4]</sup>: It seems to only work with root permissions.<br/>
 <sup>[5]</sup>: Unless either clipRect in the draw()-method or alpha in the
-				copyPixels()-method is working, I can't support it.<br />
+                copyPixels()-method is working, I can't support it.<br />
 <sup>[6]</sup>: Smoothing can't be disabled with jeash<br />
 <sup>[7]</sup>: Due to [the way embedded fonts work with
-				jeash](http://haxe.org/com/libs/jeash/embedfont)
+                jeash](http://haxe.org/com/libs/jeash/embedfont)
 
 
 Sometimes, features of the *dev* branch aren't tested on every

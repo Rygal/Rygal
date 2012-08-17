@@ -23,58 +23,58 @@ import nme.Lib;
 /**
  * <h2>Description</h2>
  * <p>
- * 	A stopwatch can keep track of time.
+ *  A stopwatch can keep track of time.
  * </p>
  * 
  * @author Robert Böhm
  */
 class Stopwatch {
-	
-	/** The time this stopwatch has been started. (Default = 0) */
-	public var startTime(default, null):Int;
+    
+    /** The time this stopwatch has been started. (Default = 0) */
+    public var startTime(default, null):Int;
 
-	/** The time this stopwatch has been stopped. (Default = 0) */
-	public var endTime(default, null):Int;
+    /** The time this stopwatch has been stopped. (Default = 0) */
+    public var endTime(default, null):Int;
 
-	/** The elapsed time since this stopwatch has been started. */
-	public var elapsed(getElapsed, never):Int;
-	
-	
-	/**
-	 * Creates a new stopwatch.
-	 */
-	public function new() {
-		this.startTime = 0;
-		this.endTime = 0;
-	}
-	
-	
-	/**
-	 * Starts this stopwatch.
-	 */
-	public function start():Void {
-		this.startTime = Lib.getTimer();
-	}
-	
-	/**
-	 * Stops this stopwatch.
-	 */
-	public function stop():Void {
-		this.endTime = Lib.getTimer();
-	}
-	
-	
-	/**
-	 * Returns the elapsed time since this stopwatch has been started.
-	 * 
-	 * @return	The elapsed time since this stopwatch has been started.
-	 */
-	private function getElapsed():Int {
-		if (this.endTime < this.startTime) {
-			return Lib.getTimer() - this.startTime;
-		} else {
-			return this.endTime - this.startTime;
-		}
-	}
-	
+    /** The elapsed time since this stopwatch has been started. */
+    public var elapsed(getElapsed, never):Int;
+    
+    
+    /**
+     * Creates a new stopwatch.
+     */
+    public function new() {
+        this.startTime = 0;
+        this.endTime = 0;
+    }
+    
+    
+    /**
+     * Starts this stopwatch.
+     */
+    public function start():Void {
+        this.startTime = Lib.getTimer();
+    }
+    
+    /**
+     * Stops this stopwatch.
+     */
+    public function stop():Void {
+        this.endTime = Lib.getTimer();
+    }
+    
+    
+    /**
+     * Returns the elapsed time since this stopwatch has been started.
+     * 
+     * @return  The elapsed time since this stopwatch has been started.
+     */
+    private function getElapsed():Int {
+        if (this.endTime < this.startTime) {
+            return Lib.getTimer() - this.startTime;
+        } else {
+            return this.endTime - this.startTime;
+        }
+    }
+    
 }

@@ -22,25 +22,25 @@ import nme.events.Event;
 /**
  * <h2>Description</h2>
  * <p>
- * 	A button event. It may only be dispatched by buttons.
+ *  A button event. It may only be dispatched by buttons.
  * </p>
  * 
  * @author Robert Böhm
  */
 class ButtonEvent extends Event {
-	
-	/** An event that will be called when the button was clicked. */
-	public static inline var CLICKED:String = "clicked";
+    
+    /** An event that will be called when the button was clicked. */
+    public static inline var CLICKED:String = "clicked";
 
-	
-	/**
-	 * Creates a new ButtonEvent.
-	 * 
-	 * @param	type	The type of this event, use one of the constants of
-	 * 					ButtonEvent, for instance ButtonEvent.CLICKED.
-	 */
-	public function new(type:String) {
-		super(type);
-	}
-	
+    
+    /**
+     * Creates a new ButtonEvent.
+     * 
+     * @param   type    The type of this event, use one of the constants of
+     *                  ButtonEvent, for instance ButtonEvent.CLICKED.
+     */
+    public function new(type:String) {
+        super(type);
+    }
+    
 }

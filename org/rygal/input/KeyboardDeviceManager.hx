@@ -23,31 +23,31 @@ import org.rygal.Game;
 /**
  * <h2>Description</h2>
  * <p>
- * 	A device manager for keyboards.
+ *  A device manager for keyboards.
  * </p>
  * 
  * @author Robert Böhm
  */
 class KeyboardDeviceManager extends DeviceManager {
-	
-	/**
-	 * Creates a new keyboard device manager for the given game.
-	 * 
-	 * @param	game	The game the keyboard will be registered for.
-	 */
-	public function new(game:Game) {
-		super(game);
-		
-		game.registerDevice(new Keyboard(game));
-	}
-	
-	
-	/**
-	 * Registers this keyboard device manager on the Game-class so it'll be used
-	 * on any games that will be created.
-	 */
-	public static function use():Void {
-		Game.registerDeviceManager(KeyboardDeviceManager);
-	}
-	
+    
+    /**
+     * Creates a new keyboard device manager for the given game.
+     * 
+     * @param   game    The game the keyboard will be registered for.
+     */
+    public function new(game:Game) {
+        super(game);
+        
+        game.registerDevice(new Keyboard(game));
+    }
+    
+    
+    /**
+     * Registers this keyboard device manager on the Game-class so it'll be used
+     * on any games that will be created.
+     */
+    public static function use():Void {
+        Game.registerDeviceManager(KeyboardDeviceManager);
+    }
+    
 }
