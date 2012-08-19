@@ -60,15 +60,6 @@ class Game {
     /** The screen canvas that will be displayed. */
     public var screen(default, null):Canvas;
     
-    /** The zoom factor this game is using. */
-    public var zoom(default, null):Int;
-    
-    /** The width of this game. */
-    public var width(default, null):Int;
-    
-    /** The height of this game. */
-    public var height(default, null):Int;
-    
     /** The mouse of this game. */
     public var mouse(getMouse, null):Mouse;
     
@@ -81,18 +72,31 @@ class Game {
     /** The primary joystick of this game */
     public var joystick(getJoystick, null):JoystickDeviceManager;
     
+    /** The zoom factor this game is using. */
+    public var zoom(default, null):Int;
+    
+    /** The width of this game. */
+    public var width(default, null):Int;
+    
+    /** The height of this game. */
+    public var height(default, null):Int;
+    
     /** The camera's x-position. */
-    public var cameraX:Int;
+    public var cameraX:Int = 0;
     
     /** The camera's y-position. */
-    public var cameraY:Int;
+    public var cameraY:Int = 0;
     
     /** The game's speed modifier.
      *  (Affects the "elapsed" times of update-calls) */
-    public var speed:Float;
+    public var speed:Float = 1;
     
     /** The step per update or 0 if no fixed timestep should be used. */
-    public var fixedTimestep:Float;
+    public var fixedTimestep:Float = 0;
+    
+    /** Determines if this game should use automatically pause when the focus of
+     *  the game is lost. */
+    public var autoPause:Bool = true;
     
     
     /** An array with the device managers of this game. */
@@ -100,12 +104,6 @@ class Game {
     
     /** Contains all the registered devices of this game. */
     private var _devices:Hash<IntHash<InputDevice>>;
-    
-    /** The last update in milliseconds. */
-    private var _lastUpdate:Float;
-    
-    /** The current time in milliseconds. */
-    private var _now:Float;
     
     /** All registered scenes. */
     private var _scenes:Hash<Scene>;
@@ -119,27 +117,26 @@ class Game {
     /** The current scene. */
     private var _currentScene:Scene;
     
-    /** The name of the initial scene. */
-    private var _initialSceneName:String;
-    
-    /** Determines if the game is paused. */
-    private var _paused:Bool;
-    
-    /** Determines if the game is currently really paused. */
-    private var _reallyPaused:Bool;
-    
     /** The pause scene. */
     private var _pauseScene:Scene;
-    
-    /** Determines if the last pause requested was made automatically due to
-      * focus loss. */
-    private var _autoPaused:Bool;
     
     /** The upcoming scene. */
     private var _nextScene:Scene;
     
+    /** The last update in milliseconds. */
+    private var _lastUpdate:Float;
+    
+    /** The current time in milliseconds. */
+    private var _now:Float;
+    
+    /** Determines if the game is paused. */
+    private var _wantPause:Bool = false;
+    
+    /** Determines if the game is currently really paused. */
+    private var _paused:Bool = false;
+    
     /** The accumulator for timesteps. */
-    private var _accumulator:Float;
+    private var _accumulator:Float = 0;
     
     
     /**
@@ -162,35 +159,30 @@ class Game {
         // have to worry about it:
         DeviceManager.useDefaultDeviceManagers();
         
-        this.fixedTimestep = fixedTimestep;
-        _accumulator = 0;
         _devices = new Hash<IntHash<InputDevice>>();
         _deviceManagers = new Array<DeviceManager>();
+        _scenes = new Hash<Scene>();
         
         _bitmap = new Bitmap(new BitmapData(width, height));
         _bitmap.scaleX = _bitmap.scaleY = zoom;
         _sprite = new Sprite();
-        
         _sprite.addChild(_bitmap);
         
-        this.speed = 1;
-        this._autoPaused = false;
-        this._paused = false;
-        this._reallyPaused = false;
         if (pauseScene == null) {
             this._pauseScene = new DefaultPauseScene();
         } else {
             this._pauseScene = pauseScene;
         }
+        
         this.screen = new Canvas(_bitmap.bitmapData);
+        this.fixedTimestep = fixedTimestep;
         this.zoom = zoom;
         this.width = width;
         this.height = height;
-        this.cameraX = 0;
-        this.cameraY = 0;
-        _initialSceneName = initialSceneName;
-        _scenes = new Hash<Scene>();
+        
         registerScene(initialScene, initialSceneName);
+        useScene(initialSceneName);
+        
         _sprite.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     }
     
@@ -436,15 +428,14 @@ class Game {
      * Pauses this game.
      */
     public function pause():Void {
-        this._paused = true;
+        this._wantPause = true;
     }
     
     /**
      * Unpauses this game.
      */
     public function unpause():Void {
-        this._autoPaused = false;
-        this._paused = false;
+        this._wantPause = false;
     }
     
     /**
@@ -453,7 +444,7 @@ class Game {
      * @return  True if this game is currently paused.
      */
     public function isPaused():Bool {
-        return this._paused;
+        return this._wantPause;
     }
     
     
@@ -515,17 +506,17 @@ class Game {
             _currentScene.load(this);
         }
         
-        if (this._paused != this._reallyPaused) {
-            if (this._paused) {
+        if (this._wantPause != this._paused) {
+            if (this._wantPause) {
                 this._pauseScene.load(this);
-                this._reallyPaused = true;
+                this._paused = true;
             } else {
                 this._pauseScene.unload();
-                this._reallyPaused = false;
+                this._paused = false;
             }
         }
         
-        if (this._reallyPaused) {
+        if (this._paused) {
             _pauseScene.update(time);
         } else {
             _currentScene.update(time);
@@ -540,7 +531,7 @@ class Game {
         _currentScene.draw(this.screen);
         this.screen.reset();
         
-        if (this._reallyPaused) {
+        if (this._paused) {
             _pauseScene.draw(this.screen);
         }
     }
@@ -561,9 +552,7 @@ class Game {
         }
         
         _sprite.addEventListener(Event.DEACTIVATE, onDeactivate);
-        _sprite.addEventListener(Event.ACTIVATE, onActivate);
         
-        useScene(_initialSceneName);
         _lastUpdate = Lib.getTimer();
         _sprite.addEventListener(Event.ENTER_FRAME, onEnterFrame);
     }
@@ -592,7 +581,6 @@ class Game {
         _devices = new Hash<IntHash<InputDevice>>();
         
         _sprite.removeEventListener(Event.DEACTIVATE, onDeactivate);
-        _sprite.removeEventListener(Event.ACTIVATE, onActivate);
         _sprite.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
     }
     
@@ -627,20 +615,8 @@ class Game {
      * @param   e   Event parameters.
      */
     private function onDeactivate(e:Event):Void {
-        if (!isPaused()) {
-            _autoPaused = true;
+        if (autoPause) {
             pause();
-        }
-    }
-    
-    /**
-     * A callback that will be called when this game has been focused.
-     * 
-     * @param   e   Event parameters.
-     */
-    private function onActivate(e:Event):Void {
-        if (_autoPaused) {
-            unpause();
         }
     }
     
