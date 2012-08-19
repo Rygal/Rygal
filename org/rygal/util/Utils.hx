@@ -17,8 +17,12 @@
 
 
 package org.rygal.util;
+
+#if cpp
 import haxe.Log;
 import haxe.PosInfos;
+import haxe.io.Output;
+#end
 
 /**
  * <h2>Description</h2>
@@ -35,10 +39,13 @@ class Utils {
     public static inline var VERSION_MAJOR:Int = 1;
     
     /** The minor number of the current Rygal version. (0.x.0) */
-    public static inline var VERSION_MINOR:Int = 2;
+    public static inline var VERSION_MINOR:Int = 3;
     
     /** The revision number of the current Rygal version. (0.0.x) */
     public static inline var VERSION_REVISION:Int = 0;
+    
+    /** Determines if this is a development version of Rygal. */
+    public static inline var DEVELOPMENT_BUILD:Bool = true;
     
     
     /**
@@ -48,13 +55,14 @@ class Utils {
     
     
     /**
-     * Returns the current Rygal version as a string in the regular format:
-     * 1.2.3
+     * Returns the current Rygal version as a string in the regular format, for
+     * instance "1.2.3" or "1.2.3-dev".
      * 
      * @return  The current version of Rygal as a string.
      */
     public static function getVersion():String {
-        return VERSION_MAJOR + "." + VERSION_MINOR + "." + VERSION_REVISION;
+        return VERSION_MAJOR + "." + VERSION_MINOR + "." + VERSION_REVISION +
+            (DEVELOPMENT_BUILD ? "-dev" : "");
     }
     
     /**
@@ -70,33 +78,43 @@ class Utils {
         return StringTools.lpad(Std.string(number), "0", targetSize);
     }
     
+    /**
+     * Sets up a Rygal-monitored trace. Also supports direct flushing on C++
+     * target. (Rather than having to wait until the end of the application)
+     */
+    public static function setupTrace():Void {
+        #if cpp
+        Log.trace = Utils.trace;
+        #end
+    }
+    
+    
     #if cpp
-    
-    public static function setupTrace():Void {
-        Log.trace = Utils.trace;
-    }
-    
+    /**
+     * An advanced trace-handler for the C++ target that automatically flushes
+     * after each trace so you can directly see the output.
+     * 
+     * @param	object  The object to be traced.
+     * @param	?inf    Informations about the source of the trace.
+     */
     private static function trace(object:Dynamic, ?inf:PosInfos):Void {
-        Sys.stdout().writeString(inf.fileName + ":" + inf.lineNumber + ": " + Std.string(object) + "\n");
-        Sys.stdout().flush();
-    }
-    
-    #else
-    
-    private static var realTrace:Dynamic -> PosInfos -> Void;
-    
-    public static function setupTrace():Void {
-        if (realTrace == null) {
-            realTrace = Log.trace;
+        var stdout:Output = Sys.stdout();
+        var text:String = Std.string(object);
+        
+        if (inf == null) {
+            stdout.writeString(text + "\n");
+        } else {
+            stdout.writeString(inf.fileName + ":" + inf.lineNumber + ": " +
+                text + "\n");
         }
-        Log.trace = Utils.trace;
+        
+        try {
+            stdout.flush();
+        } catch (e:Dynamic) {
+            // .flush() doesn't always work, but there's no known way to
+            // determine whether it's supported or not.
+        }
     }
-    
-    private static function trace(object:Dynamic, ?inf:PosInfos):Void {
-        realTrace(object, inf);
-    }
-    
     #end
-    
     
 }
