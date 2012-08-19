@@ -53,7 +53,7 @@ class AnimatedSprite extends Sprite {
     private var _currentIterator:TextureSequenceIterator;
     
     /** The milliseconds left until the image gets changed again. */
-    private var _elapsedMs:Int;
+    private var _elapsedMs:Float;
     
     
     /**

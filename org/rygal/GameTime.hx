@@ -29,10 +29,10 @@ package org.rygal;
 class GameTime {
     
     /** The system time in milliseconds. */
-    public var totalMs(default, null):Int;
+    public var totalMs(default, null):Float;
     
     /** The elapsed time in milliseconds. */
-    public var elapsedMs(default, null):Int;
+    public var elapsedMs(default, null):Float;
     
     /** The elapsed time in seconds. */
     public var elapsedS(default, null):Float;
@@ -47,10 +47,36 @@ class GameTime {
      * @param   speed       The speed modifier, will be multiplied to the
      *                      elapsed values.
      */
-    public function new(now:Int, lastUpdate:Int, speed:Float = 1) {
-        totalMs = now;
-        elapsedMs = Math.round(speed * (now - lastUpdate));
-        elapsedS = speed * elapsedMs / 1000.0;
+    public function new(now:Float, lastUpdate:Float, speed:Float = 1) {
+        this.totalMs = now;
+        this.elapsedMs = speed * (now - lastUpdate);
+        this.elapsedS = speed * elapsedMs / 1000.0;
+    }
+    
+    
+    /**
+     * Creates a new object holding time information.
+     * 
+     * @param   now         The current system time.
+     * @param   elapsedMs   The elapsed time.
+     * @param   speed       The speed modifier, will be multiplied to the
+     *                      elapsed values.
+     */
+    public static function fromElapsed(now:Float, elapsedMs:Float,
+            speed:Float = 1) {
+        
+        return new GameTime(now, now - elapsedMs, speed);
+    }
+    
+    
+    /**
+     * Slows this time object down by the given multiplier.
+     * 
+     * @param	multiplier  The factor to be multiplied by the elapsed time.
+     */
+    public function slow(multiplier:Float):Void {
+        this.elapsedMs *= multiplier;
+        this.elapsedS *= multiplier;
     }
     
 }

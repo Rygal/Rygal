@@ -91,6 +91,9 @@ class Game {
      *  (Affects the "elapsed" times of update-calls) */
     public var speed:Float;
     
+    /** The step per update or 0 if no fixed timestep should be used. */
+    public var fixedTimestep:Float;
+    
     
     /** An array with the device managers of this game. */
     private var _deviceManagers:Array<DeviceManager>;
@@ -99,10 +102,10 @@ class Game {
     private var _devices:Hash<IntHash<InputDevice>>;
     
     /** The last update in milliseconds. */
-    private var _lastUpdate:Int;
+    private var _lastUpdate:Float;
     
     /** The current time in milliseconds. */
-    private var _now:Int;
+    private var _now:Float;
     
     /** All registered scenes. */
     private var _scenes:Hash<Scene>;
@@ -135,6 +138,9 @@ class Game {
     /** The upcoming scene. */
     private var _nextScene:Scene;
     
+    /** The accumulator for timesteps. */
+    private var _accumulator:Float;
+    
     
     /**
      * Creates a new game based on the given parameters.
@@ -145,14 +151,19 @@ class Game {
      * @param   initialScene        The initial scene.
      * @param   initialSceneName    The name of the initial scene.
      * @param   pauseScene          The pause scene.
+     * @param   fixedTimestep       The step per update or 0 if no fixed
+     *                              timestep should be used.
      */
     public function new(width:Int, height:Int, zoom:Int, initialScene:Scene,
-            initialSceneName:String = "", pauseScene:Scene = null) {
+            initialSceneName:String = "", pauseScene:Scene = null,
+            fixedTimestep:Float = 0) {
         
         // Automatically load the default device manager so the "user" doesn't
         // have to worry about it:
         DeviceManager.useDefaultDeviceManagers();
         
+        this.fixedTimestep = fixedTimestep;
+        _accumulator = 0;
         _devices = new Hash<IntHash<InputDevice>>();
         _deviceManagers = new Array<DeviceManager>();
         
@@ -519,7 +530,12 @@ class Game {
         } else {
             _currentScene.update(time);
         }
-        
+    }
+    
+    /**
+     * Draws this game.
+     */
+    private function draw():Void {
         this.screen.translate(-cameraX, -cameraY);
         _currentScene.draw(this.screen);
         this.screen.reset();
@@ -587,8 +603,22 @@ class Game {
      */
     private function onEnterFrame(e:Event):Void {
         _now = Lib.getTimer();
-        update(new GameTime(_now, _lastUpdate, speed));
-        _lastUpdate = _now;
+        if (fixedTimestep > 0) {
+            var updated:Bool = false;
+            _accumulator += _now - _lastUpdate;
+            while (_accumulator > fixedTimestep) {
+                updated = true;
+                _accumulator -= fixedTimestep;
+                update(GameTime.fromElapsed(_lastUpdate, fixedTimestep));
+                _lastUpdate += fixedTimestep;
+            }
+            if(updated)
+                draw();
+        } else {
+            update(new GameTime(_now, _lastUpdate));
+            draw();
+            _lastUpdate = _now;
+        }
     }
     
     /**
