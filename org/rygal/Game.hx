@@ -18,21 +18,21 @@
 
 package org.rygal;
 
-import org.rygal.graphic.Canvas;
-import org.rygal.input.DeviceManager;
-import org.rygal.input.InputDevice;
-import org.rygal.input.Keyboard;
-import org.rygal.input.Mouse;
-import org.rygal.input.Touch;
-import org.rygal.input.Joystick;
 import nme.display.Bitmap;
 import nme.display.BitmapData;
 import nme.display.DisplayObject;
 import nme.display.Sprite;
 import nme.events.Event;
 import nme.Lib;
-import org.rygal.input.TouchDeviceManager;
+import org.rygal.graphic.Canvas;
+import org.rygal.input.DeviceManager;
+import org.rygal.input.InputDevice;
 import org.rygal.input.JoystickDeviceManager;
+import org.rygal.input.Keyboard;
+import org.rygal.input.Mouse;
+import org.rygal.input.Touch;
+import org.rygal.input.TouchDeviceManager;
+import org.rygal.util.Utils;
 
 /**
  * <h2>Description</h2>
@@ -71,6 +71,9 @@ class Game {
     
     /** The primary joystick of this game */
     public var joystick(getJoystick, null):JoystickDeviceManager;
+    
+    /** The pause scene of this game. */
+    public var pauseScene(getPauseScene, setPauseScene):Scene;
     
     /** The zoom factor this game is using. */
     public var zoom(default, null):Int;
@@ -117,11 +120,17 @@ class Game {
     /** The current scene. */
     private var _currentScene:Scene;
     
+    /** The upcoming scene. */
+    private var _nextScene:Scene;
+    
     /** The pause scene. */
     private var _pauseScene:Scene;
     
-    /** The upcoming scene. */
-    private var _nextScene:Scene;
+    /** The next pause scene. */
+    private var _nextPauseScene:Scene;
+    
+    /** Determines whether or not the pause scene should be changed. */
+    private var _changePauseScene:Bool;
     
     /** The last update in milliseconds. */
     private var _lastUpdate:Float;
@@ -142,22 +151,25 @@ class Game {
     /**
      * Creates a new game based on the given parameters.
      * 
+     * @param   zoom                The zoom factor of this game.
      * @param   width               The width of this game.
      * @param   height              The height of this game.
-     * @param   zoom                The zoom factor of this game.
-     * @param   initialScene        The initial scene.
-     * @param   initialSceneName    The name of the initial scene.
-     * @param   pauseScene          The pause scene.
-     * @param   fixedTimestep       The step per update or 0 if no fixed
-     *                              timestep should be used.
      */
-    public function new(width:Int, height:Int, zoom:Int, initialScene:Scene,
-            initialSceneName:String = "", pauseScene:Scene = null,
-            fixedTimestep:Float = 0) {
+    public function new(zoom:Int = 1, width:Int = 0, height:Int = 0) {
         
         // Automatically load the default device manager so the "user" doesn't
         // have to worry about it:
         DeviceManager.useDefaultDeviceManagers();
+        
+        // Automatically setup Rygal's advanced trace:
+        Utils.setupTrace();
+        
+        if (width == 0) {
+            width = Math.ceil(Lib.current.stage.stageWidth / zoom);
+        }
+        if (height == 0) {
+            height = Math.ceil(Lib.current.stage.stageHeight / zoom);
+        }
         
         _devices = new Hash<IntHash<InputDevice>>();
         _deviceManagers = new Array<DeviceManager>();
@@ -168,24 +180,29 @@ class Game {
         _sprite = new Sprite();
         _sprite.addChild(_bitmap);
         
-        if (pauseScene == null) {
-            this._pauseScene = new DefaultPauseScene();
-        } else {
-            this._pauseScene = pauseScene;
-        }
-        
+        this._pauseScene = new DefaultPauseScene();
         this.screen = new Canvas(_bitmap.bitmapData);
-        this.fixedTimestep = fixedTimestep;
         this.zoom = zoom;
         this.width = width;
         this.height = height;
         
-        registerScene(initialScene, initialSceneName);
-        useScene(initialSceneName);
-        
         _sprite.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     }
     
+    
+    /**
+     * Creates a new game based on the given parameters and adds it to the
+     * stage.
+     * 
+     * @param   zoom                The zoom factor of this game.
+     * @param   width               The width of this game.
+     * @param   height              The height of this game.
+     */
+    public static function create(zoom:Int = 1, width:Int = 0, height:Int = 0):Game {
+        var game:Game = new Game(zoom, width, height);
+        Lib.current.stage.addChild(game.getDisplayObject());
+        return game;
+    }
     
     /**
      * Determines whether a device manager is already registered or not.
@@ -506,20 +523,36 @@ class Game {
             _currentScene.load(this);
         }
         
+        if (_changePauseScene) {
+            if (_pauseScene != null)
+                _pauseScene.unload();
+            
+            _pauseScene = _nextPauseScene;
+            _nextPauseScene = null;
+            _changePauseScene = false;
+            if (_pauseScene != null) _pauseScene.load(this);
+        }
+        
         if (this._wantPause != this._paused) {
             if (this._wantPause) {
-                this._pauseScene.load(this);
-                this._paused = true;
+                if (_pauseScene != null) {
+                    this._pauseScene.load(this);
+                    this._paused = true;
+                } else {
+                    this._wantPause = false;
+                }
             } else {
-                this._pauseScene.unload();
+                if (_pauseScene != null) {
+                    this._pauseScene.unload();
+                }
                 this._paused = false;
             }
         }
         
         if (this._paused) {
-            _pauseScene.update(time);
+            if (_pauseScene != null) _pauseScene.update(time);
         } else {
-            _currentScene.update(time);
+            if (_currentScene != null) _currentScene.update(time);
         }
     }
     
@@ -528,11 +561,11 @@ class Game {
      */
     private function draw():Void {
         this.screen.translate(-cameraX, -cameraY);
-        _currentScene.draw(this.screen);
+        if (_currentScene != null) _currentScene.draw(this.screen);
         this.screen.reset();
         
         if (this._paused) {
-            _pauseScene.draw(this.screen);
+            if (_pauseScene != null) _pauseScene.draw(this.screen);
         }
     }
     
@@ -618,6 +651,36 @@ class Game {
         if (autoPause) {
             pause();
         }
+    }
+    
+    /**
+     * Defines the pause scene.
+     * 
+     * @param   scene   The new pause scene to be used.
+     * @return  The new pause scene.
+     */
+    private function setPauseScene(scene:Scene):Scene {
+        if (isPaused()) {
+            // Have to do the pause scene changing on the next update:
+            _changePauseScene = true;
+            _nextPauseScene = scene;
+            
+        } else {
+            // Can directly change the pause scene:
+            _pauseScene = scene;
+            _nextPauseScene = null;
+            _changePauseScene = false;
+        }
+        return scene;
+    }
+    
+    /**
+     * Returns the current pause scene.
+     * 
+     * @return  The current pause scene.
+     */
+    private function getPauseScene():Scene {
+        return _pauseScene;
     }
     
 }
