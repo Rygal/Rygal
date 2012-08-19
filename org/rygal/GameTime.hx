@@ -70,13 +70,15 @@ class GameTime {
     
     
     /**
-     * Slows this time object down by the given multiplier.
+     * Changes the elapsed time by multiplying it with the given factor. You can
+     * use this for instance to slow down the time (e.g. applyFactor(0.5)) or to
+     * fasten it up (e.g. applyFactor(2)).
      * 
-     * @param	multiplier  The factor to be multiplied by the elapsed time.
+     * @param	factor  The factor to be multiplied by the elapsed time.
      */
-    public function slow(multiplier:Float):Void {
-        this.elapsedMs *= multiplier;
-        this.elapsedS *= multiplier;
+    public function applyTimeFactor(factor:Float):Void {
+        this.elapsedMs *= factor;
+        this.elapsedS *= factor;
     }
     
 }
