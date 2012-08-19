@@ -52,6 +52,8 @@ class PhysicalWorld implements PhysicalObject {
     /** A container with all physical objects this world contains. */
     private var _objects:Array<PhysicalObject>;
     
+    /** Returns the count of objects on this world */
+    public var objectCount(getObjectCount, never):Int;
     
     /**
      * Creates a new physical world.
@@ -110,4 +112,12 @@ class PhysicalWorld implements PhysicalObject {
         return false;
     }
     
+    /**
+     * Returns the count of objects in this world
+     *
+     * @returns the count of objects in this world.
+     */
+    private function getObjectCount():Int {
+    	return _objects.length;
+    }
 }
