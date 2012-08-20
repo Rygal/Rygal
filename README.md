@@ -81,10 +81,17 @@ fully supported:
         <td>Yes</td>
     </tr>
     <tr>
+        <td>AIR<sup>[5]</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
         <td>HTML 5</td>
-        <td>No<sup>[5]</sup></td>
-        <td>Partially<sup>[6]</sup></td>
-        <td>No<sup>[7]</sup></td>
+        <td>No<sup>[6]</sup></td>
+        <td>Partially<sup>[7]</sup></td>
+        <td>No<sup>[8]</sup></td>
         <td>No</td>
     </tr>
 </table>
@@ -93,10 +100,11 @@ fully supported:
 <sup>[2]</sup>: Tested on *Intel Macs*.<br/>
 <sup>[3]</sup>: Tested on *Ubuntu 12.04 32bit*.<br/>
 <sup>[4]</sup>: It seems to only work with root permissions.<br/>
-<sup>[5]</sup>: Unless either clipRect in the draw()-method or alpha in the
+<sup>[5]</sup>: Doesn't work with Java 7 (You'll need to downgrade to Java 6).<br/>
+<sup>[6]</sup>: Unless either clipRect in the draw()-method or alpha in the
                 copyPixels()-method is working, I can't support it.<br />
-<sup>[6]</sup>: Smoothing can't be disabled with jeash<br />
-<sup>[7]</sup>: Due to [the way embedded fonts work with
+<sup>[7]</sup>: Smoothing can't be disabled with jeash<br />
+<sup>[8]</sup>: Due to [the way embedded fonts work with
                 jeash](http://haxe.org/com/libs/jeash/embedfont)
 
 
