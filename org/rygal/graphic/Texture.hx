@@ -22,6 +22,7 @@ import nme.Assets;
 import nme.display.BitmapData;
 import nme.geom.Point;
 import nme.geom.Rectangle;
+import nme.utils.ByteArray;
 
 /**
  * <h2>Description</h2>
@@ -76,6 +77,19 @@ class Texture {
     public static function fromAssets(name:String):Texture {
         return new Texture(Assets.getBitmapData(name));
     }
+	
+	/**
+	 * Loads a texture from bytes.
+	 * @param	name	The asset ID to be used.
+	 * @return The loaded texture.
+	 */
+	public static function fromBytes(bytes:ByteArray):Texture {
+		#if cpp
+		return new Texture(BitmapData.loadFromBytes(bytes));
+		#else
+		return null; // TODO: throw error
+		#end
+	}
     
     /**
      * Creates a new texture containing a string. It basically creates a new
