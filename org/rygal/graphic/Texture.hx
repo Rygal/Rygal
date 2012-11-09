@@ -84,7 +84,7 @@ class Texture {
 	 * @return The loaded texture.
 	 */
 	public static function fromBytes(bytes:ByteArray):Texture {
-		#if cpp
+		#if !flash
 		return new Texture(BitmapData.loadFromBytes(bytes));
 		#else
 		return null; // TODO: throw error
