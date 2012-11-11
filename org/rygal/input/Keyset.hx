@@ -106,7 +106,7 @@ class Keyset {
      * @return  The predefined keyset for the IJKL-keys.
      */
     public static function getIJKL():Keyset {
-        return new Keyset(Keys.I, Keys.J, Keys.K, Keys.L);
+        return new Keyset(Keys.I, Keys.L, Keys.K, Keys.J);
     }
     
     /**
