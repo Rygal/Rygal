@@ -85,10 +85,10 @@ class Game {
     public var height(default, null):Int;
     
     /** The camera's x-position. */
-    public var cameraX:Int = 0;
+    public var cameraX:Float = 0;
     
     /** The camera's y-position. */
-    public var cameraY:Int = 0;
+    public var cameraY:Float = 0;
     
     /** The game's speed modifier.
      *  (Affects the "elapsed" times of update-calls) */
@@ -560,7 +560,7 @@ class Game {
      * Draws this game.
      */
     private function draw():Void {
-        this.screen.translate(-cameraX, -cameraY);
+        this.screen.translate(Std.int(-cameraX), Std.int(-cameraY));
         if (_currentScene != null) _currentScene.draw(this.screen);
         this.screen.reset();
         
