@@ -247,6 +247,27 @@ class Canvas {
         y += yTranslation;
         _bitmapData.fillRect(new Rectangle(x, y, width, height), color);
     }
+	
+	/**
+     * Draw a filled circle onto this canvas with the given properties.
+     * 
+     * @param   color   The color of the circle.
+     * @param   x       The x-coordinate where to draw to.
+     * @param   y       The y-coordinate where to draw to.
+     * @param   radius	The radius of the circle
+     */
+    public function fillCircle(color:Int, x:Float, y:Float, radius:Float):Void {
+        
+        x += xTranslation;
+        y += yTranslation;
+		
+		var sprite = new nme.display.Sprite();
+		sprite.graphics.beginFill(color);
+		sprite.graphics.drawCircle(x, y, radius);
+		sprite.graphics.endFill();
+		
+        _bitmapData.draw(sprite);
+    }
     
     /**
      * Returns a texture that uses the same bitmap data, thus when you change
