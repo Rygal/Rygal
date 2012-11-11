@@ -50,10 +50,10 @@ class Mouse extends InputDevice {
     
     
     /** The x-coordinate of the mouse. */
-    public var x(default, null):Int;
+    public var x(getX, never):Int;
     
     /** The y-coordinate of the mouse. */
-    public var y(default, null):Int;
+    public var y(getY, never):Int;
     
     /** Determines whether this mouse is pressed or not. */
     public var isPressed(default, null):Bool;
@@ -70,6 +70,12 @@ class Mouse extends InputDevice {
      *  buttons.*/
     public var buttonMask(getButtonMask, never):Int;
     
+    
+    /** The previous x-coordinate of the mouse. */
+    private var _prevX:Int;
+    
+    /** The previous y-coordinate of the mouse. */
+    private var _prevY:Int;
     
     /** The absolute x-coordinate of the mouse. */
     private var _absoluteX:Int;
@@ -219,6 +225,7 @@ class Mouse extends InputDevice {
      * @param   e   Event parameters.
      */
     private function onMouseDown(e:nme.events.MouseEvent):Void {
+		refreshPosition(e);
         isPressed = true;
         this.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, this));
     }
@@ -229,6 +236,7 @@ class Mouse extends InputDevice {
      * @param   e   Event parameters.
      */
     private function onMouseUp(e:nme.events.MouseEvent):Void {
+		refreshPosition(e);
         isPressed = false;
         this.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_UP, this));
     }
@@ -239,21 +247,9 @@ class Mouse extends InputDevice {
      * @param   e   Event parameters.
      */
     private function onMouseMove(e:nme.events.MouseEvent):Void {
-        var prevX:Int = this._absoluteX;
-        var prevY:Int = this._absoluteY;
-        #if js
-        this._absoluteX = Std.int((e.stageX - _handler.x) / _game.zoom);
-        this._absoluteY = Std.int((e.stageY - _handler.y) / _game.zoom);
-        #else
-        this._absoluteX = Std.int(e.localX / _game.zoom);
-        this._absoluteY = Std.int(e.localY / _game.zoom);
-        #end
-        prevX += _game.cameraX;
-        prevY += _game.cameraY;
-        this.x = _absoluteX + _game.cameraX;
-        this.y = _absoluteY + _game.cameraY;
+		refreshPosition(e);
         this.dispatchEvent(
-                new MouseMoveEvent(MouseEvent.MOUSE_MOVE, this, prevX, prevY)
+                new MouseMoveEvent(MouseEvent.MOUSE_MOVE, this, _prevX, _prevY)
             );
     }
     
@@ -263,6 +259,7 @@ class Mouse extends InputDevice {
      * @param   e   Event parameters.
      */
     private function onMouseWheel(e:nme.events.MouseEvent):Void {
+		refreshPosition(e);
         this.dispatchEvent(new MouseWheelEvent(MouseEvent.MOUSE_WHEEL, this,
             e.delta));
     }
@@ -274,6 +271,7 @@ class Mouse extends InputDevice {
      * @param   e   Event parameters.
      */
     private function onRightMouseDown(e:nme.events.MouseEvent):Void {
+		refreshPosition(e);
         isRightButtonPressed = true;
         this.dispatchEvent(new MouseEvent(MouseEvent.RIGHT_MOUSE_DOWN, this));
     }
@@ -285,6 +283,7 @@ class Mouse extends InputDevice {
      * @param   e   Event parameters.
      */
     private function onRightMouseUp(e:nme.events.MouseEvent):Void {
+		refreshPosition(e);
         isRightButtonPressed = false;
         this.dispatchEvent(new MouseEvent(MouseEvent.RIGHT_MOUSE_UP, this));
     }
@@ -296,6 +295,7 @@ class Mouse extends InputDevice {
      * @param   e   Event parameters.
      */
     private function onMiddleMouseDown(e:nme.events.MouseEvent):Void {
+		refreshPosition(e);
         isMiddleButtonPressed = true;
         this.dispatchEvent(new MouseEvent(MouseEvent.MIDDLE_MOUSE_DOWN, this));
     }
@@ -307,6 +307,7 @@ class Mouse extends InputDevice {
      * @param   e   Event parameters.
      */
     private function onMiddleMouseUp(e:nme.events.MouseEvent):Void {
+		refreshPosition(e);
         isMiddleButtonPressed = false;
         this.dispatchEvent(new MouseEvent(MouseEvent.MIDDLE_MOUSE_UP, this));
     }
@@ -322,5 +323,42 @@ class Mouse extends InputDevice {
             (this.isRightButtonPressed ? Mouse.RIGHT : 0) |
             (this.isMiddleButtonPressed ? Mouse.MIDDLE : 0);
     }
+	
+	/**
+	 * Refreshes the position of this mouse using the given coordinates.
+	 * 
+	 * @param	e	The event to take the coordinates from.
+	 */
+	private function refreshPosition(e:nme.events.MouseEvent):Void {
+        this._prevX = this._absoluteX;
+        this._prevY = this._absoluteY;
+        #if js
+        this._absoluteX = Std.int((e.stageX - _handler.x) / _game.zoom);
+        this._absoluteY = Std.int((e.stageY - _handler.y) / _game.zoom);
+        #else
+        this._absoluteX = Std.int(e.localX / _game.zoom);
+        this._absoluteY = Std.int(e.localY / _game.zoom);
+        #end
+        this._prevX += Std.int(_game.cameraX);
+        this._prevY += Std.int(_game.cameraY);
+	}
+	
+	/**
+	 * Returns the x-coordinate of this mouse.
+	 * 
+	 * @return	The x-coordinate of this mouse.
+	 */
+	private function getX():Int {
+		return this._absoluteX + Std.int(_game.cameraX);
+	}
+	
+	/**
+	 * Returns the y-coordinate of this mouse.
+	 * 
+	 * @return	The y-coordinate of this mouse.
+	 */
+	private function getY():Int {
+		return this._absoluteY + Std.int(_game.cameraY);
+	}
     
 }

@@ -85,8 +85,8 @@ class Touch extends InputDevice {
     public function updateFromEvent(e:nme.events.TouchEvent):Void {
         var localX:Float = e.localX - _game.getDisplayObject().x;
         var localY:Float = e.localY - _game.getDisplayObject().y;
-        this.x = Std.int(localX / _game.zoom) + _game.cameraX;
-        this.y = Std.int(localY / _game.zoom) + _game.cameraY;
+        this.x = Std.int(localX / _game.zoom + _game.cameraX);
+        this.y = Std.int(localY / _game.zoom + _game.cameraY);
         
         this.isPrimaryTouchPoint = e.isPrimaryTouchPoint;
         
