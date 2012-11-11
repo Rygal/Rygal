@@ -110,7 +110,7 @@ class Color {
     public static inline var LIGHT_SLATE_GRAY:Int = 0x778899;
     public static inline var LIGHT_STEEL_BLUE:Int = 0xB0C4DE;
     public static inline var LIGHT_YELLOW:Int = 0xFFFFE0;
-    public static inline var LIME:Int = 0x00FF7F;
+    public static inline var LIME:Int = 0x00FF00;
     public static inline var LIME_GREEN:Int = 0x32CD32;
     public static inline var LINEN:Int = 0xFAF0E6;
     public static inline var MAGENTA:Int = FUCHSIA;

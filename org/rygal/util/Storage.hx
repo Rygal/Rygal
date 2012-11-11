@@ -47,8 +47,11 @@ import nme.net.SharedObject;
  * @author Robert Böhm
  */
 class Storage {
+	
     #if js
     
+	public var autoFlush:Bool = true;
+	
     // NME/HTML5 doesn't support SharedObject.
     public function new(name:String) {}
     public static function canStore():Bool { return false; }
@@ -59,10 +62,18 @@ class Storage {
     public function get(key:String, defaultData:Dynamic = null):Dynamic {
         return defaultData;
     }
-    public function close():Void {}
+    public function close():Void { }
+	public function flush():Void { }
     
     #else
     
+	/** Determines if this storage automatically flushes after each insertion. */
+	public var autoFlush(getAutoFlush, setAutoFlush):Bool;
+    
+	
+	/** The internal variable that determines if this storage automatically flushes after each insertion. */
+	private var _autoFlush:Bool = true;
+	
     /** The internal shared object this storage is based on. */
     private var _object:SharedObject;
     
@@ -93,7 +104,7 @@ class Storage {
      */
     public function clear():Void {
         _object.clear();
-        _object.flush();
+		this.flush();
     }
     
     /**
@@ -113,7 +124,8 @@ class Storage {
      */
     public function unset(key:String):Void {
         Reflect.deleteField(_object.data, key);
-        _object.flush();
+		if(autoFlush)
+			this.flush();
     }
     
     /**
@@ -124,7 +136,8 @@ class Storage {
      */
     public function put(key:String, data:Dynamic):Void {
         Reflect.setField(_object.data, key, data);
-        _object.flush();
+		if(autoFlush)
+			this.flush();
     }
     
     /**
@@ -154,6 +167,36 @@ class Storage {
             return defaultData;
         }
     }
+	
+	/**
+	 * Flushes the data of this storage.
+	 */
+	public function flush():Void {
+		_object.flush();
+	}
+	
+	
+	/**
+	 * Determines if this storage automatically flushes after each insertion.
+	 * 
+	 * @return	Determines if this storage automatically flushes after each insertion.
+	 */
+	private function getAutoFlush():Bool {
+		return _autoFlush;
+	}
+	
+	/**
+	 * Defines if this storage shall automatically flush after each insertion.
+	 * 
+	 * @param	autoFlush	True, if this storage should automatically flush after each insertion.
+	 * @return	True, if this storage should automatically flush after each insertion.
+	 */
+	private function setAutoFlush(autoFlush:Bool):Bool {
+		if (autoFlush && !_autoFlush) {
+			this.flush();
+		}
+		return _autoFlush = autoFlush;
+	}
     
     #end
     
