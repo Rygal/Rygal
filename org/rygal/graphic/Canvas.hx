@@ -268,6 +268,28 @@ class Canvas {
 		
         _bitmapData.draw(sprite);
     }
+	
+	/**
+     * Draw a filled ellipse onto this canvas with the given properties.
+     * 
+     * @param   color   The color of the circle.
+     * @param   x       The x-coordinate where to draw to.
+     * @param   y       The y-coordinate where to draw to.
+     * @param   width	The width of the ellipse
+	 * @param	height	The height of the ellipse
+     */
+    public function fillEllipse(color:Int, x:Float, y:Float, width:Float, height:Float):Void {
+        
+        x += xTranslation;
+        y += yTranslation;
+		
+		var sprite = new nme.display.Sprite();
+		sprite.graphics.beginFill(color);
+		sprite.graphics.drawEllipse(x, y, width, height);
+		sprite.graphics.endFill();
+		
+        _bitmapData.draw(sprite);
+    }
     
     /**
      * Returns a texture that uses the same bitmap data, thus when you change
