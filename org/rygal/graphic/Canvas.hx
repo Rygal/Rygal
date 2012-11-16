@@ -247,6 +247,73 @@ class Canvas {
         y += yTranslation;
         _bitmapData.fillRect(new Rectangle(x, y, width, height), color);
     }
+	
+	/**
+     * Draw a filled circle onto this canvas with the given properties.
+     * 
+     * @param   color   The color of the circle.
+     * @param   x       The x-coordinate where to draw to.
+     * @param   y       The y-coordinate where to draw to.
+     * @param   radius	The radius of the circle
+     */
+    public function fillCircle(color:Int, x:Float, y:Float, radius:Float):Void {
+        
+        x += xTranslation;
+        y += yTranslation;
+		
+		var sprite = new nme.display.Sprite();
+		sprite.graphics.beginFill(color);
+		sprite.graphics.drawCircle(x, y, radius);
+		sprite.graphics.endFill();
+		
+        _bitmapData.draw(sprite);
+    }
+	
+	/**
+	 * Draw a line onto this canvas with the given properties.
+	 * @param	color	The color of the circle.
+	 * @param	sourceX	The x-coordinate of the source point.
+	 * @param	sourceY	The y-coordinate of the source point.
+	 * @param	destX	The x-coordinate of the destination point.
+	 * @param	destY	The y-coordinate of the destination point.
+	 * @param	?thickness	The thickness of the line [default: 1.0]
+	 */
+	public function drawLine(color:Int, sourceX:Float, sourceY:Float, destX:Float, destY:Float, ?thickness:Float = 1.0) {
+		sourceX += xTranslation;
+        sourceY += yTranslation;
+		destX += xTranslation;
+        destY += yTranslation;
+		
+		var sprite = new nme.display.Sprite();
+		sprite.graphics.lineStyle(thickness, color);
+		sprite.graphics.moveTo(sourceX, sourceY);
+		sprite.graphics.lineTo(destX, destY);
+		sprite.graphics.endFill();
+		
+        _bitmapData.draw(sprite);
+	}
+	
+	/**
+     * Draw a filled ellipse onto this canvas with the given properties.
+     * 
+     * @param   color   The color of the circle.
+     * @param   x       The x-coordinate where to draw to.
+     * @param   y       The y-coordinate where to draw to.
+     * @param   width	The width of the ellipse
+	 * @param	height	The height of the ellipse
+     */
+    public function fillEllipse(color:Int, x:Float, y:Float, width:Float, height:Float):Void {
+        
+        x += xTranslation;
+        y += yTranslation;
+		
+		var sprite = new nme.display.Sprite();
+		sprite.graphics.beginFill(color);
+		sprite.graphics.drawEllipse(x, y, width, height);
+		sprite.graphics.endFill();
+		
+        _bitmapData.draw(sprite);
+    }
     
     /**
      * Returns a texture that uses the same bitmap data, thus when you change
