@@ -269,6 +269,15 @@ class Canvas {
         _bitmapData.draw(sprite);
     }
 	
+	/**
+	 * Draw a line onto this canvas with the given properties.
+	 * @param	color	The color of the circle.
+	 * @param	sourceX	The x-coordinate of the source point.
+	 * @param	sourceY	The y-coordinate of the source point.
+	 * @param	destX	The x-coordinate of the destination point.
+	 * @param	destY	The y-coordinate of the destination point.
+	 * @param	?thickness	The thickness of the line [default: 1.0]
+	 */
 	public function drawLine(color:Int, sourceX:Float, sourceY:Float, destX:Float, destY:Float, ?thickness:Float = 1.0) {
 		sourceX += xTranslation;
         sourceY += yTranslation;
