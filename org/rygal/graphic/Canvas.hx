@@ -269,6 +269,21 @@ class Canvas {
         _bitmapData.draw(sprite);
     }
 	
+	public function drawLine(color:Int, sourceX:Float, sourceY:Float, destX:Float, destY:Float, ?thickness:Float = 1.0) {
+		sourceX += xTranslation;
+        sourceY += yTranslation;
+		destX += xTranslation;
+        destY += yTranslation;
+		
+		var sprite = new nme.display.Sprite();
+		sprite.graphics.lineStyle(thickness, color);
+		sprite.graphics.moveTo(sourceX, sourceY);
+		sprite.graphics.lineTo(destX, destY);
+		sprite.graphics.endFill();
+		
+        _bitmapData.draw(sprite);
+	}
+	
 	/**
      * Draw a filled ellipse onto this canvas with the given properties.
      * 
