@@ -16,25 +16,25 @@
 // along with Rygal. If not, see: <http://www.gnu.org/licenses/>.
 
 
-package org.rygal;
+package org.rygal.exceptions;
 
 /**
  * <h2>Description</h2>
  * <p>
- *  An error to be thrown whenever the arguments were invalid.
+ *  An exception to be thrown whenever the arguments were invalid.
  * </p>
  * <p>
- *  Note: The error system is not implemented yet!
+ *  Note: The exception system is not implemented yet!
  * </p>
  * 
  * @author Robert Böhm
  */
-class InvalidArgumentError extends Error {
+class InvalidArgumentException extends Exception {
     
     /**
-     * Creates a new InvalidArgumentError with the given message.
+     * Creates a new InvalidArgumentException with the given message.
      * 
-     * @param   ?message    A message for this error.
+     * @param   ?message    A message for this exception.
      */
     public function new(?message:String) {
         super(message);
