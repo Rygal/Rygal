@@ -24,6 +24,8 @@ import nme.geom.Point;
 import nme.geom.Rectangle;
 import nme.utils.ByteArray;
 
+import org.rygal.exceptions.TargetNotSupportedException;
+
 /**
  * <h2>Description</h2>
  * <p>
@@ -84,10 +86,15 @@ class Texture {
 	 * @return The loaded texture.
 	 */
 	public static function fromBytes(bytes:ByteArray):Texture {
-		#if !flash
-		return new Texture(BitmapData.loadFromBytes(bytes));
+		#if flash
+		// create a dummy texture
+		var can:Canvas = Canvas.create(1, 1);
+		
+		throw new TargetNotSupportedException("Flash");
+		
+		return can.toTexture();
 		#else
-		return null; // TODO: throw error
+		return new Texture(BitmapData.loadFromBytes(bytes));
 		#end
 	}
     
