@@ -41,6 +41,8 @@ class JoystickEvent extends Event {
     public var x:Float;
     public var y:Float;
     public var z:Float;
+    
+    public var axis:Array<Float>;
 
     public function new(type:String, joystick:Joystick) {
         super(type);
@@ -50,6 +52,7 @@ class JoystickEvent extends Event {
         this.x = joystick.x;
         this.y = joystick.y;
         this.z = joystick.z;
+        this.axis = joystick.axis;
     }
     
 }
