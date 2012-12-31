@@ -39,6 +39,8 @@ class Joystick extends InputDevice {
     public var x(default, null):Float;
     public var y(default, null):Float;
     public var z(default, null):Float;
+    
+    public var axis(default, null):Array<Float>;
 
     private var _game:Game;
     private var _buttonStates:IntHash<Bool>;
@@ -58,6 +60,7 @@ class Joystick extends InputDevice {
         this.x = e.x;
         this.y = e.y;
         this.z = e.z;
+        this.axis = e.axis;
     }
     #end
     
