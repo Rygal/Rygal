@@ -29,12 +29,20 @@ package org.rygal.exceptions;
 class TargetNotSupportedException extends Exception {
     
     /**
-     * Creates a new TargetNotSupportedException for the given target
-     * 
-     * @param   ?message    A message for this exception.
+     * Creates a new TargetNotSupportedException for the current target
      */
-    public function new(target:String) {
-        super("Target not supported: " + target);
+    public function new() {
+	var message:String = "Target not supported";
+
+        #if cpp
+        message += ": C++";	
+        #elseif flash
+        message += ": Flash";
+        #elseif js
+	message += ": JavaScript"
+	#end
+
+        super(message);
     }
     
 }

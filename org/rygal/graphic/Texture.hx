@@ -86,12 +86,11 @@ class Texture {
 	 * @return The loaded texture.
 	 */
 	public static function fromBytes(bytes:ByteArray):Texture {
-		#if flash
-		throw new TargetNotSupportedException("Flash");
-		
-		// create dummy
-		return Canvas.create(1, 1).toTexture();
-		#else
+                #if flash
+                throw new TargetNotSupportedException();
+
+                return null;
+                #else
 		return new Texture(BitmapData.loadFromBytes(bytes));
 		#end
 	}
