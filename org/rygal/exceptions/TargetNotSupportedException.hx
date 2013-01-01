@@ -34,15 +34,15 @@ class TargetNotSupportedException extends Exception {
     public function new() {
 	var message:String = "Target not supported";
 
-        #if cpp
-        message += ": C++";	
-        #elseif flash
-        message += ": Flash";
-        #elseif js
+	#if cpp
+	message += ": C++";	
+	#elseif flash
+	message += ": Flash";
+	#elseif js
 	message += ": JavaScript"
 	#end
 
-        super(message);
+	super(message);
     }
     
 }

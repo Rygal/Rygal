@@ -86,13 +86,13 @@ class Texture {
 	 * @return The loaded texture.
 	 */
 	public static function fromBytes(bytes:ByteArray):Texture {
-                #if flash
-                throw new TargetNotSupportedException();
+	    #if flash
+            throw new TargetNotSupportedException();
 
-                return null;
-                #else
-		return new Texture(BitmapData.loadFromBytes(bytes));
-		#end
+            return null;
+            #else
+	    return new Texture(BitmapData.loadFromBytes(bytes));
+	    #end
 	}
     
     /**
