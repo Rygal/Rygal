@@ -81,18 +81,16 @@ class Texture {
     }
 	
 	/**
-	 * Loads a texture from bytes.
+	 * Loads a texture from bytes. This method don't work for the Flash target.
 	 * @param	name	The asset ID to be used.
 	 * @return The loaded texture.
 	 */
 	public static function fromBytes(bytes:ByteArray):Texture {
 		#if flash
-		// create a dummy texture
-		var can:Canvas = Canvas.create(1, 1);
-		
 		throw new TargetNotSupportedException("Flash");
 		
-		return can.toTexture();
+		// create dummy
+		return Canvas.create(1, 1).toTexture();
 		#else
 		return new Texture(BitmapData.loadFromBytes(bytes));
 		#end
